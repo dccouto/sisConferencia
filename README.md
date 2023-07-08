@@ -1,6 +1,6 @@
 ﻿# Ministério da Cidadania
 ## Equipe de Qualidade
-### Primeria Infancia API
+### SisConferencia API
 
 Esse é SisConferencia API
 O projeto foi baseado no padrão para aplicações que utilizarão backend em JAVA. Ele já vem configurado com alguns recursos do springboot, dentre eles:
