@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: {{ .Values.backend.replicaCount }}
+  selector:
+    matchLabels:
+      name: backend
+  template:
+    metadata:
+      annotations:
+        rollme: {{ randAlphaNum 10 | quote }}
+      labels:
+        name: backend
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.backend.registrySecret }}
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+          volumeMounts:
+            - name: data-backend
+              mountPath: /mnt/data
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          # readinessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: http
+          #   initialDelaySeconds: 180
+          #   periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /actuator/health
+          #     port: http
+          #   initialDelaySeconds: 180
+          #   periodSeconds: 5
+
+      volumes:
+        - name: data-backend
+          persistentVolumeClaim:
+            claimName: data-backend

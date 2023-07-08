@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-connection-pod
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    {{- if .Values.ingress.enabled }}
+    {{- range $index, $value := .Values.ingress.hosts }}
+    - name: wget-{{ $index }}
+      image: busybox
+      command: ["wget"]
+      args:
+        - {{ $value.host | quote }}
+    {{- end }}
+    {{- else }}
+    - name: wget
+      image: busybox
+      command: ["wget"]
+      args:
+        - "{{ .Values.java.service.name }}:{{ .Values.java.service.port }}"
+    {{- end }}
+  restartPolicy: Never

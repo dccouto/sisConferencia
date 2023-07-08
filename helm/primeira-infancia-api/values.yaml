@@ -1,0 +1,30 @@
+backend:
+  replicaCount: 1
+  registrySecret: registry-cidadania
+  image:
+    repository: docker-registry.hom.cidadania.gov.br/sisConferencia-api
+    pullPolicy: Always
+    tag: "1.0"
+  service:
+    name: backend-service
+    type: ClusterIP
+    port: 8080
+
+ingress:
+  enabled: true
+  hosts:
+    - host: sisConferencia-api.desenvolvimento.hom.cidadania.gov.br/
+      paths:
+        - path: /
+          service:
+            name: backend-service
+            port: 8080
+  tls: []
+
+imageCredentials:
+  name: registry-cidadania
+  registry: docker-registry.hom.cidadania.gov.br
+  auth: ""
+  
+volume:
+  storageClassName: nfs-hom-newstorage

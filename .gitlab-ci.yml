@@ -1,0 +1,242 @@
+image: maven:3.6.3-openjdk-11-slim
+
+include:
+  - project: arquitetura/templates
+    file: 
+      - approve.yaml
+      - rules.yaml
+      - kaniko.yaml
+      - sonarqube.yaml
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"  
+  PROJECT_NAME_SLUG: primeira-infancia-api
+  HELMCHARTS_PATH: helm/primeira-infancia-api
+  DOCKERFILE_PATH: Dockerfile
+  APP_NAME: backend
+
+stages:
+  - test
+  - sonar
+  - build
+  - approve
+  - deploy
+
+### comum ###
+test:
+  extends: .rules_master_or_fork_all
+  stage: test 
+  before_script:
+    - mkdir .m2 && cp $JAVA_M2_SETTINGS .m2/settings.xml
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+  after_script:
+    - cp -rf $HOME/.m2/repository .m2/repository
+  artifacts:
+    reports:
+      junit:
+        - $APP_NAME_SERVICO/target/surefire-reports/TEST-*.xml
+    paths:
+      - .m2/
+      - target/
+
+sonar:  
+  extends: .sonarqube_master_or_fork_all
+  stage: sonar
+
+### teste
+build-test:
+  extends: .kaniko_test
+  stage: build
+  variables:
+    CONTEXT: $CI_PROJECT_DIR
+    ADDITIONAL_FLAGS: >-
+      --cache=false
+      --dockerfile=$CONTEXT/$DOCKERFILE_PATH
+      --destination=$DOCKER_REGISTRY_PUSH/$PROJECT_NAME_SLUG/$APP_NAME/test:$CI_COMMIT_SHORT_SHA
+  before_script:
+    - mkdir .m2 && cp $JAVA_M2_SETTINGS .m2/settings.xml
+    - cat $env_test > src/main/resources/application.properties
+
+deploy-test:
+  extends: .rules_test
+  stage: deploy
+  image:
+    name: alpine/helm:3.6.2
+    entrypoint: ['']
+  environment:
+    name: test
+    url: http://$PROJECT_NAME_SLUG.tst.cidadania.gov.br/
+  script:
+    - helm upgrade
+      --install
+      --create-namespace
+      --namespace=$PROJECT_NAME_SLUG-test      
+      --set backend.image.repository=$DOCKER_REGISTRY_PULL/$PROJECT_NAME_SLUG/$APP_NAME/test
+      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set imageCredentials.registry=$DOCKER_REGISTRY_PULL
+      --set imageCredentials.auth=$DOCKER_REGISTRY_AUTH
+      --set namespace=$PROJECT_NAME_SLUG-test
+      --set ingress.hosts[0].host=$PROJECT_NAME_SLUG.tst.cidadania.gov.br
+      --set ingress.hosts[0].paths[0].path=/
+      --set ingress.hosts[0].paths[0].service.name=backend-service
+      --set ingress.hosts[0].paths[0].service.port=8080
+      --set volume.storageClassName=nfs-hom-newstorage
+      --values $HELMCHARTS_PATH/values.yaml
+      $PROJECT_NAME_SLUG-test
+      $HELMCHARTS_PATH
+    - echo "http://$PROJECT_NAME_SLUG.tst.cidadania.gov.br/"
+
+### staging
+build-staging:
+  extends: .kaniko_staging_tag
+  stage: build
+  variables:
+    CONTEXT: $CI_PROJECT_DIR
+    ADDITIONAL_FLAGS: >-
+      --cache=false
+      --dockerfile=$CONTEXT/$DOCKERFILE_PATH
+      --destination=$DOCKER_REGISTRY_PUSH/$PROJECT_NAME_SLUG/$APP_NAME/staging:$CI_COMMIT_SHORT_SHA
+  before_script:
+    - mkdir .m2 && cp $JAVA_M2_SETTINGS .m2/settings.xml
+    - cat $env_staging > src/main/resources/application.properties
+
+deploy-staging:
+  extends: .rules_staging_tag
+  stage: deploy
+  image:
+    name: alpine/helm:3.6.2
+    entrypoint: ['']
+  environment:
+    name: staging
+    url: http://$PROJECT_NAME_SLUG.hom.cidadania.gov.br/
+  script:
+    - helm upgrade
+      --install
+      --create-namespace
+      --namespace=$PROJECT_NAME_SLUG-staging
+      --set backend.image.repository=$DOCKER_REGISTRY_PULL/$PROJECT_NAME_SLUG/$APP_NAME/staging
+      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set imageCredentials.registry=$DOCKER_REGISTRY_PULL
+      --set imageCredentials.auth=$DOCKER_REGISTRY_AUTH
+      --set namespace=$PROJECT_NAME_SLUG-staging
+      --set ingress.hosts[0].host=$PROJECT_NAME_SLUG.hom.cidadania.gov.br
+      --set ingress.hosts[0].paths[0].path=/
+      --set ingress.hosts[0].paths[0].service.name=backend-service
+      --set ingress.hosts[0].paths[0].service.port=8080
+      --set volume.storageClassName=nfs-hom-newstorage
+      --values $HELMCHARTS_PATH/values.yaml
+      $PROJECT_NAME_SLUG-staging
+      $HELMCHARTS_PATH
+    - echo "http://$PROJECT_NAME_SLUG.hom.cidadania.gov.br/"
+
+### production
+build-production:
+  extends: .kaniko_prod
+  stage: build
+  variables:
+    CONTEXT: $CI_PROJECT_DIR
+    ADDITIONAL_FLAGS: >-
+      --cache=false
+      --dockerfile=$CONTEXT/$DOCKERFILE_PATH
+      --destination=$PROD_DOCKER_REGISTRY_PUSH/$PROJECT_NAME_SLUG/$APP_NAME/production:$CI_COMMIT_SHORT_SHA
+      --destination=$PROD_DOCKER_REGISTRY_PUSH/$PROJECT_NAME_SLUG/$APP_NAME:latest
+  before_script:
+    - mkdir .m2 && cp $JAVA_M2_SETTINGS .m2/settings.xml
+    - cat $env_production > src/main/resources/application.properties
+
+approve-deploy:
+  extends: .approve_infra
+  stage: approve
+
+deploy-production:
+  extends: .rules_prod
+  stage: deploy
+  image:
+    name: alpine/helm:3.6.2
+    entrypoint: ['']
+  environment:
+    name: openshift
+    url: http://$PROJECT_NAME_SLUG.app.cidadania.gov.br/
+  script:
+    - helm upgrade
+      --install
+      --create-namespace
+      --namespace=$PROJECT_NAME_SLUG-production
+      --set backend.image.repository=$PROD_DOCKER_REGISTRY_PULL/$PROJECT_NAME_SLUG/$APP_NAME/production
+      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set imageCredentials.registry=$PROD_DOCKER_REGISTRY_PULL
+      --set imageCredentials.auth=$PROD_DOCKER_REGISTRY_AUTH
+      --set namespace=$PROJECT_NAME_SLUG-production
+      --set ingress.hosts[0].host=$PROJECT_NAME_SLUG.app.cidadania.gov.br
+      --set ingress.hosts[0].paths[0].path=/
+      --set ingress.hosts[0].paths[0].service.name=backend-service
+      --set ingress.hosts[0].paths[0].service.port=8080
+      --set volume.storageClassName=nfs-prod-newstorage
+      --values $HELMCHARTS_PATH/values.yaml
+      $PROJECT_NAME_SLUG-production
+      $HELMCHARTS_PATH
+    - echo "http://$PROJECT_NAME_SLUG.app.cidadania.gov.br/"
+
+### treinamento
+build-treinamento:
+  extends: .kaniko_treinamento
+  stage: build
+  variables:
+    CONTEXT: $CI_PROJECT_DIR
+    ADDITIONAL_FLAGS: >-
+      --cache=false
+      --dockerfile=$CONTEXT/$DOCKERFILE_PATH
+      --destination=$DOCKER_REGISTRY_PUSH/$PROJECT_NAME_SLUG/$APP_NAME/treinamento:$CI_COMMIT_SHORT_SHA
+  before_script:
+    - mkdir .m2 && cp $JAVA_M2_SETTINGS .m2/settings.xml
+    - cat $env_treinamento > src/main/resources/application.properties
+
+approve-deploy-treinamento:
+  extends: .approve_infra-treinamento
+  stage: approve
+
+destroy-treinamento:
+  extends: .rules_treinamento
+  stage: deploy
+  image:
+    name: alpine/helm:3.6.2
+    entrypoint: ['']
+  environment:
+    name: openshift
+    action: stop
+  allow_failure: true
+  script:
+    - helm uninstall --namespace=$PROJECT_NAME_SLUG-treinamento $PROJECT_NAME_SLUG-treinamento-$CI_MERGE_REQUEST_IID
+
+deploy-treinamento:
+  extends: .rules_treinamento
+  stage: deploy
+  image:
+    name: alpine/helm:3.6.2
+    entrypoint: ['']
+  environment:
+    name: openshift
+    url: http://$PROJECT_NAME_SLUG.treinamento.cidadania.gov.br/
+    on_stop: destroy-treinamento
+  script:
+    - helm upgrade
+      --install
+      --create-namespace
+      --namespace=$PROJECT_NAME_SLUG-treinamento
+      --set backend.image.repository=$DOCKER_REGISTRY_PULL/$PROJECT_NAME_SLUG/$APP_NAME/treinamento
+      --set backend.image.tag=$CI_COMMIT_SHORT_SHA
+      --set imageCredentials.registry=$DOCKER_REGISTRY_PULL
+      --set imageCredentials.auth=$DOCKER_REGISTRY_AUTH
+      --set namespace=$PROJECT_NAME_SLUG-treinamento
+      --set ingress.hosts[0].host=$PROJECT_NAME_SLUG.treinamento.cidadania.gov.br
+      --set ingress.hosts[0].paths[0].path=/
+      --set ingress.hosts[0].paths[0].service.name=backend-service
+      --set ingress.hosts[0].paths[0].service.port=8080
+      --set volume.storageClassName=nfs-hom-newstorage
+      --values $HELMCHARTS_PATH/values.yaml
+      $PROJECT_NAME_SLUG-test
+      $HELMCHARTS_PATH
+    - echo "http://$PROJECT_NAME_SLUG.treinamento.cidadania.gov.br/"
+
+

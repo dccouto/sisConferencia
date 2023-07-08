@@ -1,0 +1,48 @@
+# SSO
+#app.host-oauth=$HOST_OAUTH
+#app.host-hazelcast=$HOST_HAZELCAST
+#app.sso-servico.host=$SSO_SERVICO_HOST
+#app.sso-servico.usuario=$SSO_SERVICO_USUARIO
+#app.sso-servico.senha=$SSO_SERVICO_SENHA
+
+# JPA
+#spring.jpa.show-sql=$JPA_SHOW_SQL
+#spring.jpa.hibernate.ddl-auto=$JPA_HIBERNATE_DDL
+
+# H2
+#spring.h2.console.enabled=true
+#spring.h2.console.path=/h2
+
+# Datasources
+#spring.datasource.driverClassName=org.h2.Driver
+#spring.datasource.url=$LOCALDB_JDBCURL
+#spring.datasource.username=$LOCALDB_USERNAME
+#spring.datasource.password=$LOCALDB_PASSWORD
+
+
+# SSO
+app.host-oauth=http://sso-des.hom.cidadania.gov.br/api/auth
+app.host-hazelcast=http://hazelcast-des.hom.cidadania.gov.br/api/cache/servico
+app.sso-servico.host=http://servico-sso-des.hom.cidadania.gov.br/api/sso
+app.sso-servico.usuario=SKELETON-JAVA
+app.sso-servico.senha=admin123
+
+# hikari
+# 10s kill idle connection
+spring.datasource.hikari.idleTimeout=10000 
+
+# data source
+spring.datasource.driverClassName=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@suorts01.mds.net:1521:mdsdes
+spring.datasource.username=usr_pcf
+spring.datasource.password=pcfbpctestepubalv
+
+# jpa
+spring.jpa.database-platform=org.hibernate.dialect.Oracle12cDialect
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.hibernate.time_zone=UTF
+spring.jpa.hibernate.default_schema=DB_PCF
+
+spring.jpa.properties.hibernate.show_sql=true
+spring.jpa.properties.hibernate.use_sql_comments=true
+spring.jpa.properties.hibernate.format_sql=true

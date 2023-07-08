@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  primeira-infancia-api-java11:
+    container_name: primeira-infancia-api-java11
+    image: java11
+    network_mode: host
+    volumes:
+      - $PWD:/app
+      - $HOME/.m2:/root/.m2
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "8080:8080"
+    restart: always
