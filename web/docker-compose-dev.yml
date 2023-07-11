@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  react-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile-dev
+    image: minha-rede-suas-web
+    container_name: minha-rede-suas-web
+    entrypoint: ./docker/web-dev/docker-entrypoint.sh
+    volumes:
+      - .:/var/www
+    ports:
+      - "3000:3000"
+    tty: true

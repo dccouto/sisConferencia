@@ -1,0 +1,19 @@
+.chips {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+a, a:hover {
+    text-decoration: none !important;
+}
+
+.footer-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

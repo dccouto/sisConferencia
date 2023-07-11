@@ -1,0 +1,7 @@
+FROM node
+RUN yarn
+WORKDIR /var/www
+ADD ./.env.example ./.env
+
+EXPOSE 3000
+CMD ["npm", "start"]
