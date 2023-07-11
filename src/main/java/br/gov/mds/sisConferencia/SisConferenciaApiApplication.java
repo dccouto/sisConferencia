@@ -32,7 +32,7 @@ public class SisConferenciaApiApplication {
      * @param args
      */
     public static void main(String[] args) {
-        System.setProperty("server.servlet.context-path", "/sisconferencia/api");
+        System.setProperty("server.servlet.context-path", "/sisconferencia/api/v1");
         SpringApplication.run(SisConferenciaApiApplication.class, args);
     }
 }
