@@ -29,14 +29,17 @@ const EventosConferencia = () => {
     const isMunicipal = ['Gestor Municipal'].includes(auth.perfil)
 
     useEffect(() => {
-        
+            
+
+
+
     }, [])
 
 
     return (
         <>
             <Breadcrumbs
-                current={`Conferências`}
+                current={`Conferências`} 
                 prevCrumbs={[{ name: 'Página inicial' }, { name: 'Eventos' }]}
             />
 
