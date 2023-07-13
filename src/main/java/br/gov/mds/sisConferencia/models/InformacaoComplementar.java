@@ -1,14 +1,17 @@
 package br.gov.mds.sisConferencia.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
@@ -23,30 +26,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "TB_EIXO", schema = Schemas.SISCONFERENCIA)
-public class Eixo {
+@Table(name = "TB_INFORMACAO_COMPLEMENTAR", schema = Schemas.SISCONFERENCIA)
+public class InformacaoComplementar {
 
 	@Id
-	@Column(name = "PK_EIXO")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_EIXO")
-	@SequenceGenerator(name = "SQ_EIXO", sequenceName = "SQ_EIXO", allocationSize = 1)
+	@Column(name = "PK_INFORMACAO_COMPLEMENTAR")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_INFORMACAO_COMPLEMENTAR")
+	@SequenceGenerator(name = "SQ_INFORMACAO_COMPLEMENTAR", sequenceName = "SQ_INFORMACAO_COMPLEMENTAR", allocationSize = 1)
 	private Long id;
-
-	@Column(name = "NU_EIXO")
-	private Integer numero;
-
-	@Column(name = "DS_TEMA")
-	private String tema;
 
 	@Column(name = "DS_DESCRICAO")
 	private String descricao;
 
-	@ManyToOne
-	@JoinColumn(name = "FK_EVENTO")
-	private Evento evento;
-
-	@ManyToOne
-	@JoinColumn(name = "FK_EMENTA", nullable = false)
-	private Ementa ementa;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "informacoesComplementares")
+	private List<Inscricao> inscricoes;
 
 }

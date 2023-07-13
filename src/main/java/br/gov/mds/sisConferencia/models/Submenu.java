@@ -1,5 +1,7 @@
 package br.gov.mds.sisConferencia.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
@@ -23,30 +27,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "TB_EIXO", schema = Schemas.SISCONFERENCIA)
-public class Eixo {
-
+@Table(name = "TB_SUBMENU_PRINCIPAL_CONFIG", schema = Schemas.SISCONFERENCIA)
+public class Submenu {
+	
 	@Id
-	@Column(name = "PK_EIXO")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_EIXO")
-	@SequenceGenerator(name = "SQ_EIXO", sequenceName = "SQ_EIXO", allocationSize = 1)
+    @Column(name = "PK_SUBMENU_PRINCIPAL_CONFIG")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_SUBMENU_PRINCIPAL_CONFIG")
+    @SequenceGenerator(name = "SQ_SUBMENU_PRINCIPAL_CONFIG", sequenceName = "SQ_SUBMENU_PRINCIPAL_CONFIG", allocationSize = 1)
 	private Long id;
-
-	@Column(name = "NU_EIXO")
-	private Integer numero;
-
-	@Column(name = "DS_TEMA")
-	private String tema;
-
+	
 	@Column(name = "DS_DESCRICAO")
-	private String descricao;
-
-	@ManyToOne
-	@JoinColumn(name = "FK_EVENTO")
-	private Evento evento;
-
-	@ManyToOne
-	@JoinColumn(name = "FK_EMENTA", nullable = false)
-	private Ementa ementa;
+	private String menu;
+	
+	@Column(name = "DS_ROTA")
+	private String rota;
+	
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "FK_MENU_PRINCIPAL_CONFIG", nullable = false)
+    private MenuPrincipal menuPrincipal;
 
 }

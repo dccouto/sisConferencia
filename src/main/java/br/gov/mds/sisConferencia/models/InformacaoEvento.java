@@ -25,23 +25,22 @@ import lombok.Setter;
 @Entity
 @Table(name = "TB_INFORMACAO_EVENTO", schema = Schemas.SISCONFERENCIA)
 public class InformacaoEvento {
-	
-	@Id
-    @Column(name = "PK_INFORMACAO_EVENTO")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_INFORMACAO_EVENTO")
-    @SequenceGenerator(name = "SQ_INFORMACAO_EVENTO", sequenceName = "SQ_INFORMACAO_EVENTO", allocationSize = 1)
-    private Long id;
 
-    
-    @Column(name = "DS_DESCRICAO")
-    private String descricao;
-    
-    @ManyToOne
-    @JoinColumn(name = "FK_EVENTO", nullable = false)
-    private Evento evento;
-    
-    @ManyToOne
-    @JoinColumn(name = "FK_TIPO_INSCRICAO", nullable = false)
-    private TipoInscricao tipoInscricao;
+	@Id
+	@Column(name = "PK_INFORMACAO_EVENTO")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_INFORMACAO_EVENTO")
+	@SequenceGenerator(name = "SQ_INFORMACAO_EVENTO", sequenceName = "SQ_INFORMACAO_EVENTO", allocationSize = 1)
+	private Long id;
+
+	@Column(name = "DS_DESCRICAO")
+	private String descricao;
+
+	@ManyToOne
+	@JoinColumn(name = "FK_EVENTO", nullable = false)
+	private Evento evento;
+
+	@ManyToOne
+	@JoinColumn(name = "FK_TIPO_INSCRICAO", nullable = false)
+	private TipoInscricao tipoInscricao;
 
 }

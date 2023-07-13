@@ -24,32 +24,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "TB_CONSELHO", schema = Schemas.SISCONFERENCIA)
-public class Conselho {
+@Table(name = "TB_MENU_PRINCIPAL_CONFIG", schema = Schemas.SISCONFERENCIA)
+public class MenuPrincipal {
 	
-    @Id
-    @Column(name = "PK_CONSELHO")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_CONSELHO")
-    @SequenceGenerator(name = "SQ_CONSELHO", sequenceName = "SQ_CONSELHO", allocationSize = 1)
+	@Id
+    @Column(name = "PK_MENU_PRINCIPAL_CONFIG")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_MENU_PRINCIPAL_CONFIG")
+    @SequenceGenerator(name = "SQ_MENU_PRINCIPAL_CONFIG", sequenceName = "SQ_MENU_PRINCIPAL_CONFIG", allocationSize = 1)
 	private Long id;
 	
-
 	@Column(name = "DS_DESCRICAO")
-	private String descricao;
+	private String menu;
 	
-	@Column(name = "DS_PORTE")
-	private String porte;
+	@Column(name = "DS_ROTA")
+	private String rota;
 	
-    @Column(name = "COD_MUNICIPIO")
-    private Long idMunicipio;
-    
-    @Column(name = "COD_ESTADO")
-    private Long idEstado;
+	//private List<Funcionalidade> funcionalidades;
 	
-    @Column(name = "COD_IBGE")
-	private Long idIbge;
-	
-    @OneToMany(mappedBy = "conselho")
-    private List<Conselheiro> conselheiros;
+    @OneToMany(mappedBy = "menuPrincipal")
+	private List<Submenu> submenu;
 
 }

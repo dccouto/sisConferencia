@@ -27,7 +27,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 @RestControllerAdvice
-public class AppExecptionHandler extends ResponseEntityExceptionHandler {
+public class SisConferenciaExecptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * Sobrescreve handleMethodArgumentNotValid para poder capturar exceções do @Valid
@@ -47,7 +47,7 @@ public class AppExecptionHandler extends ResponseEntityExceptionHandler {
      * 
      * @return {@link HttpStatus} Bad Request
      */
-    @ExceptionHandler(AppException.class)
+    @ExceptionHandler(SisConferenciaException.class)
     public ResponseEntity<Object> badRequestException(Throwable exception, WebRequest request) {
         return sendResponseExceptionRequest(exception.getMessage(), request, HttpStatus.BAD_REQUEST);
     }
