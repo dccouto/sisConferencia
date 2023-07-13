@@ -16,20 +16,6 @@ export default function LoginForm() {
     return (
         <Grid container spacing={3} justifyContent='center' alignItems='center'>
             <Grid item xs={12} sm={6}>
-                <Box
-                    component='img'
-                    src={logo}
-                    alt='Logo'
-                    sx={{
-                        [theme.breakpoints.down('md')]: {
-                            width: '100px',
-                        },
-                        width: '200px',
-                    }}
-                />
-                
-            </Grid>
-            <Grid item xs={12} sm={6}>
                 <BotaoLoginGovBr link={`${govBrConstants.urlProvider}/authorize?${qs}`} />
             </Grid>
         </Grid>

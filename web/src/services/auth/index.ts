@@ -34,7 +34,7 @@ export async function mockLogin(): Promise<UserAuth> {
       ],
     },{
         id: "2",
-        menu: "Cadastro de Conselheiros",
+        menu: "Cadastro de Participantes",
         rota: "/",
         funcionalidades: [1, 2, 3],
         submenu: [
@@ -92,6 +92,19 @@ export async function mockLogin(): Promise<UserAuth> {
             id: "1.1",
             menu: "Documentos",
             rota: "/documentos",
+            funcionalidades: [1, 2],
+          },
+        ],
+      },{
+        id: "5",
+        menu: "Administração",
+        rota: "/",
+        funcionalidades: [1, 2, 3],
+        submenu: [
+          {
+            id: "1.1",
+            menu: "Administração",
+            rota: "/administracao",
             funcionalidades: [1, 2],
           },
         ],
