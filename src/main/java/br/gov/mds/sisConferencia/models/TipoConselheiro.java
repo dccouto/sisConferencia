@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_TIPO_CONSELHEIRO", schema = Schemas.SISCONFERENCIA)
-public class TipoConselheiro {
+public class TipoConselheiro implements DomainGeneric {
 	
     /**
      * Não terá sequence criada no banco de dados
