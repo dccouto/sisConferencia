@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolationException;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,16 @@ public class SisConferenciaExecptionHandler extends ResponseEntityExceptionHandl
     public ResponseEntity<Object> badRequestException(Throwable exception, WebRequest request) {
         return sendResponseExceptionRequest(exception.getMessage(), request, HttpStatus.BAD_REQUEST);
     }
+    
+    /**
+     * Captura AppExceptions e retorna objeto Dto com as informações
+     * 
+     * @return {@link HttpStatus} Bad Request
+     */
+    @ExceptionHandler(SisConferenciaNotFoundException.class)
+    public ResponseEntity<Object> SisConferenciaNotFoundException(Throwable exception, WebRequest request) {
+    	return sendResponseExceptionRequest(exception.getMessage(), request, HttpStatus.NOT_FOUND);
+    }
 
     /**
      * Captura Exceptions e retorna objeto Dto com as informações
@@ -60,6 +71,16 @@ public class SisConferenciaExecptionHandler extends ResponseEntityExceptionHandl
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> internalServerErrorException(Throwable exception, WebRequest request) {
         return sendResponseExceptionRequest(exception.getMessage(), request, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    /**
+     * Captura Exceptions e retorna objeto Dto com as informações
+     * 
+     * @return {@link HttpStatus} Not Found
+     */
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<Object> emptyResultDataAccessException(Throwable exception, WebRequest request) {
+    	return sendResponseExceptionRequest(exception.getMessage(), request, HttpStatus.NOT_FOUND);
     }
 
     /**
