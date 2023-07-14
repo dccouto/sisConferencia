@@ -1,11 +1,12 @@
 package br.gov.mds.sisConferencia.rest;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.mds.sisConferencia.models.TipoEvento;
 import br.gov.mds.sisConferencia.service.TipoEventoService;
+
 
 @RestController
 @RequestMapping("/tipoEvento")
@@ -46,7 +48,10 @@ public class TipoEventoController {
 
     @GetMapping
     public ResponseEntity<List<TipoEvento>> getAll() {
-        return new ResponseEntity<>(tipoEventoService.findAll(), HttpStatus.OK);
+        List<TipoEvento> tipoEventos = tipoEventoService.findAll();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("X-Total-Count", String.valueOf(tipoEventos.size()));
+        return new ResponseEntity<>(tipoEventos, responseHeaders, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
