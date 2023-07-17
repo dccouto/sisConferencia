@@ -6,7 +6,6 @@ import br.gov.mds.sisConferencia.models.TipoConselheiro;
 import br.gov.mds.sisConferencia.repository.TipoConselheiroRepository;
 
 @Service
-
 public class TipoConselheiroService extends GenericService<TipoConselheiro, Long> {
 
 

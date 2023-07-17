@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_TIPO_ACOMPANHANTE", schema = Schemas.SISCONFERENCIA)
-public class TipoAcompanhante {
+public class TipoAcompanhante implements DomainGeneric {
 	
 	/**
 	 * Não terá sequence criada no banco de dados

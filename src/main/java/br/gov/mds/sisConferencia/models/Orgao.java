@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
 import br.gov.mds.sisConferencia.util.converter.SimNaoConverter;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_ORGAO_INSCRICAO", schema = Schemas.SISCONFERENCIA)
-public class Orgao {
+public class Orgao implements DomainGeneric {
 
 	@Id
 	@Column(name = "PK_ORGAO_INSCRICAO")
