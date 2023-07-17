@@ -1,33 +1,25 @@
 package br.gov.mds.sisConferencia.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.models.TipoAcompanhante;
 import br.gov.mds.sisConferencia.repository.TipoAcompanhanteRepository;
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class TipoAcompanhanteService {
+public class TipoAcompanhanteService extends GenericService<TipoAcompanhante, Long> {
 	
-	private final TipoAcompanhanteRepository tipoAcompanhanteRepository;
 
-	public List<TipoAcompanhante> listarTodos() {
-		return tipoAcompanhanteRepository.findAll();
+	public TipoAcompanhanteService(TipoAcompanhanteRepository repository) {
+		super(repository);
+	}
+	
+
+	public TipoAcompanhante atualizar(Long id, TipoAcompanhante tipoAcompanhante) {
+		TipoAcompanhante existingTipoAcompanhante = findById(id);
+		existingTipoAcompanhante.setDescricao(tipoAcompanhante.getDescricao());
+		return save(existingTipoAcompanhante);
+
 	}
 
-	public Optional<TipoAcompanhante> buscarPorId(Long id) {
-		return tipoAcompanhanteRepository.findById(id);
-	}
 
-	public TipoAcompanhante salvar(TipoAcompanhante tipoAcompanhante) {
-		return tipoAcompanhanteRepository.save(tipoAcompanhante);
-	}
-
-	public void excluir(Long id) {
-		tipoAcompanhanteRepository.deleteById(id);
-	}
 }

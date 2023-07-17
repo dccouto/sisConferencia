@@ -18,18 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.mds.sisConferencia.models.TipoEvento;
 import br.gov.mds.sisConferencia.service.TipoEventoService;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/tipoEvento")
 @CrossOrigin(origins = "http://localhost:3000")
 public class TipoEventoController {
 
 	private final TipoEventoService tipoEventoService;
-
-	@Autowired
-	public TipoEventoController(TipoEventoService tipoEventoService) {
-		this.tipoEventoService = tipoEventoService;
-	}
 
 	@PostMapping
 	public ResponseEntity<TipoEvento> create(@RequestBody TipoEvento tipoEvento) {

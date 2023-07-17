@@ -17,9 +17,9 @@ import br.gov.mds.sisConferencia.models.Usuario;
 import br.gov.mds.sisConferencia.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/usuarios")
-@RequiredArgsConstructor
 public class UsuarioController {
 
 	private final UsuarioService usuarioService;

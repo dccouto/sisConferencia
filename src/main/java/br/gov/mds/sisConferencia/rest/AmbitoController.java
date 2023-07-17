@@ -17,13 +17,12 @@ import br.gov.mds.sisConferencia.models.Ambito;
 import br.gov.mds.sisConferencia.service.AmbitoService;
 import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/ambito")
-@RequiredArgsConstructor
 public class AmbitoController {
 
 	private final AmbitoService ambitoService;
-
 
 	@PostMapping
 	public ResponseEntity<Ambito> create(@RequestBody Ambito ambito) {

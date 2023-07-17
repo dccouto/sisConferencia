@@ -17,9 +17,9 @@ import br.gov.mds.sisConferencia.models.Orgao;
 import br.gov.mds.sisConferencia.service.OrgaoService;
 import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/orgaos")
-@RequiredArgsConstructor
 public class OrgaoController {
 
 	private final OrgaoService orgaoService;
