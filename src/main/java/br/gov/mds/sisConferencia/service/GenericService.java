@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
-import br.gov.mds.sisConferencia.models.DomainGeneric;
+import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 
 public abstract class GenericService<T extends DomainGeneric, ID> {
 	

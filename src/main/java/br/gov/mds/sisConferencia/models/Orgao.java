@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
 import br.gov.mds.sisConferencia.util.converter.SimNaoConverter;
 import lombok.AllArgsConstructor;

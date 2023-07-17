@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
