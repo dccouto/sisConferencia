@@ -21,6 +21,7 @@ import br.gov.mds.sisConferencia.service.TipoEventoService;
 
 @RestController
 @RequestMapping("/tipoEvento")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TipoEventoController {
 
 	private final TipoEventoService tipoEventoService;

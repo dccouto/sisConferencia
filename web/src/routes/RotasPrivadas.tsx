@@ -13,6 +13,8 @@ let Reunioes = lazy(() => import('../pages/Eventos/Reunioes'))
 
 // Administrador
 let Perfil = lazy(() => import('../pages/Administrador/Perfil'))
+let TipoEvento = lazy(() => import('../pages/Administrador/TipoEvento'))
+
 
 // Eventos Conferencia
 let ConferenciasListar = lazy(() =>  import('../pages/Eventos/Conferencias/Listar'))
@@ -97,10 +99,16 @@ export const RotasPrivadas: IRotas = {
             path: '/administracao',
             element: <Perfil />,
         },
+ 
         {
             name: privateRoutesNames.adminPerfil.name,
             path: privateRoutesNames.adminPerfil.path,
             element: <Perfil />,
+        },
+        {
+            name: privateRoutesNames.adminTipoEvento.name,
+            path: privateRoutesNames.adminTipoEvento.path,
+            element: <TipoEvento/>,
         },
     ],
 }

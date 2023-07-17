@@ -103,8 +103,8 @@ export async function mockLogin(): Promise<UserAuth> {
         submenu: [
           {
             id: "1.1",
-            menu: "Administração",
-            rota: "/administracao",
+            menu: "Tipo de Evento",
+            rota: "/administracao/TipoEvento",
             funcionalidades: [1, 2],
           },
         ],

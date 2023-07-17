@@ -8,7 +8,7 @@ export function DescSistema() {
     return (
         <a href='/'>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <img src='/logo.png' style={{ width: imageSize, height: imageSize }} alt='SISCONFERÊNCIA' />
+                
 
                 <div
                     style={{
@@ -25,9 +25,8 @@ export function DescSistema() {
                             position: 'absolute',
                             width: '100%',
                             left: 0,
-                            top: isDesktop ? 0 : 3,
-                            fontSize: isDesktop ? 17 : 14,
-                            color: '#0080ff',
+                            fontSize: isDesktop ? 36 : 30,
+                            color: '#15D2B6',
                             fontWeight: 'bold',
                         }}
                     >
@@ -35,14 +34,18 @@ export function DescSistema() {
                     </div>
                     <div
                         style={{
+                            position: 'absolute',
+                            width: '100%',
+                            paddingLeft:isDesktop ?'30%':'25%',
+                            left: 0,
                             fontSize: isDesktop ? 36 : 30,
-                            color: 'rgb(181 182 185)',
+                            color: '#1351B4',
                             fontWeight: 'bold',
-                            lineHeight: isDesktop ? 0.9 : 1.2,
                         }}
                     >
-                        CONFERÊNCIA
+                        Conferência
                     </div>
+                   
                 </div>
             </div>
         </a>

@@ -46,3 +46,24 @@ spring.jpa.hibernate.default_schema=DB_PCF
 spring.jpa.properties.hibernate.show_sql=true
 spring.jpa.properties.hibernate.use_sql_comments=true
 spring.jpa.properties.hibernate.format_sql=true
+
+
+# Permitir acesso de qualquer origem (não recomendado para produção)
+spring.web.mvc.cors.allowed-origins=*
+
+# Permitir métodos HTTP específicos (por exemplo, GET, POST, etc.)
+spring.web.mvc.cors.allowed-methods=GET,POST,PUT,DELETE
+
+# Permitir cabeçalhos específicos
+spring.web.mvc.cors.allowed-headers=*
+
+# Expõe determinados cabeçalhos à aplicação cliente
+spring.web.mvc.cors.exposed-headers=X-Total-Count
+
+# Configurações para o envio de cookies e headers de autenticação nas requisições CORS.
+# Se verdadeiro, o cabeçalho de resposta 'Access-Control-Allow-Credentials' será 'true'.
+spring.web.mvc.cors.allow-credentials=true
+
+
+logging.level.org.springframework.web=DEBUG
+logging.level.org.springframework.security=DEBUG
