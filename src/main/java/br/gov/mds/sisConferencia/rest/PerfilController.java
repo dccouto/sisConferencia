@@ -26,42 +26,28 @@ public class PerfilController {
 
 	@GetMapping
 	public ResponseEntity<List<Perfil>> listarTodos() {
-		List<Perfil> perfis = perfilService.listarTodos();
-		return ResponseEntity.ok(perfis);
+		return ResponseEntity.ok(perfilService.findAll());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Perfil> buscarPorId(@PathVariable Long id) {
-		return perfilService.buscarPorId(id)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+		return ResponseEntity.ok(perfilService.findById(id));
 	}
 
 	@PostMapping
 	public ResponseEntity<Perfil> salvar(@RequestBody Perfil perfil) {
-		Perfil novoPerfil = perfilService.salvar(perfil);
-		return ResponseEntity.status(HttpStatus.CREATED).body(novoPerfil);
+		return ResponseEntity.status(HttpStatus.CREATED).body(perfilService.save(perfil));
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Perfil> atualizar(@PathVariable Long id, @RequestBody Perfil perfilAtualizado) {
-		return perfilService.buscarPorId(id)
-				.map(perfil -> {
-					perfil.setDescricao(perfilAtualizado.getDescricao());
-					Perfil perfilAtualizadoObj = perfilService.salvar(perfil);
-					return ResponseEntity.ok(perfilAtualizadoObj);
-				})
-				.orElse(ResponseEntity.notFound().build());
+		return ResponseEntity.ok(perfilService.atualizar(id, perfilAtualizado));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> excluir(@PathVariable Long id) {
-		return perfilService.buscarPorId(id)
-				.map(perfil -> {
-					perfilService.excluir(id);
-					return ResponseEntity.noContent().build();
-				})
-				.orElse(ResponseEntity.notFound().build());
+		perfilService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

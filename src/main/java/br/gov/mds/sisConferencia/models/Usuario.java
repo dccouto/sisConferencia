@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_USUARIO", schema = Schemas.SISCONFERENCIA)
-public class Usuario {
+public class Usuario implements DomainGeneric {
 	
     @Id
     @Column(name = "PK_USUARIO")

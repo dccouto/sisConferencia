@@ -16,7 +16,7 @@ public class TipoEventoService extends GenericService<TipoEvento , Long> {
 	public TipoEvento atualizar(Long id, TipoEvento tipoEvento) {
 		TipoEvento existingTipoEvento = findById(id);
 		existingTipoEvento.setDescricao(tipoEvento.getDescricao());
-		return repository.save(existingTipoEvento);
+		return save(existingTipoEvento);
 
 	}
 }

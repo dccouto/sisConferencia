@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_PERFIL", schema = Schemas.SISCONFERENCIA)
-public class Perfil {
+public class Perfil implements DomainGeneric {
 	
     @Id
     @Column(name = "PK_PERFIL")

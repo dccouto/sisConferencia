@@ -1,33 +1,33 @@
 package br.gov.mds.sisConferencia.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.models.Orgao;
-import br.gov.mds.sisConferencia.repository.OrgaoRepository;
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class OrgaoService {
+public class OrgaoService extends GenericService<Orgao , Long> {
 
-	private final OrgaoRepository orgaoRepository;
+	public OrgaoService(JpaRepository<Orgao, Long> repository) {
+		super(repository);
+	}
+	
+	public Orgao atualizar(Long id, Orgao orgaoAtualizado) {
+		Orgao orgao = findById(id);
+		
+		orgao.setNome(orgaoAtualizado.getNome());
+		orgao.setAreaAtuacao(orgaoAtualizado.getAreaAtuacao());
+		orgao.setCargoAtuante(orgaoAtualizado.getCargoAtuante());
+		orgao.setEmail(orgaoAtualizado.getEmail());
+		orgao.setIsConselheiro(orgaoAtualizado.getIsConselheiro());
+		orgao.setEndereco(orgaoAtualizado.getEndereco());
+		orgao.setTelefone(orgaoAtualizado.getTelefone());
+		orgao.setTipoRepresentacao(orgaoAtualizado.getTipoRepresentacao());
+		orgao.setSeguimento(orgaoAtualizado.getSeguimento());
+		orgao.setAmbito(orgaoAtualizado.getAmbito());
+		orgao.setConselho(orgaoAtualizado.getConselho());
+		return save(orgao);
 
-	public List<Orgao> listarTodos() {
-		return orgaoRepository.findAll();
 	}
 
-	public Optional<Orgao> buscarPorId(Long id) {
-		return orgaoRepository.findById(id);
-	}
-
-	public Orgao salvar(Orgao orgao) {
-		return orgaoRepository.save(orgao);
-	}
-
-	public void excluir(Long id) {
-		orgaoRepository.deleteById(id);
-	}
 }

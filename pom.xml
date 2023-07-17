@@ -9,7 +9,7 @@
     </parent>
     <groupId>br.gov.mds.sisConferencia</groupId>
     <artifactId>sisConferencia-api</artifactId>
-    <version>1.0.6.3-SNAPSHOT</version>
+    <version>1.0.0.0-SNAPSHOT</version>
     <name>sisConferencia-api</name>
     <description>Projeto SisConferencia api</description>
     <properties>
