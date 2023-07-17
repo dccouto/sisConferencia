@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_EVENTO", schema = Schemas.SISCONFERENCIA)
-public class Evento {
+public class Evento implements DomainGeneric {
 
 	@Id
 	@Column(name = "PK_FORMULARIO")
