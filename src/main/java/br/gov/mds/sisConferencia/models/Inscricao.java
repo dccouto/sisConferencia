@@ -35,7 +35,6 @@ import lombok.Setter;
 public class Inscricao {
 
 	@Id
-
 	@Column(name = "PK_INSCRICAO")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_INSCRICAO")
 	@SequenceGenerator(name = "SQ_INSCRICAO", sequenceName = "SQ_INSCRICAO", allocationSize = 1)

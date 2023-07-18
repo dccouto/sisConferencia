@@ -2,7 +2,10 @@ package br.gov.mds.sisConferencia.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.gov.mds.sisConferencia.util.Schemas;
@@ -22,11 +25,10 @@ import lombok.Setter;
 @Table(name = "TB_TIPO_REPRESENTACAO", schema = Schemas.SISCONFERENCIA)
 public class TipoRepresentacao {
 	
-	/**
-	 * Não terá sequence criada no banco de dados
-	 */
 	@Id
 	@Column(name = "PK_TIPO_REPRESENTACAO")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TIPO_REPRESENTACAO")
+	@SequenceGenerator(name = "SQ_TIPO_REPRESENTACAO", sequenceName = "SQ_TIPO_REPRESENTACAO", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "DS_DESCRICAO")

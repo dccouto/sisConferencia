@@ -2,7 +2,10 @@ package br.gov.mds.sisConferencia.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.gov.mds.sisConferencia.util.Schemas;
@@ -21,11 +24,10 @@ import lombok.Setter;
 @Table(name = "TB_TIPO_ENDERECO", schema = Schemas.SISCONFERENCIA)
 public class TipoEndereco {
 	
-    /**
-     * Não terá sequence criada no banco de dados
-     * */
-    @Id
-    @Column(name = "PK_TIPO_ENDERECO")
+	@Id
+	@Column(name = "PK_TIPO_ENDERECO")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TIPO_ENDERECO")
+	@SequenceGenerator(name = "SQ_TIPO_ENDERECO", sequenceName = "SQ_TIPO_ENDERECO", allocationSize = 1)
     private Long id;
 
     
