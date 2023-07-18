@@ -40,12 +40,9 @@ public class TipoEventoController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<TipoEvento>> getAll(@RequestHeader HttpHeaders responseHeaders) {
-		List<TipoEvento> tipoEventos = tipoEventoService.findAll();
-		// HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("X-Total-Count", String.valueOf(tipoEventos.size()));
-		responseHeaders.setContentLength(tipoEventos.size());
-		return new ResponseEntity<>(tipoEventos, responseHeaders, HttpStatus.OK);
+	public  ResponseEntity<List<TipoEvento>> getAll() {
+		
+		return ResponseEntity.ok(tipoEventoService.findAll());
 	}
 
 	@GetMapping("/{id}")
