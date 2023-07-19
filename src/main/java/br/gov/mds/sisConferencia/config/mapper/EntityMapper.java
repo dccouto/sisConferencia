@@ -1,4 +1,4 @@
-package br.gov.mds.sisConferencia.service.mapper;
+package br.gov.mds.sisConferencia.config.mapper;
 
 import java.util.List;
 
