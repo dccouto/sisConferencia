@@ -2,7 +2,6 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +43,6 @@ public class TipoEventoController {
 		List<TipoEvento> tipoEventos = tipoEventoService.findAll();
 		// HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("X-Total-Count", String.valueOf(tipoEventos.size()));
-		responseHeaders.setContentLength(tipoEventos.size());
 		return new ResponseEntity<>(tipoEventos, responseHeaders, HttpStatus.OK);
 	}
 
