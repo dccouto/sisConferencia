@@ -39,11 +39,11 @@ public class PessoaEnvolvidaConferencia {
 	private String outros;
 
     @ManyToOne
-    @JoinColumn(name = "PK_TIPO_PARTICIPACAO")
+    @JoinColumn(name = "FK_TIPO_PARTICIPACAO")
     private TipoParticipacao tipoParticipacao;
 
     @ManyToOne
-    @JoinColumn(name = "PK_RELATORIO_EVENTO")
+    @JoinColumn(name = "FK_RELATORIO_EVENTO")
     private RelatorioEvento relatorioEvento;
 
 }

@@ -40,7 +40,7 @@ public class RelatorioEvento {
 	@Column(name = "NO_RESPONSAVEL_REGISTRO")
 	private String responsavelRegistro;
 	
-	@Column(name = "NO_RESPONSAVEL_REGISTRO")
+	@Column(name = "NO_PRESIDENTE_CONSELHO")
 	private String presidenteConselho;
 	
 	@Column(name = "QTD_MUNICIPIO")
@@ -70,17 +70,14 @@ public class RelatorioEvento {
 	@Column(name = "QTD_CONVIDADOS")
 	private Integer qtdConvidados;
 	
-	@OneToMany
-	@JoinColumn(name = "FK_EVENTO_MOBILIZACAO", nullable = false)
-	private List<EventoMobilizacao> evento;
+	@OneToMany(mappedBy = "relatorioEvento")
+	private List<EventoMobilizacao> eventosMobilizacoes;
 	
 	@OneToMany(mappedBy = "relatorioEvento")
-    @JoinColumn(name = "FK_CONSELHO", nullable = false)
 	private List<Conselho> conselho;
     
     
 	@OneToMany(mappedBy = "relatorioEvento")
-    @JoinColumn(name = "FK_PESSOA_ENVOLVIDA_CONFERENCIA", nullable = false)
 	private List<PessoaEnvolvidaConferencia> pessoaEnvolvidaConferencia;
 	
 	

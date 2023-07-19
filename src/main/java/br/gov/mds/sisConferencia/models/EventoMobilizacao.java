@@ -45,14 +45,14 @@ public class EventoMobilizacao {
 	private String outrasFormas;
 	
 	@ManyToOne
-	@JoinColumn(name = "PK_EVENTO")
-	private Long idEvento;
+	@JoinColumn(name = "FK_EVENTO")
+	private Evento evento;
 
 	@ManyToOne
-	@JoinColumn(name = "PK_TIPO_EVENTO_MOBILIZACAO")
+	@JoinColumn(name = "FK_TIPO_EVENTO_MOBILIZACAO")
 	private TipoEventoMobilizacao tipoEventoMobilizacao;
 
 	@ManyToOne
-	@JoinColumn(name = "PK_RELATORIO_EVENTO")
+	@JoinColumn(name = "FK_RELATORIO_EVENTO")
 	private RelatorioEvento relatorioEvento;
 }
