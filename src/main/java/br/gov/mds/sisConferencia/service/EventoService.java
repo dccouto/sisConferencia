@@ -14,14 +14,20 @@ public class EventoService extends GenericService<Evento, Long> {
 	
 	public Evento atualizar(Long id, Evento eventoAtualizado) {
 		Evento existingEvento = findById(id);
-		existingEvento.setDescricao(eventoAtualizado.getDescricao());
+		
+		existingEvento.setNome(eventoAtualizado.getNome());
+		existingEvento.setObjetivo(eventoAtualizado.getObjetivo());
 		existingEvento.setTema(eventoAtualizado.getTema());
 		existingEvento.setDataCadastro(eventoAtualizado.getDataCadastro());
 		existingEvento.setDataInicial(eventoAtualizado.getDataInicial());
 		existingEvento.setDataFinal(eventoAtualizado.getDataFinal());
+		existingEvento.setAtivo(eventoAtualizado.getAtivo());
 		existingEvento.setTipoEvento(eventoAtualizado.getTipoEvento());
 		existingEvento.setTipoRegime(eventoAtualizado.getTipoRegime());
 		existingEvento.setPortaria(eventoAtualizado.getPortaria());
+		existingEvento.setEixos(eventoAtualizado.getEixos());
+		existingEvento.setDocumentos(eventoAtualizado.getDocumentos());
+		
 		return save(existingEvento);
 
 	}
