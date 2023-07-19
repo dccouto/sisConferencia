@@ -1,34 +1,34 @@
 
 import { AxiosResponse } from 'axios';
 import api, { getHeaders, getHeadersFiles } from '../../global'
-import { ITipoEvento } from './types';
+import { IEvento } from './types';
+import { IListaEventos } from './types';
 
 
 
-
-const apiServiceTipoEvento = {
+const apiServiceEventos = {
     listar: async () => {
         try {
-            const response = await api.get<ITipoEvento[]>('/tipoEvento');
+            const response = await api.get<IListaEventos[]>('/eventos');
             return response;
         } catch (error) {
             console.error(error);
             return [];
         }
     },
-    criar: async function (data: ITipoEvento): Promise<any>  {
+    criar: async function (data: IEvento): Promise<any>  {
         try {
             
-            const response = await api.post<ITipoEvento>('/tipoEvento', data, getHeaders());
+            const response = await api.post<IEvento>('/eventos', data, getHeaders());
             return response;
         } catch (error) {
             console.error('Erro ao obter o tipo de evento:', error);
             throw error;
         }
     },
-    atualizar: async (id: number, data: ITipoEvento):Promise<any>  => {
+    atualizar: async (id: number, data: IEvento):Promise<any>  => {
         try {
-            const response = await api.put(`/tipoEvento/${id}`, data, getHeaders());
+            const response = await api.put(`/eventos/${id}`, data, getHeaders());
             return response;
         } catch (error) {
             console.error(error);
@@ -37,11 +37,11 @@ const apiServiceTipoEvento = {
 
     excluir: async (id: number): Promise<void> => {
         try {
-            await api.delete(`/tipoEvento/${id}`);
+            await api.delete(`/eventos/${id}`);
         } catch (error) {
             console.error(error);
         }
     }
 };
 
-export default apiServiceTipoEvento;
+export default apiServiceEventos;

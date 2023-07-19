@@ -14,6 +14,8 @@ let Reunioes = lazy(() => import('../pages/Eventos/Reunioes'))
 // Administrador
 let Perfil = lazy(() => import('../pages/Administrador/Perfil'))
 let TipoEvento = lazy(() => import('../pages/Administrador/TipoEvento'))
+let Eventos = lazy(() => import('../pages/Administrador/Eventos'))
+let CriarEvento = lazy(() => import('../pages/Administrador/Eventos/Criar'))
 
 
 // Eventos Conferencia
@@ -75,22 +77,7 @@ export const RotasPrivadas: IRotas = {
             element: <Reunioes />,
         },
        
-        {
-            name: privateRoutesNames.eventosReunioesRegistrar.name,
-            path: privateRoutesNames.eventosReunioesRegistrar.path,
-            element: <ReunioesRegistrar/>,
-        },
-        {
-            name: privateRoutesNames.eventosReunioesAtualizar.name,
-            path: privateRoutesNames.eventosReunioesAtualizar.path,
-            element: <ReunioesRegistrar />,
-        },
-
-        {
-            name: privateRoutesNames.eventosReunioesListar.name,
-            path: privateRoutesNames.eventosReunioesListar.path,
-            element: <ReunioesListar />,
-        },
+       
 
 
         // Administradores
@@ -109,6 +96,28 @@ export const RotasPrivadas: IRotas = {
             name: privateRoutesNames.adminTipoEvento.name,
             path: privateRoutesNames.adminTipoEvento.path,
             element: <TipoEvento/>,
+        },
+        {
+            name: privateRoutesNames.adminEventos.name,
+            path: privateRoutesNames.adminEventos.path,
+            element: <Eventos/>,
+        },
+        //Administrar Eventos
+        {
+            name: privateRoutesNames.adminEventosCriar.name,
+            path: privateRoutesNames.adminEventosCriar.path,
+            element: <CriarEvento/>,
+        },
+        {
+            name: privateRoutesNames.eventosReunioesAtualizar.name,
+            path: privateRoutesNames.eventosReunioesAtualizar.path,
+            element: <ReunioesRegistrar />,
+        },
+
+        {
+            name: privateRoutesNames.eventosReunioesListar.name,
+            path: privateRoutesNames.eventosReunioesListar.path,
+            element: <ReunioesListar />,
         },
     ],
 }

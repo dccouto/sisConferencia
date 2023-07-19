@@ -120,14 +120,14 @@ const LoginForm = () => {
     const botaoGovBr =    <LoginFormGovBr></LoginFormGovBr>
     
     return (
-        <Grid>
+        <Grid >
            
             
             <Grid item xs={isDesktop ? 7 : 12} paddingTop={2}>
 
                 
             </Grid>
-            <Grid alignItems={'center'}>
+            <Grid alignItems={'center'} >
                         <img
                             src='/logo.png'
                             style={{ width: imageSize, height: imageSize }}

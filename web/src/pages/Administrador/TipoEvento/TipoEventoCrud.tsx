@@ -1,79 +1,68 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-// Meterial
 import {
     Box,
     Dialog,
     DialogTitle,
     DialogContent,
-    FormControlLabel,
     Grid,
-    Paper,
-    RadioGroup,
-    Radio,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
     Typography,
 } from '@mui/material'
 
-// Types
 import { ITipoEvento } from '../../../services/sisConferenciaApi/tipoEvento/types'
 
-// Components
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit';
 
-// Service
-import apiService from './../../../services/sisConferenciaApi/tipoEvento/index';
-
-// Utils
 import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
+import { CustomTable } from '../../../components/Formulario/CustomTable'
+
+interface ColumnConfig {
+    key: string
+    displayName: string
+    width?: number
+    visible?: boolean
+}
 
 interface Props {
     visible: boolean
     tipoEventos: ITipoEvento[]
     setTipoEventos: (tipoEventos: ITipoEvento[]) => void
+    apiService:any
+    columnConfig: ColumnConfig[]
 }
 
-const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos }: Props) => {
+const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos,apiService,columnConfig }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
     const [editItem, setEditItem] = useState<ITipoEvento | null>(null)
 
     const adicionarTipoEvento = (item: ITipoEvento) => {
-        const index = tipoEventos.findIndex((tipoEvento) => tipoEvento.id === item.id);
+        const index = tipoEventos.findIndex((tipoEvento) => tipoEvento.id === item.id)
     
         if (index !== -1) {
-            const updatedTipoEventos = [...tipoEventos];
-            updatedTipoEventos[index] = item;
-            setTipoEventos(updatedTipoEventos);
+            const updatedTipoEventos = [...tipoEventos]
+            updatedTipoEventos[index] = item
+            setTipoEventos(updatedTipoEventos)
         } else {
-            setTipoEventos([...tipoEventos, item]);
+            setTipoEventos([...tipoEventos, item])
         }
-    };
+    }
 
     const deletarTipoEvento = async (item: ITipoEvento) => {
         const list = tipoEventos.filter((c) => c.id !== item.id)
-        await apiService.tipoEventoExcluir(item.id)
+        await apiService.excluir(item.id)
         setTipoEventos(list)
     }
 
     const verifyDuplicateDescricao = (txtDescricao: string) => {
         txtDescricao = Mask.numeros(txtDescricao)
         const find = tipoEventos.find((tipoEvento) => String(tipoEvento.descricao) === txtDescricao)
-
         if (find) return false
         return true
     }
@@ -91,10 +80,6 @@ const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos }: Props) => {
 
     const rhfmethods = useForm<ITipoEvento>({ resolver: yupResolver(FormSchema) })
 
-    useEffect(() => {
-        rhfmethods.reset()
-    }, [isForm])
-
     const handleSalvar = async (values: ITipoEvento) => {
         try {
             let dataSave = {
@@ -104,16 +89,12 @@ const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos }: Props) => {
             let tipoEvento: ITipoEvento
 
             if (editItem) {
-                tipoEvento = await apiService.tipoEventoAtualizar(dataSave.id,dataSave)
+                tipoEvento = await apiService.atualizar(dataSave.id, dataSave)
             } else {
-                tipoEvento = await apiService.tipoEventoCriar(dataSave)
-            
+                tipoEvento = await apiService.criar(dataSave)
             }
             adicionarTipoEvento(tipoEvento)
-            
-
             toastSuccess('Tipo de Evento adicionado com sucesso.')
-
             setIsForm(false)
             setEditItem(null)
         } catch (error) {
@@ -123,68 +104,30 @@ const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos }: Props) => {
     }
 
     const handleEditar = (item: ITipoEvento) => {
-        setIsForm(true)
         setEditItem(item)
+        setIsForm(true)
         rhfmethods.reset(item)
     }
+
+    const initializeFormFields = () => {
+        setTimeout(() => {
+            rhfmethods.setValue('descricao', '');
+            rhfmethods.setValue('id', 0);
+        }, 0);
+    };
 
     return (
         <>
             <FormProvider {...rhfmethods}>
                 {visible && (
                     <>
-                        {/* Tabela */}
-                        <Box display={isForm ? 'none' : 'block'}>
-                            <Grid container xs={12}>
-                                <TableContainer component={Paper}>
-                                    <Table aria-label='simple table'>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell sx={{ fontWeight: 'bold' }} width={300}>
-                                                    ID
-                                                </TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }}>Descrição</TableCell>
-                                                <TableCell sx={{ fontWeight: 'bold' }} width={100}>
-                                                    {''}
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-
-                                        {tipoEventos.length === 0 ? (
-                                            <Typography textAlign={'center'} p={2}>
-                                                Nenhuma tipo de evento adicionado
-                                            </Typography>
-                                        ) : (
-                                            <TableBody>
-                                                {tipoEventos.map((item, key) => (
-                                                    <TableRow key={key}>
-                                                        <TableCell scope='row'>{item.id}</TableCell>
-                                                        <TableCell>{item.descricao}</TableCell>
-
-                                                        <TableCell>
-                                                            <EditIcon
-                                                                color='primary'
-                                                                onClick={() => handleEditar(item)}
-                                                            />
-
-                                                            <span style={{ marginRight: '8px' }} />
-
-                                                            <DeleteIcon
-                                                                color={'primary'}
-                                                                onClick={() => {
-                                                                    deletarTipoEvento(item)
-                                                                }}
-                                                            />
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        )}
-                                    </Table>
-                                </TableContainer>
-                            </Grid>
-                        </Box>
-
+                        <CustomTable
+                            data={tipoEventos}
+                            onEdit={handleEditar}
+                            onDelete={deletarTipoEvento}
+                            columnConfig={columnConfig}
+                        />
+                        
                         <Dialog {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
                             <DialogTitle>Cadastrar Tipo de Evento</DialogTitle>
                             <DialogContent>
@@ -228,10 +171,13 @@ const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos }: Props) => {
                         </Dialog>
 
                         <Grid container spacing={2} my={4} mr={4} justifyContent={'end'}>
-                            <Grid mr={3}>
-                                <BotaoPadrao size={'large'} variant='outlined' onClick={() => setIsForm(true)}>
-                                    ADICIONAR NOVO TIPO DE EVENTO
-                                </BotaoPadrao>
+                            <Grid>
+                                <BotaoPadrao size={'large'} variant='outlined' onClick={() =>{ 
+                                setIsForm(true);
+                                initializeFormFields();
+                                }}>
+                                ADICIONAR NOVO TIPO DE EVENTO
+                            </BotaoPadrao>
                             </Grid>
                         </Grid>
                     </>
@@ -240,7 +186,5 @@ const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos }: Props) => {
         </>
     )
 }
-
-
 
 export default TipoEventoCrud

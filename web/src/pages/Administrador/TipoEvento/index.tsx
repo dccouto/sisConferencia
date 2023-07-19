@@ -7,7 +7,7 @@ import TipoEventoCrud from './TipoEventoCrud';
 
 
 // Services
-import apiService from './../../../services/sisConferenciaApi/tipoEvento/index';
+import apiServiceTipoEvento from './../../../services/sisConferenciaApi/tipoEvento/index';
 import { useEffect, useState } from 'react';
 import { ITipoEvento } from './../../../services/sisConferenciaApi/tipoEvento/types';
 
@@ -17,6 +17,14 @@ const paginaInicial = '/home'
 
 
 const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+
+
+const columnsConfig = [
+    { key: 'id', displayName: 'ID', width: 300 ,visible:true},
+    { key: 'descricao', displayName: 'Descrição',visible:true},
+]
+
+
 
 export default function TipoEvento() {
 
@@ -28,7 +36,7 @@ export default function TipoEvento() {
 
         async function buscarListaTipoEvento() {
             try {
-                const result = await apiService.tipoEventoListar();
+                const result = await apiServiceTipoEvento.listar();
                 if (Array.isArray(result)) {
                     setTipoEventos(result);
                 } else {
@@ -45,12 +53,12 @@ export default function TipoEvento() {
     return (
         <>
             <Breadcrumbs
-                current={`Configurações do Sistema`}
-                prevCrumbs={[{ name: 'Administração' }, { name: 'Tabelas de Apoio' }]}
-            />
-            <Titulo titulo={`Tabelas de Apoio`} voltar={paginaInicial} />
+                current={`Tipo de Evento`}
+                prevCrumbs={[{ name: 'Administração' }]}
+            />  
+            <Titulo titulo={`Tipo de Evento`} voltar={paginaInicial} />
 
-            <TipoEventoCrud visible={true} tipoEventos={tipoEventos} setTipoEventos={setTipoEventos} ></TipoEventoCrud>
+            <TipoEventoCrud visible={true} tipoEventos={tipoEventos} setTipoEventos={setTipoEventos} apiService={apiServiceTipoEvento} columnConfig={columnsConfig}></TipoEventoCrud>
         </>
     )
 }
