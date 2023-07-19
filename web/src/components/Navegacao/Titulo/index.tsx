@@ -17,7 +17,7 @@ export function Titulo({ titulo, voltar }: ITituloProps) {
 
     return (
         <Box sx={{ my: 3 }} display='flex' justifyContent='space-between'>
-            <Typography variant='h6' fontWeight={'bold'}>{titulo}</Typography>
+            <Typography variant='h6' fontWeight={'bold'} color='#0C326F' >{titulo}</Typography>
             {isDesktop && voltar && (
                 <MuiLink
                     sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}

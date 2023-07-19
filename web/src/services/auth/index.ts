@@ -39,31 +39,31 @@ export async function mockLogin(): Promise<UserAuth> {
         funcionalidades: [1, 2, 3],
         submenu: [
           {
-            id: "1.1",
+            id: "2.1",
             menu: "Delegados ",
             rota: "/delegados",
             funcionalidades: [1, 2],
           },
           {
-            id: "1.2",
+            id: "2.2",
             menu: "Conselheiros",
             rota: "/conselheiros",
             funcionalidades: [2, 3],
           },
           {
-            id: "1.3",
+            id: "2.3",
             menu: "Observadores",
             rota: "/observadores",
             funcionalidades: [2, 3],
           },
           {
-            id: "1.4",
+            id: "2.4",
             menu: "Ouvintes",
             rota: "/ouvintes",
             funcionalidades: [2, 3],
           },
           {
-            id: "1.5",
+            id: "2.5",
             menu: "Palestrantes",
             rota: "/palestrantes",
             funcionalidades: [2, 3],
@@ -76,7 +76,7 @@ export async function mockLogin(): Promise<UserAuth> {
         funcionalidades: [1, 2, 3],
         submenu: [
           {
-            id: "1.1",
+            id: "3.1",
             menu: "Relatório de eleição de conselheiros",
             rota: "/relatorio",
             funcionalidades: [1, 2],
@@ -89,7 +89,7 @@ export async function mockLogin(): Promise<UserAuth> {
         funcionalidades: [1, 2, 3],
         submenu: [
           {
-            id: "1.1",
+            id: "4.1",
             menu: "Documentos",
             rota: "/documentos",
             funcionalidades: [1, 2],
@@ -102,10 +102,16 @@ export async function mockLogin(): Promise<UserAuth> {
         funcionalidades: [1, 2, 3],
         submenu: [
           {
-            id: "1.1",
-            menu: "Tipo de Evento",
+            id: "5.1",
+            menu: "Tipo de Eventos",
             rota: "/administracao/TipoEvento",
-            funcionalidades: [1, 2],
+            funcionalidades: [1, 2,3],
+          },
+          {
+            id: "5.2",
+            menu: "Eventos",
+            rota: "/administracao/Eventos",
+            funcionalidades: [1, 2,3],
           },
         ],
       }];
