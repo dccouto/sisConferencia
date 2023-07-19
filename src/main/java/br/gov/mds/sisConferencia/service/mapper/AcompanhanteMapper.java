@@ -1,5 +1,6 @@
 package br.gov.mds.sisConferencia.service.mapper;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Acompanhante;
 import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class AcompanhanteMapper implements EntityMapper<AcompanhanteDTO, Acompanhante>{
+public class AcompanhanteMapper implements EntityMapper<AcompanhanteDTO, Acompanhante> {
 
     private static ModelMapper mapper;
 

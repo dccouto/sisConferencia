@@ -1,5 +1,6 @@
 package br.gov.mds.sisConferencia.service.mapper;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Ambito;
 import br.gov.mds.sisConferencia.service.dto.AmbitoDTO;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class AmbitoMapper implements EntityMapper<AmbitoDTO, Ambito>{
+public class AmbitoMapper implements EntityMapper<AmbitoDTO, Ambito> {
 
     private static ModelMapper mapper;
 

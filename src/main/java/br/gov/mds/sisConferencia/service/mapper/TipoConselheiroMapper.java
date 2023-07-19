@@ -1,5 +1,6 @@
 package br.gov.mds.sisConferencia.service.mapper;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.TipoConselheiro;
 import br.gov.mds.sisConferencia.service.dto.TipoConselheiroDTO;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class TipoConselheiroMapper implements EntityMapper<TipoConselheiroDTO, TipoConselheiro>{
+public class TipoConselheiroMapper implements EntityMapper<TipoConselheiroDTO, TipoConselheiro> {
 
     private static ModelMapper mapper;
 

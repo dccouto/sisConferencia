@@ -1,5 +1,6 @@
 package br.gov.mds.sisConferencia.service.mapper;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Orgao;
 import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class OrgaoMapper implements EntityMapper<OrgaoDTO, Orgao>{
+public class OrgaoMapper implements EntityMapper<OrgaoDTO, Orgao> {
 
     private static ModelMapper mapper;
 
