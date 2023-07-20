@@ -1,5 +1,8 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.PortariaDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.models.Portaria;
@@ -7,6 +10,13 @@ import br.gov.mds.sisConferencia.repository.PortariaRepository;
 
 @Service
 public class PortariaService extends GenericService<Portaria, Long> {
+
+	@Autowired
+	EntityMapper<PortariaDTO, Portaria> entityMapper;
+
+	public PortariaDTO salvar(PortariaDTO portariaDTO) {
+		return this.entityMapper.toDto(save(this.entityMapper.toEntity(portariaDTO)));
+	}
 
 	public PortariaService(PortariaRepository repository) {
 		super(repository);
