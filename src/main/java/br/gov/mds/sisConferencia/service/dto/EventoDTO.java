@@ -16,7 +16,9 @@ public class EventoDTO {
 
     private Long id;
 
-    private String descricao;
+    private String nome;
+    
+    private String objetivo;
 
     private String tema;
 
@@ -25,6 +27,8 @@ public class EventoDTO {
     private LocalDateTime dataInicial;
 
     private LocalDateTime dataFinal;
+    
+    private Boolean ativo;
 
     private TipoEventoDTO tipoEvento;
 

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.mds.sisConferencia.models.Usuario;
 import br.gov.mds.sisConferencia.service.UsuarioService;
+import br.gov.mds.sisConferencia.service.dto.UsuarioDTO;
+import br.gov.mds.sisConferencia.service.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -23,26 +25,27 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
 	private final UsuarioService usuarioService;
+	private final UsuarioMapper mapper;
 
 	@GetMapping
-	public ResponseEntity<List<Usuario>> listarTodos() {
-		return ResponseEntity.ok(usuarioService.findAll());
+	public ResponseEntity<List<UsuarioDTO>> listarTodos() {
+		return ResponseEntity.ok(mapper.toDto(usuarioService.findAll()));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(usuarioService.findById(id));
+	public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(mapper.toDto(usuarioService.findById(id)));
 
 	}
 
 	@PostMapping
-	public ResponseEntity<Usuario> salvar(@RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
+	public ResponseEntity<UsuarioDTO> salvar(@RequestBody Usuario usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(usuarioService.save(usuario)));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
-		return ResponseEntity.ok(usuarioService.atualizar(id, usuarioAtualizado));
+	public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+		return ResponseEntity.ok(mapper.toDto(usuarioService.atualizar(id, usuarioAtualizado)));
 
 	}
 
@@ -50,6 +53,6 @@ public class UsuarioController {
 	public ResponseEntity<?> excluir(@PathVariable Long id) {
 		usuarioService.delete(id);
 		return ResponseEntity.noContent().build();
-		
+
 	}
 }
