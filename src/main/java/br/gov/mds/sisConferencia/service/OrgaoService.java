@@ -1,5 +1,8 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +11,17 @@ import br.gov.mds.sisConferencia.models.Orgao;
 @Service
 public class OrgaoService extends GenericService<Orgao , Long> {
 
+	@Autowired
+	EntityMapper<OrgaoDTO, Orgao> entityMapper;
+
+	public OrgaoDTO salvar(OrgaoDTO orgaoDTO) {
+		return this.entityMapper.toDto(save(this.entityMapper.toEntity(orgaoDTO)));
+	}
+
 	public OrgaoService(JpaRepository<Orgao, Long> repository) {
 		super(repository);
 	}
-	
+
 	public Orgao atualizar(Long id, Orgao orgaoAtualizado) {
 		Orgao orgao = findById(id);
 		
