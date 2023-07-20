@@ -15,7 +15,7 @@ export const apiLogin = async (data: IUsuarioLogin) => {
 export async function mockLogin(): Promise<UserAuth> {
     const menuObjeto: IMenuItem [] = [{
       id: "1",
-      menu: "Eventos",
+      menu: "Conferências e Reuniões",
       rota: "/",
       funcionalidades: [1, 2, 3],
       submenu: [
@@ -111,6 +111,18 @@ export async function mockLogin(): Promise<UserAuth> {
             id: "5.2",
             menu: "Eventos",
             rota: "/administracao/Eventos",
+            funcionalidades: [1, 2,3],
+          },
+          {
+            id: "5.3",
+            menu: "Tipo de Regime",
+            rota: "/administracao/TipoRegime",
+            funcionalidades: [1, 2,3],
+          },
+          {
+            id: "5.4",
+            menu: "Portaria",
+            rota: "/administracao/Portaria",
             funcionalidades: [1, 2,3],
           },
         ],

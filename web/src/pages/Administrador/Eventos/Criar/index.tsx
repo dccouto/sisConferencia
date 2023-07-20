@@ -30,7 +30,11 @@ const CriarEvento = () => {
     const navigate = useNavigate()
     
     const FormSchema = yup.object().shape({
-
+         nome: yup.string().required('Campo de preenchimento obrigatório *'),   
+         formato: yup.string().required('Campo de preenchimento obrigatório *'),  
+         tipoEvento: yup.string().required('Campo de preenchimento obrigatório *'),  
+         dataInicial: yup.string().required('Campo de preenchimento obrigatório *'),  
+         dataFinal: yup.string().required('Campo de preenchimento obrigatório *'),  
 
     });
 
@@ -128,7 +132,7 @@ const CriarEvento = () => {
                              <FormContainer>
                                 <RHFDate
                                     name={'dataInicial'}
-                                    label={'Data de inicio do evento'}
+                                    label={'Inicio'}
                                     minDate={umAnoAtras()}
                                     maxDate={new Date()}
                                     gridProps={{ lg: 6 }}
@@ -136,7 +140,7 @@ const CriarEvento = () => {
 
                                 <RHFDate
                                     name={'dataFinal'}
-                                    label={'Data final do evento'}
+                                    label={'Fim'}
                                     gridProps={{ lg: 6 }}
                                 />
                             </FormContainer>

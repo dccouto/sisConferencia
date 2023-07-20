@@ -84,6 +84,14 @@ export const privateRoutesNames: IRoutesNames = {
         name: 'adminEventosCriar',
         path: '/administracao/eventos/criar',
     },
+    adminTipoRegime: {
+        name: 'adminTipoRegime',
+        path: '/administracao/tipoRegime',
+    },
+    adminPortaria: {
+        name: 'adminPortaria',
+        path: '/administracao/portaria',
+    },
 }
 
 export const publicRoutesNames: IRoutesNames = {

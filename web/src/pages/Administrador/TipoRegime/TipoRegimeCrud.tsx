@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material'
 
-import { IPortaria } from '../../../services/sisConferenciaApi/portaria/types'
+import { ITipoRegime } from '../../../services/sisConferenciaApi/tipoRegime/types'
 
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
@@ -31,38 +31,38 @@ interface ColumnConfig {
 
 interface Props {
     visible: boolean
-    portarias: IPortaria[]
-    setPortarias: (portarias: IPortaria[]) => void
+    tipoRegimes: ITipoRegime[]
+    setTipoRegimes: (tipoRegimes: ITipoRegime[]) => void
     apiService:any
     columnConfig: ColumnConfig[]
 }
 
-const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig }: Props) => {
+const TipoRegimeCrud = ({ visible, tipoRegimes, setTipoRegimes,apiService,columnConfig }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
-    const [editItem, setEditItem] = useState<IPortaria | null>(null)
+    const [editItem, setEditItem] = useState<ITipoRegime | null>(null)
 
-    const adicionarPortaria = (item: IPortaria) => {
-        const index = portarias.findIndex((portaria) => portaria.id === item.id)
+    const adicionarTipoRegime = (item: ITipoRegime) => {
+        const index = tipoRegimes.findIndex((tipoRegime) => tipoRegime.id === item.id)
     
         if (index !== -1) {
-            const updatedPortarias = [...portarias]
-            updatedPortarias[index] = item
-            setPortarias(updatedPortarias)
+            const updatedTipoRegimes = [...tipoRegimes]
+            updatedTipoRegimes[index] = item
+            setTipoRegimes(updatedTipoRegimes)
         } else {
-            setPortarias([...portarias, item])
+            setTipoRegimes([...tipoRegimes, item])
         }
     }
 
-    const deletarPortaria = async (item: IPortaria) => {
-        const list = portarias.filter((c) => c.id !== item.id)
+    const deletarTipoRegime = async (item: ITipoRegime) => {
+        const list = tipoRegimes.filter((c) => c.id !== item.id)
         await apiService.excluir(item.id)
-        setPortarias(list)
+        setTipoRegimes(list)
     }
 
     const verifyDuplicateDescricao = (txtDescricao: string) => {
         txtDescricao = Mask.numeros(txtDescricao)
-        const find = portarias.find((portaria) => String(portaria.descricao) === txtDescricao)
+        const find = tipoRegimes.find((tipoRegime) => String(tipoRegime.descricao) === txtDescricao)
         if (find) return false
         return true
     }
@@ -73,37 +73,37 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
         descricao: yup
             .string()
             .required('Descrição é obrigatório *')
-            .test('test-descricao', 'Tipo de Evento já cadastrado', (value: any) => {
+            .test('test-descricao', 'Tipo de Regime já cadastrado', (value: any) => {
                 return verifyDuplicateDescricao(value)
             }),
     })
 
-    const rhfmethods = useForm<IPortaria>({ resolver: yupResolver(FormSchema) })
+    const rhfmethods = useForm<ITipoRegime>({ resolver: yupResolver(FormSchema) })
 
-    const handleSalvar = async (values: IPortaria) => {
+    const handleSalvar = async (values: ITipoRegime) => {
         try {
             let dataSave = {
                 id: values.id,
                 descricao: values.descricao,
             }
-            let portaria: IPortaria
+            let tipoRegime: ITipoRegime
 
             if (editItem) {
-                portaria = await apiService.atualizar(dataSave.id, dataSave)
+                tipoRegime = await apiService.atualizar(dataSave.id, dataSave)
             } else {
-                portaria = await apiService.criar(dataSave)
+                tipoRegime = await apiService.criar(dataSave)
             }
-            adicionarPortaria(portaria)
-            toastSuccess('Tipo de Evento adicionado com sucesso.')
+            adicionarTipoRegime(tipoRegime)
+            toastSuccess('Tipo de Regime adicionado com sucesso.')
             setIsForm(false)
             setEditItem(null)
         } catch (error) {
             console.log(error)
-            toastError('Erro ao adicionar tipo de Evento')
+            toastError('Erro ao adicionar tipo de Regime')
         }
     }
 
-    const handleEditar = (item: IPortaria) => {
+    const handleEditar = (item: ITipoRegime) => {
         setEditItem(item)
         setIsForm(true)
         rhfmethods.reset(item)
@@ -122,14 +122,14 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                 {visible && (
                     <>
                         <CustomTable
-                            data={portarias}
+                            data={tipoRegimes}
                             onEdit={handleEditar}
-                            onDelete={deletarPortaria}
+                            onDelete={deletarTipoRegime}
                             columnConfig={columnConfig}
                         />
                         
                         <Dialog {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
-                            <DialogTitle>Cadastrar Tipo de Evento</DialogTitle>
+                            <DialogTitle>Cadastrar Tipo de Regime</DialogTitle>
                             <DialogContent>
                                 <Grid container xs={12} spacing={3} mt={1}>
                                     <RHFText
@@ -163,7 +163,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                                             style={{ height: 50 }}
                                             sx={{ p: 2 }}
                                         >
-                                            Salvar Tipo de Evento
+                                            Salvar Tipo de Regime
                                         </BotaoPadrao>
                                     </Grid>
                                 </Grid>
@@ -176,7 +176,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                                 setIsForm(true);
                                 initializeFormFields();
                                 }}>
-                                ADICIONAR NOVO TIPO DE EVENTO
+                                ADICIONAR NOVO TIPO DE REGIME
                             </BotaoPadrao>
                             </Grid>
                         </Grid>
@@ -187,4 +187,4 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
     )
 }
 
-export default PortariaCrud
+export default TipoRegimeCrud
