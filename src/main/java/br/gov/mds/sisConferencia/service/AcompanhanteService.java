@@ -13,12 +13,12 @@ import br.gov.mds.sisConferencia.repository.AcompanhanteRepository;
 @Service
 public class AcompanhanteService extends GenericService<Acompanhante, Long> {
 
-		@Autowired
-			EntityMapper<AcompanhanteDTO, Acompanhante> entityMapper;
+	@Autowired
+	EntityMapper<AcompanhanteDTO, Acompanhante> entityMapper;
 
-			public AcompanhanteDTO salvar(AcompanhanteDTO acompanhanteDTO) {
-				return this.entityMapper.toDto(save(this.entityMapper.toEntity(acompanhanteDTO)));
-			}
+	public AcompanhanteDTO salvar(AcompanhanteDTO acompanhanteDTO) {
+		return this.entityMapper.toDto(save(this.entityMapper.toEntity(acompanhanteDTO)));
+	}
 
 	public AcompanhanteService(AcompanhanteRepository repository) {
 		super(repository);
