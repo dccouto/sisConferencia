@@ -14,14 +14,6 @@ import javax.transaction.Transactional;
 @Service
 public class TipoInscricaoService extends GenericService<TipoInscricao, Long, TipoInscricaoDTO> {
 
-	@Autowired
-	EntityMapper<TipoInscricaoDTO, TipoInscricao> entityMapper;
-
-	@Transactional
-	public TipoInscricaoDTO salvar(TipoInscricaoDTO tipoInscricaoDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoInscricaoDTO)));
-	}
-
 	public TipoInscricaoService(TipoInscricaoRepository repository, TipoInscricaoMapper mapper) {
 		super(repository, mapper);
 	}
