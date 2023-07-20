@@ -2,6 +2,10 @@ package br.gov.mds.sisConferencia.service;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.models.Evento;
+import br.gov.mds.sisConferencia.service.dto.EventoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
