@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/portarias")
+@RequestMapping("/portaria")
 public class PortariaController {
 
 	private final PortariaService portariaService;

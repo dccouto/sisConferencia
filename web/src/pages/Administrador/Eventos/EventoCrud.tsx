@@ -19,7 +19,7 @@ import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
 import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
-import { CustomTable } from '../../../components/Formulario/CustomTable'
+import { CustomTable } from '../../../components/Tabela/CustomTable'
 import { IEvento } from '../../../services/sisConferenciaApi/eventos/types'
 import { IListaEventos } from '../../../services/sisConferenciaApi/eventos/types'
 

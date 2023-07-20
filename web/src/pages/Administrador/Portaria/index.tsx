@@ -60,7 +60,7 @@ export default function Portaria() {
             />  
             <Titulo titulo={`Portaria`} voltar={paginaInicial} />
 
-            <PortariaCrud visible={true} portarias={portarias} setportarias={setPortarias} apiService={apiServicePortaria} columnConfig={columnsConfig}></PortariaCrud>
+            <PortariaCrud visible={true} portarias={portarias} setPortarias={setPortarias} apiService={apiServicePortaria} columnConfig={columnsConfig}></PortariaCrud>
         </>
     )
 }

@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/tipo-regimes")
+@RequestMapping("/tipoRegime")
 public class TipoRegimeController {
 
 	private final TipoRegimeService tipoRegimeService;

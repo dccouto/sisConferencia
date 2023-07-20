@@ -1,3 +1,3 @@
-export const EventoResult = {
+export const PortariaResult = {
 
 }

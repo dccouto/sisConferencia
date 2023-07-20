@@ -20,7 +20,7 @@ import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
 import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
-import { CustomTable } from '../../../components/Formulario/CustomTable'
+import { CustomTable } from '../../../components/Tabela/CustomTable'
 
 interface ColumnConfig {
     key: string

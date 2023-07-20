@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material'
 
-import { IPortaria } from '../../../services/sisConferenciaApi/portaria/types'
+import { ITipoEvento } from '../../../services/sisConferenciaApi/tipoEvento/types'
 
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
@@ -20,7 +20,7 @@ import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
 import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
-import { CustomTable } from '../../../components/Formulario/CustomTable'
+import { CustomTable } from '../../../components/Tabela/CustomTable'
 
 interface ColumnConfig {
     key: string
@@ -31,38 +31,38 @@ interface ColumnConfig {
 
 interface Props {
     visible: boolean
-    portarias: IPortaria[]
-    setPortarias: (portarias: IPortaria[]) => void
+    tipoEventos: ITipoEvento[]
+    setTipoEventos: (tipoEventos: ITipoEvento[]) => void
     apiService:any
     columnConfig: ColumnConfig[]
 }
 
-const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig }: Props) => {
+const TipoEventoCrud = ({ visible, tipoEventos, setTipoEventos,apiService,columnConfig }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
-    const [editItem, setEditItem] = useState<IPortaria | null>(null)
+    const [editItem, setEditItem] = useState<ITipoEvento | null>(null)
 
-    const adicionarPortaria = (item: IPortaria) => {
-        const index = portarias.findIndex((portaria) => portaria.id === item.id)
+    const adicionarTipoEvento = (item: ITipoEvento) => {
+        const index = tipoEventos.findIndex((tipoEvento) => tipoEvento.id === item.id)
     
         if (index !== -1) {
-            const updatedPortarias = [...portarias]
-            updatedPortarias[index] = item
-            setPortarias(updatedPortarias)
+            const updatedTipoEventos = [...tipoEventos]
+            updatedTipoEventos[index] = item
+            setTipoEventos(updatedTipoEventos)
         } else {
-            setPortarias([...portarias, item])
+            setTipoEventos([...tipoEventos, item])
         }
     }
 
-    const deletarPortaria = async (item: IPortaria) => {
-        const list = portarias.filter((c) => c.id !== item.id)
+    const deletarTipoEvento = async (item: ITipoEvento) => {
+        const list = tipoEventos.filter((c) => c.id !== item.id)
         await apiService.excluir(item.id)
-        setPortarias(list)
+        setTipoEventos(list)
     }
 
     const verifyDuplicateDescricao = (txtDescricao: string) => {
         txtDescricao = Mask.numeros(txtDescricao)
-        const find = portarias.find((portaria) => String(portaria.descricao) === txtDescricao)
+        const find = tipoEventos.find((tipoEvento) => String(tipoEvento.descricao) === txtDescricao)
         if (find) return false
         return true
     }
@@ -78,22 +78,22 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
             }),
     })
 
-    const rhfmethods = useForm<IPortaria>({ resolver: yupResolver(FormSchema) })
+    const rhfmethods = useForm<ITipoEvento>({ resolver: yupResolver(FormSchema) })
 
-    const handleSalvar = async (values: IPortaria) => {
+    const handleSalvar = async (values: ITipoEvento) => {
         try {
             let dataSave = {
                 id: values.id,
                 descricao: values.descricao,
             }
-            let portaria: IPortaria
+            let tipoEvento: ITipoEvento
 
             if (editItem) {
-                portaria = await apiService.atualizar(dataSave.id, dataSave)
+                tipoEvento = await apiService.atualizar(dataSave.id, dataSave)
             } else {
-                portaria = await apiService.criar(dataSave)
+                tipoEvento = await apiService.criar(dataSave)
             }
-            adicionarPortaria(portaria)
+            adicionarTipoEvento(tipoEvento)
             toastSuccess('Tipo de Evento adicionado com sucesso.')
             setIsForm(false)
             setEditItem(null)
@@ -103,7 +103,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
         }
     }
 
-    const handleEditar = (item: IPortaria) => {
+    const handleEditar = (item: ITipoEvento) => {
         setEditItem(item)
         setIsForm(true)
         rhfmethods.reset(item)
@@ -122,9 +122,9 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                 {visible && (
                     <>
                         <CustomTable
-                            data={portarias}
+                            data={tipoEventos}
                             onEdit={handleEditar}
-                            onDelete={deletarPortaria}
+                            onDelete={deletarTipoEvento}
                             columnConfig={columnConfig}
                         />
                         
@@ -187,4 +187,4 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
     )
 }
 
-export default PortariaCrud
+export default TipoEventoCrud
