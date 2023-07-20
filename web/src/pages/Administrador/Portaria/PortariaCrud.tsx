@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { format } from 'date-fns'
 
 import {
     Box,
@@ -21,6 +22,7 @@ import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
+import { RHFDate } from '../../../components/Formulario/reactHookForms/RHFDate'
 
 interface ColumnConfig {
     key: string
@@ -70,6 +72,9 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
     const { toastSuccess, toastError } = useToast()
 
     const FormSchema = yup.object().shape({
+
+        numero: yup.string().required('Número é obrigatório *'),
+        dataPortaria: yup.string().required('Data é obrigatório *'),
         descricao: yup
             .string()
             .required('Descrição é obrigatório *')
@@ -85,6 +90,9 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
             let dataSave = {
                 id: values.id,
                 descricao: values.descricao,
+                numero:values.numero,
+                dataPortaria: values.dataPortaria
+                    ? format(new Date(values.dataPortaria), 'yyyy-MM-dd'): '',
             }
             let portaria: IPortaria
 
@@ -132,6 +140,25 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                             <DialogTitle>Cadastrar Portaria</DialogTitle>
                             <DialogContent>
                                 <Grid container xs={12} spacing={3} mt={1}>
+                                    
+                                    <RHFDate
+                                        name={'dataPortaria'}
+                                        label={'Data'}
+                                        gridProps={{ lg: 6 }}
+                                    />
+
+                                     <RHFText
+                                        name={'numero'}
+                                        label={'Número'}
+                                        gridProps={{ xs: 6 }}
+                                        inputProps={{ maxLength: 100 }}
+                                        InputLabelProps={{ shrink: true }}
+                                        onChange={(e) => {
+                                            const v = e.target.value
+                                            rhfmethods.setValue('numero', v)
+                                        }}
+                                    />
+                                                              
                                     <RHFText
                                         name={'descricao'}
                                         label={'Descrição'}

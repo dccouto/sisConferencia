@@ -23,6 +23,10 @@ import RHFTextArea from '../../../../components/Formulario/TextArea'
 import { RHFDate } from '../../../../components/Formulario/reactHookForms/RHFDate'
 import RHFInputFile from '../../../../components/Formulario/InputFile'
 import apiServiceTipoEvento from '../../../../services/sisConferenciaApi/tipoEvento'
+import apiServiceTipoRegime from '../../../../services/sisConferenciaApi/tipoRegime'
+import apiServicePortaria from '../../../../services/sisConferenciaApi/portaria'
+import { ITipoRegime } from '../../../../services/sisConferenciaApi/tipoRegime/types'
+import { IPortaria } from '../../../../services/sisConferenciaApi/portaria/types'
 
 const CriarEvento = () => {
 
@@ -51,18 +55,50 @@ const CriarEvento = () => {
    
 
     const [tiposEvento, setTiposEvento] = useState<ITipoEvento[]>([]);
+    const [tiposRegime, setTiposRegime] = useState<ITipoRegime[]>([]);
+    const [portarias, setPortarias] = useState<IPortaria[]>([]);
 
     useEffect(() => {
-        const fetchTiposEvento = async () => {
-            const result = await apiServiceTipoEvento.listar();
+        const atualizarListaCombos = async () => {
+            try {
+                const result = await apiServiceTipoEvento.listar();
                 if (Array.isArray(result)) {
                     setTiposEvento(result);
                 } else {
-                    console.error("Result is not an array");
+                    console.error("Erro ao obter Tipo Evento");
                 }
+            }
+            catch(error){
+                console.error(error)
+            }
+            try {
+                const result = await apiServiceTipoRegime.listar();
+                if (Array.isArray(result)) {
+                    setTiposRegime(result);
+                } else {
+                    console.error("Erro ao obter Tipo Regime");
+                }
+            }
+            catch(error){
+                console.error(error)
+            }
+             
+            try {
+                const result = await apiServicePortaria.listar();
+                if (Array.isArray(result)) {
+                    setPortarias(result);
+                } else {
+                    console.error("Erro ao obter lista de portarias");
+                }
+            }
+            catch(error){
+                console.error(error)
+            }
+             
+                
         };
 
-        fetchTiposEvento();
+        atualizarListaCombos();
     }, []);
 
     function handleSalvar(){
@@ -151,9 +187,11 @@ const CriarEvento = () => {
                             <Titulo titulo={`Portaría`} />
                             <FormContainer>
                                     <RHFSelect name='portaria' label='Portaria' gridProps={{ lg:12 }}>
-                                        {/* <MenuItem value={'federal'}>Federal</MenuItem> */}
-                                        <MenuItem value={'municipal'}>Municipal</MenuItem>
-                                        {/* <MenuItem value={'estadual'}>Estadual</MenuItem> */}
+                                    {portarias.map((portaria) => (
+                                        <MenuItem key={portaria.id} value={portaria.id}>
+                                          {portaria.numero} - {portaria.descricao} -{portaria.dataPortaria}
+                                        </MenuItem>
+                                    ))}
                                     </RHFSelect>
                             </FormContainer>
                         </Grid>
@@ -176,9 +214,11 @@ const CriarEvento = () => {
                             
 
                                 <RHFSelect name='tipoRegime' label='Tipo Regime' gridProps={{ lg: 6 }}>
-                                    {/* <MenuItem value={'federal'}>Federal</MenuItem> */}
-                                    <MenuItem value={'municipal'}>Municipal</MenuItem>
-                                    {/* <MenuItem value={'estadual'}>Estadual</MenuItem> */}
+                                    {tiposRegime.map((tipo) => (
+                                        <MenuItem key={tipo.id} value={tipo.id}>
+                                           {tipo.descricao} 
+                                        </MenuItem>
+                                    ))}
                                 </RHFSelect>
                             
                                 <RHFTextArea 
