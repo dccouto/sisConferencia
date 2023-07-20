@@ -115,8 +115,8 @@ export async function mockLogin(): Promise<UserAuth> {
           },
           {
             id: "5.3",
-            menu: "Tipo de Regime",
-            rota: "/administracao/TipoRegime",
+            menu: "Formato de Evento",
+            rota: "/administracao/Formato",
             funcionalidades: [1, 2,3],
           },
           {

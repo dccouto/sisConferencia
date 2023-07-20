@@ -13,7 +13,7 @@ import {
     Typography,
 } from '@mui/material'
 
-import { IPortaria } from '../../../services/sisConferenciaApi/portaria/types'
+import { IFormato } from '../../../services/sisConferenciaApi/formato/types'
 
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
@@ -33,38 +33,38 @@ interface ColumnConfig {
 
 interface Props {
     visible: boolean
-    portarias: IPortaria[]
-    setPortarias: (portarias: IPortaria[]) => void
+    formatos: IFormato[]
+    setFormatos: (formatos: IFormato[]) => void
     apiService:any
     columnConfig: ColumnConfig[]
 }
 
-const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig }: Props) => {
+const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
-    const [editItem, setEditItem] = useState<IPortaria | null>(null)
+    const [editItem, setEditItem] = useState<IFormato | null>(null)
 
-    const adicionarPortaria = (item: IPortaria) => {
-        const index = portarias.findIndex((portaria) => portaria.id === item.id)
+    const adicionarFormato = (item: IFormato) => {
+        const index = formatos.findIndex((formato) => formato.id === item.id)
     
         if (index !== -1) {
-            const updatedPortarias = [...portarias]
-            updatedPortarias[index] = item
-            setPortarias(updatedPortarias)
+            const updatedFormatos = [...formatos]
+            updatedFormatos[index] = item
+            setFormatos(updatedFormatos)
         } else {
-            setPortarias([...portarias, item])
+            setFormatos([...formatos, item])
         }
     }
 
-    const deletarPortaria = async (item: IPortaria) => {
-        const list = portarias.filter((c) => c.id !== item.id)
+    const deletarFormato = async (item: IFormato) => {
+        const list = formatos.filter((c) => c.id !== item.id)
         await apiService.excluir(item.id)
-        setPortarias(list)
+        setFormatos(list)
     }
 
     const verifyDuplicateDescricao = (txtDescricao: string) => {
         txtDescricao = Mask.numeros(txtDescricao)
-        const find = portarias.find((portaria) => String(portaria.descricao) === txtDescricao)
+        const find = formatos.find((formato) => String(formato.descricao) === txtDescricao)
         if (find) return false
         return true
     }
@@ -74,7 +74,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
     const FormSchema = yup.object().shape({
 
         numero: yup.string().required('Número é obrigatório *'),
-        dataPortaria: yup.string().required('Data é obrigatório *'),
+        dataFormato: yup.string().required('Data é obrigatório *'),
         descricao: yup
             .string()
             .required('Descrição é obrigatório *')
@@ -83,25 +83,23 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
             }),
     })
 
-    const rhfmethods = useForm<IPortaria>({ resolver: yupResolver(FormSchema) })
+    const rhfmethods = useForm<IFormato>({ resolver: yupResolver(FormSchema) })
 
-    const handleSalvar = async (values: IPortaria) => {
+    const handleSalvar = async (values: IFormato) => {
         try {
             let dataSave = {
                 id: values.id,
                 descricao: values.descricao,
-                numero:values.numero,
-                dataPortaria: values.dataPortaria
-                 ? format(new Date(values.dataPortaria), 'yyyy-MM-dd'): '',
+               
             }
-            let portaria: IPortaria
+            let formato: IFormato
 
             if (editItem) {
-                portaria = await apiService.atualizar(dataSave.id, dataSave)
+                formato = await apiService.atualizar(dataSave.id, dataSave)
             } else {
-                portaria = await apiService.criar(dataSave)
+                formato = await apiService.criar(dataSave)
             }
-            adicionarPortaria(portaria)
+            adicionarFormato(formato)
             toastSuccess('Tipo de Evento adicionado com sucesso.')
             setIsForm(false)
             setEditItem(null)
@@ -111,7 +109,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
         }
     }
 
-    const handleEditar = (item: IPortaria) => {
+    const handleEditar = (item: IFormato) => {
         setEditItem(item)
         setIsForm(true)
         rhfmethods.reset(item)
@@ -130,35 +128,18 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                 {visible && (
                     <>
                         <CustomTable
-                            data={portarias}
+                            data={formatos}
                             onEdit={handleEditar}
-                            onDelete={deletarPortaria}
+                            onDelete={deletarFormato}
                             columnConfig={columnConfig}
                         />
                         
                         <Dialog {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
-                            <DialogTitle>Cadastrar Portaria</DialogTitle>
+                            <DialogTitle>Cadastrar Formato</DialogTitle>
                             <DialogContent>
                                 <Grid container xs={12} spacing={3} mt={1}>
                                     
-                                    <RHFDate
-                                        name={'dataPortaria'}
-                                        label={'Data'}
-                                        gridProps={{ lg: 6 }}
-                                    />
-
-                                     <RHFText
-                                        name={'numero'}
-                                        label={'Número'}
-                                        gridProps={{ xs: 6 }}
-                                        inputProps={{ maxLength: 100 }}
-                                        InputLabelProps={{ shrink: true }}
-                                        onChange={(e) => {
-                                            const v = e.target.value
-                                            rhfmethods.setValue('numero', v)
-                                        }}
-                                    />
-                                                              
+                                                                                               
                                     <RHFText
                                         name={'descricao'}
                                         label={'Descrição'}
@@ -190,7 +171,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                                             style={{ height: 50 }}
                                             sx={{ p: 2 }}
                                         >
-                                            Salvar Portaria
+                                            Salvar Formato
                                         </BotaoPadrao>
                                     </Grid>
                                 </Grid>
@@ -203,7 +184,7 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
                                 setIsForm(true);
                                 initializeFormFields();
                                 }}>
-                                ADICIONAR NOVA PORTARIA
+                                ADICIONAR NOVO FORMATO DE EVENTO
                             </BotaoPadrao>
                             </Grid>
                         </Grid>
@@ -214,4 +195,4 @@ const PortariaCrud = ({ visible, portarias, setPortarias,apiService,columnConfig
     )
 }
 
-export default PortariaCrud
+export default FormatoCrud
