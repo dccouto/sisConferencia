@@ -1,15 +1,12 @@
 package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
-import br.gov.mds.sisConferencia.models.Evento;
+import br.gov.mds.sisConferencia.models.Acompanhante;
+import br.gov.mds.sisConferencia.repository.AcompanhanteRepository;
 import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
-import br.gov.mds.sisConferencia.service.dto.EventoDTO;
 import br.gov.mds.sisConferencia.service.mapper.AcompanhanteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.gov.mds.sisConferencia.models.Acompanhante;
-import br.gov.mds.sisConferencia.repository.AcompanhanteRepository;
 
 import javax.transaction.Transactional;
 
@@ -27,7 +24,6 @@ public class AcompanhanteService extends GenericService<Acompanhante, Long, Acom
 	public AcompanhanteService(AcompanhanteRepository repository, AcompanhanteMapper mapper) {
 		super(repository, mapper);
 	}
-
 
 	@Transactional
 	public Acompanhante atualizar(Long id, Acompanhante acompanhanteAtualizado) {

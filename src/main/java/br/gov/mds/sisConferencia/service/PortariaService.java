@@ -1,13 +1,12 @@
 package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.models.Portaria;
+import br.gov.mds.sisConferencia.repository.PortariaRepository;
 import br.gov.mds.sisConferencia.service.dto.PortariaDTO;
 import br.gov.mds.sisConferencia.service.mapper.PortariaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.gov.mds.sisConferencia.models.Portaria;
-import br.gov.mds.sisConferencia.repository.PortariaRepository;
 
 import javax.transaction.Transactional;
 

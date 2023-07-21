@@ -1,14 +1,11 @@
 package br.gov.mds.sisConferencia.service;
 
-import java.util.List;
-
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
 	

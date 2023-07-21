@@ -2,6 +2,9 @@ package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.service.dto.TipoAcompanhanteDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.TipoAcompanhanteDTO;
 import br.gov.mds.sisConferencia.service.mapper.TipoAcompanhanteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,6 @@ public class TipoAcompanhanteService extends GenericService<TipoAcompanhante, Lo
 
 	@Autowired
 	EntityMapper<TipoAcompanhanteDTO, TipoAcompanhante> entityMapper;
-
 	@Transactional
 	public TipoAcompanhanteDTO salvar(TipoAcompanhanteDTO tipoAcompanhanteDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoAcompanhanteDTO)));

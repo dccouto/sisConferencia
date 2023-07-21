@@ -1,13 +1,12 @@
 package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.models.Perfil;
+import br.gov.mds.sisConferencia.repository.PerfilRepository;
 import br.gov.mds.sisConferencia.service.dto.PerfilDTO;
 import br.gov.mds.sisConferencia.service.mapper.PerfilMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.gov.mds.sisConferencia.models.Perfil;
-import br.gov.mds.sisConferencia.repository.PerfilRepository;
 
 import javax.transaction.Transactional;
 

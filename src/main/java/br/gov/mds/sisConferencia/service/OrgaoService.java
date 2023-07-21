@@ -1,13 +1,12 @@
 package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.models.Orgao;
 import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
 import br.gov.mds.sisConferencia.service.mapper.OrgaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-
-import br.gov.mds.sisConferencia.models.Orgao;
 
 import javax.transaction.Transactional;
 
@@ -42,7 +41,6 @@ public class OrgaoService extends GenericService<Orgao , Long, OrgaoDTO> {
 		orgao.setAmbito(orgaoAtualizado.getAmbito());
 		orgao.setConselho(orgaoAtualizado.getConselho());
 		return save(orgao);
-
 	}
 
 }
