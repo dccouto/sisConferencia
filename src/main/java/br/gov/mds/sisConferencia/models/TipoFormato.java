@@ -22,13 +22,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "TB_TIPO_REGIME", schema = Schemas.SISCONFERENCIA)
+@Table(name = "TB_TIPO_FORMATO", schema = Schemas.SISCONFERENCIA)
 public class TipoFormato implements DomainGeneric {
 
 	@Id
-	@Column(name = "PK_TIPO_REGIME")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TIPO_REGIME")
-	@SequenceGenerator(name = "SQ_TIPO_REGIME", sequenceName = "SQ_TIPO_REGIME", allocationSize = 1)
+	@Column(name = "PK_TIPO_FORMATO")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_TIPO_FORMATO")
+	@SequenceGenerator(name = "SQ_TIPO_FORMATO", sequenceName = "SQ_TIPO_FORMATO", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "DS_DESCRICAO")

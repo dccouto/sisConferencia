@@ -1,4 +1,4 @@
-export interface IFormato {
+export interface ITipoFormato {
     descricao: string;
     id: number;
   }

@@ -69,8 +69,8 @@ public class Evento implements DomainGeneric {
 	private TipoEvento tipoEvento;
 
 	@ManyToOne
-	@JoinColumn(name = "FK_TIPO_REGIME", nullable = true)
-	private TipoFormato tipoRegime;
+	@JoinColumn(name = "FK_TIPO_FORMATO", nullable = true)
+	private TipoFormato tipoFormato;
 
 	@ManyToOne
 	@JoinColumn(name = "FK_PORTARIA", nullable = true)

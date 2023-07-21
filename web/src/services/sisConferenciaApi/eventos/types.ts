@@ -23,7 +23,7 @@ export interface IEmenta {
     id: number;
   }
   
-  export interface IFormato {
+  export interface ITipoFormato {
     descricao: string;
     id: number;
   }
@@ -39,19 +39,19 @@ export interface IEmenta {
     portaria: IPortaria;
     tema: string;
     tipoEvento: ITipoEvento;
-    tipoRegime: IFormato
+    tipoRegime: ITipoFormato
   }
 
   export interface IEventoSalvar {
     dataCadastro: string;
     dataFinal: string;
     dataInicial: string;
-    objetivo: string;
+    objetivo: string | '';
     nome: string;
     portaria: number;
     tema: string;
     tipoEvento: number;
-    formato: number;
+    tipoFormato: number;
   }
   
   // Para a lista de eventos

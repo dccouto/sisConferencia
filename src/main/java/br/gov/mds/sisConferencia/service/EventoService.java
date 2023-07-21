@@ -28,7 +28,7 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 		existingEvento.setDataFinal(eventoAtualizado.getDataFinal());
 		existingEvento.setAtivo(eventoAtualizado.getAtivo());
 		existingEvento.setTipoEvento(eventoAtualizado.getTipoEvento());
-		existingEvento.setTipoRegime(eventoAtualizado.getTipoRegime());
+		existingEvento.setTipoFormato(eventoAtualizado.getTipoFormato());
 		existingEvento.setPortaria(eventoAtualizado.getPortaria());
 		existingEvento.setEixos(eventoAtualizado.getEixos());
 		existingEvento.setDocumentos(eventoAtualizado.getDocumentos());

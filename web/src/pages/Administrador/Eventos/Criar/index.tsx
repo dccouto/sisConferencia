@@ -27,8 +27,8 @@ import apiServiceTipoRegime from '../../../../services/sisConferenciaApi/tipoReg
 import apiServicePortaria from '../../../../services/sisConferenciaApi/portaria'
 import { ITipoRegime } from '../../../../services/sisConferenciaApi/tipoRegime/types'
 import { IPortaria } from '../../../../services/sisConferenciaApi/portaria/types'
-import { IFormato } from '../../../../services/sisConferenciaApi/formato/types'
-import apiServiceFormato from '../../../../services/sisConferenciaApi/formato'
+import { ITipoFormato } from '../../../../services/sisConferenciaApi/tipoFormato/types'
+import apiServiceTipoFormato from '../../../../services/sisConferenciaApi/tipoFormato'
 import Eixo from '../../Eixo'
 
 const CriarEvento = () => {
@@ -38,7 +38,7 @@ const CriarEvento = () => {
     
     const FormSchema = yup.object().shape({
          nome: yup.string().required('Campo de preenchimento obrigatório *'),   
-         formato: yup.string().required('Campo de preenchimento obrigatório *'),  
+         tipoFormato: yup.string().required('Campo de preenchimento obrigatório *'),  
          tipoEvento: yup.string().required('Campo de preenchimento obrigatório *'),  
          dataInicial: yup.string().required('Campo de preenchimento obrigatório *'),  
          dataFinal: yup.string().required('Campo de preenchimento obrigatório *'),  
@@ -58,7 +58,7 @@ const CriarEvento = () => {
    
     const [listaEixo,setListaEixo]= useState<IEixo[]>([]);
     const [tiposEvento, setTiposEvento] = useState<ITipoEvento[]>([]);
-    const [formatos, setFormatos] = useState<IFormato[]>([]);
+    const [tipoFormatos, setTipoFormatos] = useState<ITipoFormato[]>([]);
     const [portarias, setPortarias] = useState<IPortaria[]>([]);
 
     useEffect(() => {
@@ -75,9 +75,9 @@ const CriarEvento = () => {
                 console.error(error)
             }
             try {
-                const result = await apiServiceFormato.listar();
+                const result = await apiServiceTipoFormato.listar();
                 if (Array.isArray(result)) {
-                    setFormatos(result);
+                    setTipoFormatos(result);
                 } else {
                     console.error("Erro ao obter Tipo Regime");
                 }
@@ -164,8 +164,8 @@ const CriarEvento = () => {
                                     ))}
                                 </RHFSelect>
                                 
-                                <RHFSelect name='formato' label='Formato do Evento' gridProps={{ lg:6 }}>
-                                    {formatos.map((tipo) => (
+                                <RHFSelect name='tipoFormato' label='TipoFormato do Evento' gridProps={{ lg:6 }}>
+                                    {tipoFormatos.map((tipo) => (
                                         <MenuItem key={tipo.id} value={tipo.id}>
                                             {tipo.descricao}
                                         </MenuItem>

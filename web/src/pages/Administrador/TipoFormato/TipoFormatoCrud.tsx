@@ -13,7 +13,7 @@ import {
     Typography,
 } from '@mui/material'
 
-import { IFormato } from '../../../services/sisConferenciaApi/formato/types'
+
 
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
@@ -23,6 +23,7 @@ import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
 import { RHFDate } from '../../../components/Formulario/reactHookForms/RHFDate'
+import { ITipoFormato } from '../../../services/sisConferenciaApi/eventos/types'
 
 interface ColumnConfig {
     key: string
@@ -33,38 +34,38 @@ interface ColumnConfig {
 
 interface Props {
     visible: boolean
-    formatos: IFormato[]
-    setFormatos: (formatos: IFormato[]) => void
+    tipoFormatos: ITipoFormato[]
+    setTipoFormatos: (tipoFormatos: ITipoFormato[]) => void
     apiService:any
     columnConfig: ColumnConfig[]
 }
 
-const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }: Props) => {
+const TipoFormatoCrud = ({ visible, tipoFormatos, setTipoFormatos,apiService,columnConfig }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
-    const [editItem, setEditItem] = useState<IFormato | null>(null)
+    const [editItem, setEditItem] = useState<ITipoFormato | null>(null)
 
-    const adicionarFormato = (item: IFormato) => {
-        const index = formatos.findIndex((formato) => formato.id === item.id)
+    const adicionarTipoFormato = (item: ITipoFormato) => {
+        const index = tipoFormatos.findIndex((tipoFormato) => tipoFormato.id === item.id)
     
         if (index !== -1) {
-            const updatedFormatos = [...formatos]
-            updatedFormatos[index] = item
-            setFormatos(updatedFormatos)
+            const updatedTipoFormatos = [...tipoFormatos]
+            updatedTipoFormatos[index] = item
+            setTipoFormatos(updatedTipoFormatos)
         } else {
-            setFormatos([...formatos, item])
+            setTipoFormatos([...tipoFormatos, item])
         }
     }
 
-    const deletarFormato = async (item: IFormato) => {
-        const list = formatos.filter((c) => c.id !== item.id)
+    const deletarTipoFormato = async (item: ITipoFormato) => {
+        const list = tipoFormatos.filter((c) => c.id !== item.id)
         await apiService.excluir(item.id)
-        setFormatos(list)
+        setTipoFormatos(list)
     }
 
     const verifyDuplicateDescricao = (txtDescricao: string) => {
         txtDescricao = Mask.numeros(txtDescricao)
-        const find = formatos.find((formato) => String(formato.descricao) === txtDescricao)
+        const find = tipoFormatos.find((tipoFormato) => String(tipoFormato.descricao) === txtDescricao)
         if (find) return false
         return true
     }
@@ -74,7 +75,7 @@ const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }:
     const FormSchema = yup.object().shape({
 
         numero: yup.string().required('Número é obrigatório *'),
-        dataFormato: yup.string().required('Data é obrigatório *'),
+        dataTipoFormato: yup.string().required('Data é obrigatório *'),
         descricao: yup
             .string()
             .required('Descrição é obrigatório *')
@@ -83,23 +84,23 @@ const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }:
             }),
     })
 
-    const rhfmethods = useForm<IFormato>({ resolver: yupResolver(FormSchema) })
+    const rhfmethods = useForm<ITipoFormato>({ resolver: yupResolver(FormSchema) })
 
-    const handleSalvar = async (values: IFormato) => {
+    const handleSalvar = async (values: ITipoFormato) => {
         try {
             let dataSave = {
                 id: values.id,
                 descricao: values.descricao,
                
             }
-            let formato: IFormato
+            let tipoFormato: ITipoFormato
 
             if (editItem) {
-                formato = await apiService.atualizar(dataSave.id, dataSave)
+                tipoFormato = await apiService.atualizar(dataSave.id, dataSave)
             } else {
-                formato = await apiService.criar(dataSave)
+                tipoFormato = await apiService.criar(dataSave)
             }
-            adicionarFormato(formato)
+            adicionarTipoFormato(tipoFormato)
             toastSuccess('Tipo de Evento adicionado com sucesso.')
             setIsForm(false)
             setEditItem(null)
@@ -109,7 +110,7 @@ const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }:
         }
     }
 
-    const handleEditar = (item: IFormato) => {
+    const handleEditar = (item: ITipoFormato) => {
         setEditItem(item)
         setIsForm(true)
         rhfmethods.reset(item)
@@ -128,14 +129,14 @@ const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }:
                 {visible && (
                     <>
                         <CustomTable
-                            data={formatos}
+                            data={tipoFormatos}
                             onEdit={handleEditar}
-                            onDelete={deletarFormato}
+                            onDelete={deletarTipoFormato}
                             columnConfig={columnConfig}
                         />
                         
                         <Dialog {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
-                            <DialogTitle>Cadastrar Formato</DialogTitle>
+                            <DialogTitle>Cadastrar TipoFormato</DialogTitle>
                             <DialogContent>
                                 <Grid container xs={12} spacing={3} mt={1}>
                                     
@@ -171,7 +172,7 @@ const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }:
                                             style={{ height: 50 }}
                                             sx={{ p: 2 }}
                                         >
-                                            Salvar Formato
+                                            Salvar TipoFormato
                                         </BotaoPadrao>
                                     </Grid>
                                 </Grid>
@@ -195,4 +196,4 @@ const FormatoCrud = ({ visible, formatos, setFormatos,apiService,columnConfig }:
     )
 }
 
-export default FormatoCrud
+export default TipoFormatoCrud

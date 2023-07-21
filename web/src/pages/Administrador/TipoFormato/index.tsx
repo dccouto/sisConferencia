@@ -2,13 +2,15 @@
 import { Breadcrumbs } from '../../../components/Navegacao/Breadcrumbs'
 import { Titulo } from '../../../components/Navegacao/Titulo'
 import jsonServerProvider from 'ra-data-json-server';
-import FormatoCrud from './FormatoCrud';
+import TipoFormatoCrud from './TipoFormatoCrud';
 
 
 // Services
-import apiServiceFormato from './../../../services/sisConferenciaApi/formato/index';
+
 import { useEffect, useState } from 'react';
-import { IFormato } from './../../../services/sisConferenciaApi/formato/types';
+import apiServiceTipoFormato from '../../../services/sisConferenciaApi/tipoFormato';
+import { ITipoFormato } from '../../../services/sisConferenciaApi/tipoFormato/types';
+
 
 
 
@@ -25,19 +27,19 @@ const columnsConfig = [
 
 
 
-export default function Formato() {
+export default function TipoFormato() {
 
-    const [formatos,setFormatos] = useState<IFormato[]>([])
+    const [tipoFormatos,setTipoFormatos] = useState<ITipoFormato[]>([])
 
 
     useEffect(() => {
         
 
-        async function buscarListaFormato() {
+        async function buscarListaTipoFormato() {
             try {
-                const result = await apiServiceFormato.listar();
+                const result = await apiServiceTipoFormato.listar();
                 if (Array.isArray(result)) {
-                    setFormatos(result);
+                    setTipoFormatos(result);
                 } else {
                     console.error("Result is not an array");
                 }
@@ -46,7 +48,7 @@ export default function Formato() {
             }
         }
 
-        buscarListaFormato();
+        buscarListaTipoFormato();
     }, [])
     
     return (
@@ -57,7 +59,7 @@ export default function Formato() {
             />  
             <Titulo titulo={`Formato de Evento`} voltar={paginaInicial} />
 
-            <FormatoCrud visible={true} formatos={formatos} setFormatos={setFormatos} apiService={apiServiceFormato} columnConfig={columnsConfig}></FormatoCrud>
+            <TipoFormatoCrud visible={true} tipoFormatos={tipoFormatos} setTipoFormatos={setTipoFormatos} apiService={apiServiceTipoFormato} columnConfig={columnsConfig}></TipoFormatoCrud>
         </>
     )
 }

@@ -38,13 +38,13 @@ public class TipoFormatoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<TipoFormato> salvar(@RequestBody TipoFormato tipoRegime) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(tipoFormatoService.save(tipoRegime));
+	public ResponseEntity<TipoFormato> salvar(@RequestBody TipoFormato tipoFormato) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(tipoFormatoService.save(tipoFormato));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<TipoFormato> atualizar(@PathVariable Long id, @RequestBody TipoFormato tipoRegimeAtualizado) {
-		return ResponseEntity.ok(tipoFormatoService.atualizar(id, tipoRegimeAtualizado));
+	public ResponseEntity<TipoFormato> atualizar(@PathVariable Long id, @RequestBody TipoFormato tipoFormatoAtualizado) {
+		return ResponseEntity.ok(tipoFormatoService.atualizar(id, tipoFormatoAtualizado));
 	}
 
 	@DeleteMapping("/{id}")
