@@ -19,7 +19,7 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 	@Transactional
 	public Evento atualizar(Long id, Evento eventoAtualizado) {
 		Evento existingEvento = findById(id);
-		
+
 		existingEvento.setNome(eventoAtualizado.getNome());
 		existingEvento.setObjetivo(eventoAtualizado.getObjetivo());
 		existingEvento.setTema(eventoAtualizado.getTema());
