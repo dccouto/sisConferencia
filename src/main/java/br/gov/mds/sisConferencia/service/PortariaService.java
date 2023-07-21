@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class PortariaService extends GenericService<Portaria, Long, PortariaDTO> {
 
