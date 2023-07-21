@@ -2,26 +2,31 @@ package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
+import br.gov.mds.sisConferencia.service.mapper.OrgaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.models.Orgao;
 
+import javax.transaction.Transactional;
+
 @Service
-public class OrgaoService extends GenericService<Orgao , Long> {
+public class OrgaoService extends GenericService<Orgao , Long, OrgaoDTO> {
 
 	@Autowired
 	EntityMapper<OrgaoDTO, Orgao> entityMapper;
 
+	@Transactional
 	public OrgaoDTO salvar(OrgaoDTO orgaoDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(orgaoDTO)));
 	}
 
-	public OrgaoService(JpaRepository<Orgao, Long> repository) {
-		super(repository);
+	public OrgaoService(JpaRepository<Orgao, Long> repository, OrgaoMapper mapper ) {
+		super(repository, mapper);
 	}
 
+	@Transactional
 	public Orgao atualizar(Long id, Orgao orgaoAtualizado) {
 		Orgao orgao = findById(id);
 		
