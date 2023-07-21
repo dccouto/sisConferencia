@@ -9,40 +9,40 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
-import br.gov.mds.sisConferencia.models.Evento;
-import br.gov.mds.sisConferencia.service.dto.EventoDTO;
+import br.gov.mds.sisConferencia.models.TipoFormato;
+import br.gov.mds.sisConferencia.service.dto.TipoFormatoDTO;
 
 @Component
 @ComponentScan
-public class EventoMapper implements EntityMapper<EventoDTO, Evento> {
+public class TipoFormatoMapper implements EntityMapper<TipoFormatoDTO, TipoFormato> {
 
     private static ModelMapper mapper;
 
     @Autowired
     public void setModelMapper(ModelMapper mapper) {
-        EventoMapper.mapper = mapper;
+        TipoFormatoMapper.mapper = mapper;
     }
 
     @Override
-    public Evento toEntity(EventoDTO eventoDTO) {
-        return mapper.map(eventoDTO, Evento.class);
+    public TipoFormato toEntity(TipoFormatoDTO tipoFormatoDTO) {
+        return mapper.map(tipoFormatoDTO, TipoFormato.class);
     }
 
     @Override
-    public EventoDTO toDto(Evento evento) {
-        return mapper.map(evento, EventoDTO.class);
+    public TipoFormatoDTO toDto(TipoFormato tipoFormato) {
+        return mapper.map(tipoFormato, TipoFormatoDTO.class);
     }
 
     @Override
-    public List<Evento> toEntity(List<EventoDTO> eventoDTOList) {
-        return eventoDTOList.stream()
+    public List<TipoFormato> toEntity(List<TipoFormatoDTO> tipoFormatoDTOList) {
+        return tipoFormatoDTOList.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<EventoDTO> toDto(List<Evento> eventoList) {
-        return eventoList.stream()
+    public List<TipoFormatoDTO> toDto(List<TipoFormato> tipoFormatoList) {
+        return tipoFormatoList.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }

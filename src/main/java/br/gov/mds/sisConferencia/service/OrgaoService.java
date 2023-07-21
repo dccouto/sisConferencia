@@ -1,30 +1,24 @@
 package br.gov.mds.sisConferencia.service;
 
-import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.models.Orgao;
 import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.gov.mds.sisConferencia.service.mapper.OrgaoMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import br.gov.mds.sisConferencia.models.Orgao;
+import javax.transaction.Transactional;
 
 @Service
-public class OrgaoService extends GenericService<Orgao , Long> {
+public class OrgaoService extends GenericService<Orgao , Long, OrgaoDTO> {
 
-	@Autowired
-	EntityMapper<OrgaoDTO, Orgao> entityMapper;
 
-	public OrgaoDTO salvar(OrgaoDTO orgaoDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(orgaoDTO)));
+	public OrgaoService(JpaRepository<Orgao, Long> repository, OrgaoMapper mapper ) {
+		super(repository, mapper);
 	}
 
-	public OrgaoService(JpaRepository<Orgao, Long> repository) {
-		super(repository);
-	}
-
+	@Transactional
 	public Orgao atualizar(Long id, Orgao orgaoAtualizado) {
 		Orgao orgao = findById(id);
-		
 		orgao.setNome(orgaoAtualizado.getNome());
 		orgao.setAreaAtuacao(orgaoAtualizado.getAreaAtuacao());
 		orgao.setCargoAtuante(orgaoAtualizado.getCargoAtuante());

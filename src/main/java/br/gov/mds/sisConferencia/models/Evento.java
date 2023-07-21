@@ -65,16 +65,20 @@ public class Evento implements DomainGeneric {
 	private Boolean ativo;
 
 	@ManyToOne
-	@JoinColumn(name = "FK_TIPO_EVENTO", nullable = false)
+	@JoinColumn(name = "FK_TIPO_EVENTO", nullable = true)
 	private TipoEvento tipoEvento;
 
 	@ManyToOne
-	@JoinColumn(name = "FK_TIPO_REGIME", nullable = false)
-	private TipoRegime tipoRegime;
+	@JoinColumn(name = "FK_TIPO_REGIME", nullable = true)
+	private TipoFormato tipoRegime;
 
 	@ManyToOne
-	@JoinColumn(name = "FK_PORTARIA", nullable = false)
+	@JoinColumn(name = "FK_PORTARIA", nullable = true)
 	private Portaria portaria;
+	
+    @ManyToOne
+    @JoinColumn(name = "PK_ARQUIVO", nullable = true)
+    private Arquivo imagem;
 
 	@OneToMany(mappedBy = "evento")
 	private List<Eixo> eixos;

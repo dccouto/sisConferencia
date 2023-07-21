@@ -40,17 +40,20 @@ public class Documento {
 
     @Column(name = "DATA_ENVIO")
     private LocalDate dataEnvio;
+    
+    @Column(name = "DS_EXTENSAO")
+    private String extensao;
 
     @ManyToOne
-    @JoinColumn(name = "PK_TIPO_DOCUMENTO")
+    @JoinColumn(name = "FK_TIPO_DOCUMENTO")
     private TipoDocumento tipoDocumento;
 
     @ManyToOne
-    @JoinColumn(name = "PK_ARQUIVO")
+    @JoinColumn(name = "FK_ARQUIVO")
     private Arquivo arquivo;
 
     @ManyToOne
-    @JoinColumn(name = "PK_USUARIO_ENVIO")
+    @JoinColumn(name = "FK_USUARIO_ENVIO")
     private Usuario usuarioEnvio;
     
 	@JsonIgnore

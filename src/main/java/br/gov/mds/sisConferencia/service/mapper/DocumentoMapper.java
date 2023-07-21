@@ -1,7 +1,7 @@
 package br.gov.mds.sisConferencia.service.mapper;
 
-import br.gov.mds.sisConferencia.models.TipoRegime;
-import br.gov.mds.sisConferencia.service.dto.TipoRegimeDTO;
+import br.gov.mds.sisConferencia.models.Documento;
+import br.gov.mds.sisConferencia.service.dto.DocumentoDTO;
 import org.modelmapper.ModelMapper;
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,35 +12,35 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class TipoRegimeMapper implements EntityMapper<TipoRegimeDTO, TipoRegime>{
+public class DocumentoMapper implements EntityMapper<DocumentoDTO, Documento>{
 
     private static ModelMapper mapper;
 
     @Autowired
     public void setModelMapper(ModelMapper mapper) {
-        TipoRegimeMapper.mapper = mapper;
+        DocumentoMapper.mapper = mapper;
     }
 
     @Override
-    public TipoRegime toEntity(TipoRegimeDTO tipoRegimeDTO) {
-        return mapper.map(tipoRegimeDTO, TipoRegime.class);
+    public Documento toEntity(DocumentoDTO documentoDTO) {
+        return mapper.map(documentoDTO, Documento.class);
     }
 
     @Override
-    public TipoRegimeDTO toDto(TipoRegime tipoRegime) {
-        return mapper.map(tipoRegime, TipoRegimeDTO.class);
+    public DocumentoDTO toDto(Documento documento) {
+        return mapper.map(documento, DocumentoDTO.class);
     }
 
     @Override
-    public List<TipoRegime> toEntity(List<TipoRegimeDTO> tipoRegimeDTOList) {
-        return tipoRegimeDTOList.stream()
+    public List<Documento> toEntity(List<DocumentoDTO> documentoDTOList) {
+        return documentoDTOList.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<TipoRegimeDTO> toDto(List<TipoRegime> tipoRegimeList) {
-        return tipoRegimeList.stream()
+    public List<DocumentoDTO> toDto(List<Documento> documentoList) {
+        return documentoList.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }

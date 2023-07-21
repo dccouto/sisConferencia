@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TB_TIPO_REGIME", schema = Schemas.SISCONFERENCIA)
-public class TipoRegime implements DomainGeneric {
+public class TipoFormato implements DomainGeneric {
 
 	@Id
 	@Column(name = "PK_TIPO_REGIME")

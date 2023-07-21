@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoRegimeDTO {
+public class ArquivoDTO {
 
     private Long id;
 
-    private String descricao;
+    private byte[] byteArquivo;
 }
