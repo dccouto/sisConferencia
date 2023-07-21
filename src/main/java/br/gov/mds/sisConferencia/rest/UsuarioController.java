@@ -35,8 +35,8 @@ public class UsuarioController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<UsuarioDTO> salvar(@RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(usuarioService.save(usuario)));
+	public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO usuario) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveDTO(usuario));
 	}
 
 	@PutMapping("/{id}")
