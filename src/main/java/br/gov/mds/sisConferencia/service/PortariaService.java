@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import br.gov.mds.sisConferencia.models.Portaria;
 import br.gov.mds.sisConferencia.repository.PortariaRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class PortariaService extends GenericService<Portaria, Long> {
 
 	@Autowired
 	EntityMapper<PortariaDTO, Portaria> entityMapper;
 
+	@Transactional
 	public PortariaDTO salvar(PortariaDTO portariaDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(portariaDTO)));
 	}
@@ -22,6 +25,7 @@ public class PortariaService extends GenericService<Portaria, Long> {
 		super(repository);
 	}
 
+	@Transactional
 	public Portaria atualizar(Long id, Portaria portaria) {
 		var existingPortaria = findById(id);
 		existingPortaria.setNumero(portaria.getNumero());

@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import br.gov.mds.sisConferencia.models.Perfil;
 import br.gov.mds.sisConferencia.repository.PerfilRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class PerfilService extends GenericService<Perfil , Long> {
 
 	@Autowired
 	EntityMapper<PerfilDTO, Perfil> entityMapper;
 
+	@Transactional
 	public PerfilDTO salvar(PerfilDTO perfilDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(perfilDTO)));
 	}
@@ -21,7 +24,8 @@ public class PerfilService extends GenericService<Perfil , Long> {
 	public PerfilService(PerfilRepository repository) {
 		super(repository);
 	}
-	
+
+	@Transactional
 	public Perfil atualizar(Long id, Perfil perfil) {
 		Perfil existingPerfil = findById(id);
 		existingPerfil.setDescricao(perfil.getDescricao());

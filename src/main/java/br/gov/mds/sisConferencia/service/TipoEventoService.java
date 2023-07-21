@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import br.gov.mds.sisConferencia.models.TipoEvento;
 import br.gov.mds.sisConferencia.repository.TipoEventoRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class TipoEventoService extends GenericService<TipoEvento , Long> {
 
 	@Autowired
 	EntityMapper<TipoEventoDTO, TipoEvento> entityMapper;
 
+	@Transactional
 	public TipoEventoDTO salvar(TipoEventoDTO tipoEventoDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoEventoDTO)));
 	}
@@ -22,6 +25,7 @@ public class TipoEventoService extends GenericService<TipoEvento , Long> {
 		super(repository);
 	}
 
+	@Transactional
 	public TipoEvento atualizar(Long id, TipoEvento tipoEvento) {
 		TipoEvento existingTipoEvento = findById(id);
 		existingTipoEvento.setDescricao(tipoEvento.getDescricao());

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import br.gov.mds.sisConferencia.models.Acompanhante;
 import br.gov.mds.sisConferencia.repository.AcompanhanteRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class AcompanhanteService extends GenericService<Acompanhante, Long> {
 
 	@Autowired
 	EntityMapper<AcompanhanteDTO, Acompanhante> entityMapper;
 
+	@Transactional
 	public AcompanhanteDTO salvar(AcompanhanteDTO acompanhanteDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(acompanhanteDTO)));
 	}
@@ -25,6 +28,7 @@ public class AcompanhanteService extends GenericService<Acompanhante, Long> {
 	}
 
 
+	@Transactional
 	public Acompanhante atualizar(Long id, Acompanhante acompanhanteAtualizado) {
 		Acompanhante existingAcompanhante = findById(id);
 
