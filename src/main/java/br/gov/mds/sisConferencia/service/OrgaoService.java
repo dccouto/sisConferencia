@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.models.Orgao;
 
+import javax.transaction.Transactional;
+
 @Service
 public class OrgaoService extends GenericService<Orgao , Long> {
 
 	@Autowired
 	EntityMapper<OrgaoDTO, Orgao> entityMapper;
 
+	@Transactional
 	public OrgaoDTO salvar(OrgaoDTO orgaoDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(orgaoDTO)));
 	}
@@ -22,6 +25,7 @@ public class OrgaoService extends GenericService<Orgao , Long> {
 		super(repository);
 	}
 
+	@Transactional
 	public Orgao atualizar(Long id, Orgao orgaoAtualizado) {
 		Orgao orgao = findById(id);
 		

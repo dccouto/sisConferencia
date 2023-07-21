@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import br.gov.mds.sisConferencia.models.Usuario;
 import br.gov.mds.sisConferencia.repository.UsuarioRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UsuarioService extends GenericService<Usuario , Long> {
 
 	@Autowired
 	EntityMapper<UsuarioDTO, Usuario> entityMapper;
 
+	@Transactional
 	public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(usuarioDTO)));
 	}
@@ -21,13 +24,13 @@ public class UsuarioService extends GenericService<Usuario , Long> {
 	public UsuarioService(UsuarioRepository repository) {
 		super(repository);
 	}
-	
+
+	@Transactional
 	public Usuario atualizar(Long id, Usuario usuarioAtualizado) {
 		Usuario existingUsuario = findById(id);
 		existingUsuario.setIdPessoa(usuarioAtualizado.getIdPessoa());
 		existingUsuario.setPerfil(usuarioAtualizado.getPerfil());
 		return save(existingUsuario);
-
 	}
 
 }
