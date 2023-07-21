@@ -22,7 +22,7 @@ public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
 		return repository.save(entidade);
 	}
 
-	public DTO salvar(DTO dto) {
+	public DTO saveDTO(DTO dto) {
 		return mapper.toDto(repository.save(mapper.toEntity(dto)));
 	}
 

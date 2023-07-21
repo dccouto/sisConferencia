@@ -1,14 +1,6 @@
 package br.gov.mds.sisConferencia.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
@@ -36,7 +28,7 @@ public class Usuario implements DomainGeneric {
 	@Column(name = "COD_PESSOA")
 	private Long idPessoa;
 	
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FK_PERFIL", nullable = false)
 	private Perfil perfil;
 

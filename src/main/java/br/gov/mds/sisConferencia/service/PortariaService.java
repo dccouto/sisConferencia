@@ -15,14 +15,6 @@ import javax.transaction.Transactional;
 @Service
 public class PortariaService extends GenericService<Portaria, Long, PortariaDTO> {
 
-	@Autowired
-	EntityMapper<PortariaDTO, Portaria> entityMapper;
-
-	@Transactional
-	public PortariaDTO salvar(PortariaDTO portariaDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(portariaDTO)));
-	}
-
 	public PortariaService(PortariaRepository repository, PortariaMapper mapper) {
 		super(repository, mapper);
 	}

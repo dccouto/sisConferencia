@@ -1,11 +1,9 @@
 package br.gov.mds.sisConferencia.service;
 
-import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Acompanhante;
 import br.gov.mds.sisConferencia.repository.AcompanhanteRepository;
 import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
 import br.gov.mds.sisConferencia.service.mapper.AcompanhanteMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,13 +11,6 @@ import javax.transaction.Transactional;
 @Service
 public class AcompanhanteService extends GenericService<Acompanhante, Long, AcompanhanteDTO> {
 
-	@Autowired
-	EntityMapper<AcompanhanteDTO, Acompanhante> entityMapper;
-
-	@Transactional
-	public AcompanhanteDTO salvar(AcompanhanteDTO acompanhanteDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(acompanhanteDTO)));
-	}
 
 	public AcompanhanteService(AcompanhanteRepository repository, AcompanhanteMapper mapper) {
 		super(repository, mapper);
