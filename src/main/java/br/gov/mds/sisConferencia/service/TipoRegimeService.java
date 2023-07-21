@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.service.dto.TipoRegimeDTO;
+import br.gov.mds.sisConferencia.service.mapper.TipoRegimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import br.gov.mds.sisConferencia.repository.TipoRegimeRepository;
 import javax.transaction.Transactional;
 
 @Service
-public class TipoRegimeService extends GenericService<TipoRegime, Long> {
+public class TipoRegimeService extends GenericService<TipoRegime, Long, TipoRegimeDTO> {
 
 	@Autowired
 	EntityMapper<TipoRegimeDTO, TipoRegime> entityMapper;
@@ -21,8 +22,8 @@ public class TipoRegimeService extends GenericService<TipoRegime, Long> {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoRegimeDTO)));
 	}
 
-	public TipoRegimeService(TipoRegimeRepository repository) {
-		super(repository);
+	public TipoRegimeService(TipoRegimeRepository repository, TipoRegimeMapper mapper) {
+		super(repository, mapper);
 	}
 
 	@Transactional
