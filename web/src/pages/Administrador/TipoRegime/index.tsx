@@ -1,7 +1,6 @@
 // Components
 import { Breadcrumbs } from '../../../components/Navegacao/Breadcrumbs'
 import { Titulo } from '../../../components/Navegacao/Titulo'
-import { Admin, Resource } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 import TipoRegimeCrud from './TipoRegimeCrud';
 

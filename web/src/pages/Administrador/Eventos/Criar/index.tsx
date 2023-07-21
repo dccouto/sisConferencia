@@ -4,13 +4,13 @@ import { Titulo } from '../../../../components/Navegacao/Titulo'
 import { Breadcrumbs } from '../../../../components/Navegacao/Breadcrumbs'
 
 
-import { Box, Divider, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, TextField, Typography } from '@mui/material'
+import { Box, Divider, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { IEvento, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
+import { IEixo, IEvento, IEventoSalvar, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useDrawer } from '../../../../components/CidadaniaApp/Drawer/hooks/useDrawer'
@@ -27,6 +27,9 @@ import apiServiceTipoRegime from '../../../../services/sisConferenciaApi/tipoReg
 import apiServicePortaria from '../../../../services/sisConferenciaApi/portaria'
 import { ITipoRegime } from '../../../../services/sisConferenciaApi/tipoRegime/types'
 import { IPortaria } from '../../../../services/sisConferenciaApi/portaria/types'
+import { IFormato } from '../../../../services/sisConferenciaApi/formato/types'
+import apiServiceFormato from '../../../../services/sisConferenciaApi/formato'
+import Eixo from '../../Eixo'
 
 const CriarEvento = () => {
 
@@ -53,9 +56,9 @@ const CriarEvento = () => {
     };
 
    
-
+    const [listaEixo,setListaEixo]= useState<IEixo[]>([]);
     const [tiposEvento, setTiposEvento] = useState<ITipoEvento[]>([]);
-    const [tiposRegime, setTiposRegime] = useState<ITipoRegime[]>([]);
+    const [formatos, setFormatos] = useState<IFormato[]>([]);
     const [portarias, setPortarias] = useState<IPortaria[]>([]);
 
     useEffect(() => {
@@ -72,9 +75,9 @@ const CriarEvento = () => {
                 console.error(error)
             }
             try {
-                const result = await apiServiceTipoRegime.listar();
+                const result = await apiServiceFormato.listar();
                 if (Array.isArray(result)) {
-                    setTiposRegime(result);
+                    setFormatos(result);
                 } else {
                     console.error("Erro ao obter Tipo Regime");
                 }
@@ -101,7 +104,15 @@ const CriarEvento = () => {
         atualizarListaCombos();
     }, []);
 
-    function handleSalvar(){
+    const handleSalvar = async (values: any) => {
+        let msg = 'Dados salvos com sucesso.'
+
+        const dataSave = {
+            
+        } as unknown as IEventoSalvar
+
+
+
 
     }
 
@@ -154,9 +165,11 @@ const CriarEvento = () => {
                                 </RHFSelect>
                                 
                                 <RHFSelect name='formato' label='Formato do Evento' gridProps={{ lg:6 }}>
-                                    <MenuItem value={'federal'}>Presencial</MenuItem> 
-                                    <MenuItem value={'municipal'}>Virtual</MenuItem>
-                                    <MenuItem value={'estadual'}>Mista</MenuItem> 
+                                    {formatos.map((tipo) => (
+                                        <MenuItem key={tipo.id} value={tipo.id}>
+                                            {tipo.descricao}
+                                        </MenuItem>
+                                    ))}
                                 </RHFSelect>
                              
                              </FormContainer>
@@ -211,16 +224,7 @@ const CriarEvento = () => {
                                     }}
                                 />
 
-                            
 
-                                <RHFSelect name='tipoRegime' label='Tipo Regime' gridProps={{ lg: 6 }}>
-                                    {tiposRegime.map((tipo) => (
-                                        <MenuItem key={tipo.id} value={tipo.id}>
-                                           {tipo.descricao} 
-                                        </MenuItem>
-                                    ))}
-                                </RHFSelect>
-                            
                                 <RHFTextArea 
                                     name="objetivo"
                                     label="Objetivo"
@@ -252,21 +256,23 @@ const CriarEvento = () => {
 
                                 <Grid  padding={2} item xs={12}>
 
-                                <Titulo titulo={`Status`} />
-                                    <FormContainer>
-                                            <RadioGroup >
-                                                <FormControlLabel value="option1" control={<Radio />} label="Ativo" />
-                                                <FormControlLabel value="option2" control={<Radio />} label="Inativo" />
-                                            </RadioGroup>
-                                    </FormContainer>
+                                    <Titulo titulo={`Status`} />
+                                        <FormContainer>
+                                                <RadioGroup >
+                                                    <FormControlLabel value="option1" control={<Radio />} label="Ativo" />
+                                                    <FormControlLabel value="option2" control={<Radio />} label="Inativo" />
+                                                </RadioGroup>
+                                        </FormContainer>
+                                </Grid>
+                               
+                                <Grid  padding={2} item xs={12}>
+                                    <Titulo titulo={`Eixos`} />
+                                    <Eixo listaEixos={listaEixo} setEixos={setListaEixo}></Eixo>                 
                                 </Grid>
                                 
                             </FormContainer>
                         </Grid>                    
-
-                      
-
-
+                                  
                     </FormContainer>
                 
 
