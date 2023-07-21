@@ -22,6 +22,7 @@ import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
 import { IEixo } from '../../../services/sisConferenciaApi/eventos/types'
+import RHFTextArea from '../../../components/Formulario/TextArea'
 
 interface ColumnConfig {
     key: string
@@ -115,6 +116,10 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
     const initializeFormFields = () => {
         setTimeout(() => {
             rhfmethods.setValue('descricao', '');
+            rhfmethods.setValue('numero', 0);
+            rhfmethods.setValue('ementa.descricao', '');
+            rhfmethods.setValue('tema', '');
+            rhfmethods.setValue('descricao', '');
             rhfmethods.setValue('id', 0);
         }, 0);
     };
@@ -123,7 +128,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
         <>
             <FormProvider {...rhfmethods}>
                 {visible && (
-                    <>
+                    <Grid>
                         <CustomTable
                             data={eixos}
                             onEdit={handleEditar}
@@ -131,10 +136,36 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
                             columnConfig={columnConfig}
                         />
                         
-                        <Dialog {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
-                            <DialogTitle>Cadastrar Tipo de Regime</DialogTitle>
+                        <Dialog fullWidth={true}
+                            maxWidth={"md"}  {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
+                            <DialogTitle>Cadastrar Eixo</DialogTitle>
                             <DialogContent>
-                                <Grid container xs={12} spacing={3} mt={1}>
+
+                              <Grid container xs={12} spacing={3} mt={1}>
+                                    <RHFText
+                                        name={'numero'}
+                                        label={'Número'}
+                                        gridProps={{ xs: 4}}
+                                        inputProps={{ maxLength: 7 }}
+                                        InputLabelProps={{ shrink: true }}
+                                        onChange={(e) => {
+                                            const v = parseInt(e.target.value, 10);
+                                            rhfmethods.setValue('numero', v);
+                                        }}
+                                    />
+                                
+                                    <RHFText
+                                        name={'tema'}
+                                        label={'Tema'}
+                                        gridProps={{ xs: 8 }}
+                                        inputProps={{ maxLength: 100 }}
+                                        InputLabelProps={{ shrink: true }}
+                                        onChange={(e) => {
+                                            const v = e.target.value
+                                            rhfmethods.setValue('tema', v)
+                                        }}
+                                    />
+                        
                                     <RHFText
                                         name={'descricao'}
                                         label={'Descrição'}
@@ -146,6 +177,20 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
                                             rhfmethods.setValue('descricao', v)
                                         }}
                                     />
+                         
+                                <RHFTextArea 
+                                    name="ementa.descricao"
+                                    label="Descrição Ementa"
+                                    control={rhfmethods.control as any} // passando o 'control' para o RHFTextArea
+                                    rules={{ required: true }}
+                                    defaultValue=""
+                                    rows={4}
+                                    gridProps={{ lg: 12 }}
+                                    onChange={(e) => {
+                                        const v = e.target.value
+                                        rhfmethods.setValue('ementa.descricao', v)
+                                    }}
+                                />
                                 </Grid>
 
                                 <Grid container justifyContent={'end'} mt={2}>
@@ -166,13 +211,13 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
                                             style={{ height: 50 }}
                                             sx={{ p: 2 }}
                                         >
-                                            Salvar Tipo de Regime
+                                            Salvar Eixo
                                         </BotaoPadrao>
                                     </Grid>
                                 </Grid>
                             </DialogContent>
                         </Dialog>
-
+                          
                         <Grid container spacing={2} my={4} mr={4} justifyContent={'end'}>
                             <Grid>
                                 <BotaoPadrao size={'large'} variant='outlined' onClick={() =>{ 
@@ -183,7 +228,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
                             </BotaoPadrao>
                             </Grid>
                         </Grid>
-                    </>
+                    </Grid>
                 )}
             </FormProvider>
         </>
