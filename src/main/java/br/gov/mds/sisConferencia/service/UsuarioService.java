@@ -1,12 +1,14 @@
 package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 import br.gov.mds.sisConferencia.service.dto.UsuarioDTO;
 import br.gov.mds.sisConferencia.service.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.models.TipoInscricao;
 import br.gov.mds.sisConferencia.models.Usuario;
 import br.gov.mds.sisConferencia.repository.UsuarioRepository;
 import br.gov.mds.sisConferencia.service.dto.UsuarioDTO;
@@ -15,6 +17,10 @@ import javax.transaction.Transactional;
 
 @Service
 public class UsuarioService extends GenericService<Usuario, Long, UsuarioDTO> {
+
+	
+	@Autowired
+	EntityMapper<UsuarioDTO, Usuario> entityMapper;
 
 	@Transactional
 	public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
