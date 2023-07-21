@@ -1,5 +1,8 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.TipoEventoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
@@ -13,6 +16,10 @@ public class TipoEventoService extends GenericService<TipoEvento , Long, TipoEve
 	public TipoEventoService(TipoEventoRepository repository,
 			EntityMapper<TipoEventoDTO, TipoEvento> mapper) {
 		super(repository, mapper);
+	}
+
+		public TipoEventoDTO salvar(TipoEventoDTO tipoEventoDTO) {
+		return this.mapper.toDto(save(this.mapper.toEntity(tipoEventoDTO)));
 	}
 
 	public TipoEvento atualizar(Long id, TipoEvento tipoEvento) {

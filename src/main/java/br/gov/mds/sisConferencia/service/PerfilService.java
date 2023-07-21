@@ -1,5 +1,8 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.PerfilDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
@@ -8,11 +11,16 @@ import br.gov.mds.sisConferencia.repository.PerfilRepository;
 import br.gov.mds.sisConferencia.service.dto.PerfilDTO;
 
 @Service
-public class PerfilService extends GenericService<Perfil, Long, PerfilDTO> {
+public class PerfilService extends GenericService<Perfil , Long> {
 
 	public PerfilService(PerfilRepository repository, EntityMapper<PerfilDTO, Perfil> mapper) {
 		super(repository, mapper);
 	}
+
+	public PerfilDTO salvar(PerfilDTO perfilDTO) {
+		return this.entityMapper.toDto(save(this.entityMapper.toEntity(perfilDTO)));
+	}
+
 
 	public Perfil atualizar(Long id, Perfil perfil) {
 

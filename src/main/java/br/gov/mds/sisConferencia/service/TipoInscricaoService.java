@@ -1,5 +1,8 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
@@ -10,13 +13,13 @@ import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 @Service
 public class TipoInscricaoService extends GenericService<TipoInscricao , Long, TipoInscricaoDTO> {
 
-
-
-
 	public TipoInscricaoService(TipoInscricaoRepository repository,
 			EntityMapper<TipoInscricaoDTO, TipoInscricao> mapper) {
 		super(repository, mapper);
-		// TODO Auto-generated constructor stub
+	}
+
+	public TipoInscricaoDTO salvar(TipoInscricaoDTO tipoInscricaoDTO) {
+		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoInscricaoDTO)));
 	}
 
 	public TipoInscricao atualizar(Long id, TipoInscricao tipoInscricaoAtualizado) {
