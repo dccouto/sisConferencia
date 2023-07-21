@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TipoRegimeDTO {
+public class TipoFormatoDTO {
 
     private Long id;
 
