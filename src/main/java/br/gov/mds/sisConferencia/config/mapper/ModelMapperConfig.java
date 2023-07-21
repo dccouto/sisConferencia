@@ -12,7 +12,6 @@ public class ModelMapperConfig {
         var modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration().setSkipNullEnabled(true);
-
         return modelMapper;
     }
 
