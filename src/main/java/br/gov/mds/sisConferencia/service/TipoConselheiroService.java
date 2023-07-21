@@ -13,6 +13,8 @@ import br.gov.mds.sisConferencia.service.dto.TipoConselheiroDTO;
 
 import javax.transaction.Transactional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class TipoConselheiroService extends GenericService<TipoConselheiro, Long, TipoConselheiroDTO> {
 

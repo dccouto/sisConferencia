@@ -13,6 +13,8 @@ import br.gov.mds.sisConferencia.service.dto.PortariaDTO;
 
 import javax.transaction.Transactional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class PortariaService extends GenericService<Portaria, Long, PortariaDTO> {
 

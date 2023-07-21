@@ -13,6 +13,8 @@ import br.gov.mds.sisConferencia.service.dto.AmbitoDTO;
 
 import javax.transaction.Transactional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class AmbitoService extends GenericService<Ambito, Long, AmbitoDTO> {
 

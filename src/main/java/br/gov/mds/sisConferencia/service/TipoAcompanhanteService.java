@@ -21,6 +21,7 @@ public class TipoAcompanhanteService extends GenericService<TipoAcompanhante, Lo
 
 	@Autowired
 	EntityMapper<TipoAcompanhanteDTO, TipoAcompanhante> entityMapper;
+
 	@Transactional
 	public TipoAcompanhanteDTO salvar(TipoAcompanhanteDTO tipoAcompanhanteDTO) {
 		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoAcompanhanteDTO)));

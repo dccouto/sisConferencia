@@ -13,6 +13,8 @@ import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
 
 import javax.transaction.Transactional;
 
+import javax.transaction.Transactional;
+
 @Service
 public class OrgaoService extends GenericService<Orgao, Long, OrgaoDTO> {
 
