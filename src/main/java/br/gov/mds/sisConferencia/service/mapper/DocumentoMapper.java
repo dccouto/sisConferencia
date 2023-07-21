@@ -1,7 +1,7 @@
 package br.gov.mds.sisConferencia.service.mapper;
 
-import br.gov.mds.sisConferencia.models.Arquivo;
-import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
+import br.gov.mds.sisConferencia.models.Documento;
+import br.gov.mds.sisConferencia.service.dto.DocumentoDTO;
 import org.modelmapper.ModelMapper;
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,35 +12,35 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class ArquivoMapper implements EntityMapper<ArquivoDTO, Arquivo> {
+public class DocumentoMapper implements EntityMapper<DocumentoDTO, Documento>{
 
     private static ModelMapper mapper;
 
     @Autowired
     public void setModelMapper(ModelMapper mapper) {
-        ArquivoMapper.mapper = mapper;
+        DocumentoMapper.mapper = mapper;
     }
 
     @Override
-    public Arquivo toEntity(ArquivoDTO arquivoDTO) {
-        return mapper.map(arquivoDTO, Arquivo.class);
+    public Documento toEntity(DocumentoDTO documentoDTO) {
+        return mapper.map(documentoDTO, Documento.class);
     }
 
     @Override
-    public ArquivoDTO toDto(Arquivo arquivo) {
-        return mapper.map(arquivo, ArquivoDTO.class);
+    public DocumentoDTO toDto(Documento documento) {
+        return mapper.map(documento, DocumentoDTO.class);
     }
 
     @Override
-    public List<Arquivo> toEntity(List<ArquivoDTO> arquivoDTOList) {
-        return arquivoDTOList.stream()
+    public List<Documento> toEntity(List<DocumentoDTO> documentoDTOList) {
+        return documentoDTOList.stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ArquivoDTO> toDto(List<Arquivo> arquivoList) {
-        return arquivoList.stream()
+    public List<DocumentoDTO> toDto(List<Documento> documentoList) {
+        return documentoList.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
