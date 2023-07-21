@@ -2,6 +2,9 @@ package br.gov.mds.sisConferencia.service;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.service.dto.TipoEventoDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.service.dto.TipoEventoDTO;
 import br.gov.mds.sisConferencia.service.mapper.TipoEventoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
