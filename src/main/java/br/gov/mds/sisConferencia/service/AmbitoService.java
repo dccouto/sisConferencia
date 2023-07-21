@@ -15,6 +15,7 @@ public class AmbitoService extends GenericService<Ambito, Long, AmbitoDTO> {
 
 	public AmbitoService(AmbitoRepository repository, EntityMapper<AmbitoDTO, Ambito> mapper) {
 		super(repository, mapper);
+	}
 
 	public AmbitoDTO salvar(AmbitoDTO ambitoDTO) {
 		return mapper.toDto(save(mapper.toEntity(ambitoDTO)));

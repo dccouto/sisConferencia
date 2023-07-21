@@ -18,7 +18,7 @@ public class PortariaService extends GenericService<Portaria, Long, PortariaDTO>
 	}
 
 	public PortariaDTO salvar(PortariaDTO portariaDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(portariaDTO)));
+		return this.mapper.toDto(save(this.mapper.toEntity(portariaDTO)));
 	}
 
 

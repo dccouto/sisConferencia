@@ -23,9 +23,6 @@ public class TipoConselheiroService extends GenericService<TipoConselheiro, Long
 		return mapper.toDto(save(mapper.toEntity(tipoConselheiroDTO)));
 	}
 
-	public TipoConselheiroService(TipoConselheiroRepository repository) {
-		super(repository);
-	}
 
 	public TipoConselheiro atualizar(Long id, TipoConselheiro tipoConselheiroAtualizado) {
 		TipoConselheiro tipoConselheiro = findById(id);

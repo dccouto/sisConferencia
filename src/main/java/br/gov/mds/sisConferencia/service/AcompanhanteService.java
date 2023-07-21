@@ -17,9 +17,10 @@ public class AcompanhanteService extends GenericService<Acompanhante, Long, Acom
 
 	public AcompanhanteService(AcompanhanteRepository repository, EntityMapper<AcompanhanteDTO, Acompanhante> mapper) {
 		super(repository, mapper);
+	}
 
 	public AcompanhanteDTO salvar(AcompanhanteDTO acompanhanteDTO) {
-		return mapper.toDto(save(this.entityMapper.toEntity(acompanhanteDTO)));
+		return mapper.toDto(save(mapper.toEntity(acompanhanteDTO)));
 	}
 
 

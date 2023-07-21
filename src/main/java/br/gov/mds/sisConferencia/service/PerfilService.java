@@ -11,14 +11,14 @@ import br.gov.mds.sisConferencia.repository.PerfilRepository;
 import br.gov.mds.sisConferencia.service.dto.PerfilDTO;
 
 @Service
-public class PerfilService extends GenericService<Perfil , Long> {
+public class PerfilService extends GenericService<Perfil , Long, PerfilDTO> {
 
 	public PerfilService(PerfilRepository repository, EntityMapper<PerfilDTO, Perfil> mapper) {
 		super(repository, mapper);
 	}
 
 	public PerfilDTO salvar(PerfilDTO perfilDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(perfilDTO)));
+		return this.mapper.toDto(save(this.mapper.toEntity(perfilDTO)));
 	}
 
 

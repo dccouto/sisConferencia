@@ -19,7 +19,7 @@ public class TipoInscricaoService extends GenericService<TipoInscricao , Long, T
 	}
 
 	public TipoInscricaoDTO salvar(TipoInscricaoDTO tipoInscricaoDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(tipoInscricaoDTO)));
+		return this.mapper.toDto(save(this.mapper.toEntity(tipoInscricaoDTO)));
 	}
 
 	public TipoInscricao atualizar(Long id, TipoInscricao tipoInscricaoAtualizado) {
