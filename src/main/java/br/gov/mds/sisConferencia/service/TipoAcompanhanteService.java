@@ -6,8 +6,10 @@ import br.gov.mds.sisConferencia.service.mapper.TipoAcompanhanteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.TipoAcompanhante;
 import br.gov.mds.sisConferencia.repository.TipoAcompanhanteRepository;
+import br.gov.mds.sisConferencia.service.dto.TipoAcompanhanteDTO;
 
 import javax.transaction.Transactional;
 
@@ -33,6 +35,5 @@ public class TipoAcompanhanteService extends GenericService<TipoAcompanhante, Lo
 		return save(existingTipoAcompanhante);
 
 	}
-
 
 }

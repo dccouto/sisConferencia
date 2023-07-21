@@ -49,4 +49,6 @@ public class PortariaController {
 		portariaService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	
 }

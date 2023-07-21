@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 @ComponentScan
-public class ArquivoMapper implements EntityMapper<ArquivoDTO, Arquivo>{
+public class ArquivoMapper implements EntityMapper<ArquivoDTO, Arquivo> {
 
     private static ModelMapper mapper;
 

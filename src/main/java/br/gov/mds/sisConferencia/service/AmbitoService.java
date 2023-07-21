@@ -6,24 +6,23 @@ import br.gov.mds.sisConferencia.service.mapper.AmbitoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Ambito;
 import br.gov.mds.sisConferencia.repository.AmbitoRepository;
+import br.gov.mds.sisConferencia.service.dto.AmbitoDTO;
 
 import javax.transaction.Transactional;
 
 @Service
-public class AmbitoService extends GenericService<Ambito , Long, AmbitoDTO> {
+public class AmbitoService extends GenericService<Ambito, Long, AmbitoDTO> {
 
-	@Autowired
-	EntityMapper<AmbitoDTO, Ambito> entityMapper;
+	public AmbitoService(AmbitoRepository repository, EntityMapper<AmbitoDTO, Ambito> mapper) {
+		super(repository, mapper);
+	}
 
 	@Transactional
 	public AmbitoDTO salvar(AmbitoDTO ambitoDTO) {
-		return this.entityMapper.toDto(save(this.entityMapper.toEntity(ambitoDTO)));
-	}
-
-	public AmbitoService(AmbitoRepository repository, AmbitoMapper mapper) {
-		super(repository, mapper);
+		return mapper.toDto(save(mapper.toEntity(ambitoDTO)));
 	}
 
 	@Transactional

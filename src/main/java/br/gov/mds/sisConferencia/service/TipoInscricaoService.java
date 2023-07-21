@@ -6,8 +6,10 @@ import br.gov.mds.sisConferencia.service.mapper.TipoInscricaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.TipoInscricao;
 import br.gov.mds.sisConferencia.repository.TipoInscricaoRepository;
+import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 
 import javax.transaction.Transactional;
 
@@ -31,6 +33,6 @@ public class TipoInscricaoService extends GenericService<TipoInscricao, Long, Ti
 		TipoInscricao tipoInscricao = findById(id);
 		tipoInscricao.setDescricao(tipoInscricaoAtualizado.getDescricao());
 		return save(tipoInscricao);
-		
+
 	}
 }

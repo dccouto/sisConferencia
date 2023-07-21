@@ -6,13 +6,15 @@ import br.gov.mds.sisConferencia.service.mapper.TipoEventoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.TipoEvento;
 import br.gov.mds.sisConferencia.repository.TipoEventoRepository;
+import br.gov.mds.sisConferencia.service.dto.TipoEventoDTO;
 
 import javax.transaction.Transactional;
 
 @Service
-public class TipoEventoService extends GenericService<TipoEvento , Long, TipoEventoDTO> {
+public class TipoEventoService extends GenericService<TipoEvento, Long, TipoEventoDTO> {
 
 	@Autowired
 	EntityMapper<TipoEventoDTO, TipoEvento> entityMapper;

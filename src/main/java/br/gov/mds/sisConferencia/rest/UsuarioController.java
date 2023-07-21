@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Usuario;
 import br.gov.mds.sisConferencia.service.UsuarioService;
 import br.gov.mds.sisConferencia.service.dto.UsuarioDTO;
-import br.gov.mds.sisConferencia.service.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
 	private final UsuarioService usuarioService;
-	private final UsuarioMapper mapper;
+	private final EntityMapper<UsuarioDTO, Usuario> mapper;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)

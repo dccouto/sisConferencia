@@ -1,5 +1,6 @@
 package br.gov.mds.sisConferencia.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,8 +37,8 @@ public class Usuario implements DomainGeneric {
 	@Column(name = "COD_PESSOA")
 	private Long idPessoa;
 	
-    @ManyToOne
-    @JoinColumn(name = "FK_PERFIL", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "FK_PERFIL", nullable = true)
 	private Perfil perfil;
 
 

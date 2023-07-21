@@ -5,15 +5,15 @@ import java.util.List;
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 
 import javax.transaction.Transactional;
 
 public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
-	
-	protected final JpaRepository<T, ID> repository;
 
+	protected final JpaRepository<T, ID> repository;
 	protected final EntityMapper<DTO, T> mapper;
 
 	public GenericService(JpaRepository<T, ID> repository, EntityMapper<DTO, T> mapper) {
@@ -25,6 +25,10 @@ public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
 		return repository.save(entidade);
 	}
 
+	public T saveDTO(DTO dto) {
+		return repository.save(mapper.toEntity(dto));
+	}
+
 	public DTO salvar(DTO dto) {
 		return mapper.toDto(repository.save(mapper.toEntity(dto)));
 	}
@@ -34,7 +38,7 @@ public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
 	}
 
 	public List<DTO> buscarTodos() {
-		return mapper.toDto(repository.findAll()) ;
+		return mapper.toDto(repository.findAll());
 	}
 
 	public List<T> findAll() {
@@ -42,7 +46,8 @@ public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
 	}
 
 	public DTO buscarPorID(ID id) {
-		return mapper.toDto(repository.findById(id).orElseThrow(() -> new SisConferenciaNotFoundException("Não encontrado.")));
+		return mapper.toDto(
+				repository.findById(id).orElseThrow(() -> new SisConferenciaNotFoundException("Não encontrado.")));
 	}
 
 	public T findById(ID id) {

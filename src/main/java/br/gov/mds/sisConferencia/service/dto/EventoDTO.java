@@ -32,7 +32,7 @@ public class EventoDTO {
 
     private TipoEventoDTO tipoEvento;
 
-    private TipoRegimeDTO tipoRegime;
+    private TipoFormatoDTO tipoFormato;
 
     private PortariaDTO portaria;
 
