@@ -4,14 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.gov.mds.sisConferencia.models.TipoInscricao;
 import br.gov.mds.sisConferencia.service.TipoInscricaoService;
@@ -25,6 +18,7 @@ public class TipoInscricaoController {
 	private final TipoInscricaoService tipoInscricaoService;
 
 	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<TipoInscricao>> listarTodos() {
 		return ResponseEntity.ok(tipoInscricaoService.findAll());
 	}
@@ -35,11 +29,13 @@ public class TipoInscricaoController {
 	}
 
 	@PostMapping
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoInscricao> salvar(@RequestBody TipoInscricao tipoInscricao) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(tipoInscricaoService.save(tipoInscricao));
 	}
 
 	@PutMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoInscricao> atualizar(@PathVariable Long id,
 			@RequestBody TipoInscricao tipoInscricaoAtualizado) {
 		return ResponseEntity.ok(tipoInscricaoService.atualizar(id, tipoInscricaoAtualizado));
@@ -47,6 +43,7 @@ public class TipoInscricaoController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> excluir(@PathVariable Long id) {
 		tipoInscricaoService.delete(id);
 		return ResponseEntity.noContent().build();
