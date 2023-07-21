@@ -1,29 +1,19 @@
 package br.gov.mds.sisConferencia.service;
 
-import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
-import br.gov.mds.sisConferencia.models.Evento;
-import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
-import br.gov.mds.sisConferencia.service.dto.EventoDTO;
-import br.gov.mds.sisConferencia.service.mapper.AcompanhanteMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Acompanhante;
 import br.gov.mds.sisConferencia.repository.AcompanhanteRepository;
 import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
+import br.gov.mds.sisConferencia.service.mapper.AcompanhanteMapper;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @Service
 public class AcompanhanteService extends GenericService<Acompanhante, Long, AcompanhanteDTO> {
 
-	public AcompanhanteService(AcompanhanteRepository repository, EntityMapper<AcompanhanteDTO, Acompanhante> mapper) {
-		super(repository, mapper);
-	}
 
-	public AcompanhanteDTO salvar(AcompanhanteDTO acompanhanteDTO) {
-		return mapper.toDto(save(mapper.toEntity(acompanhanteDTO)));
+	public AcompanhanteService(AcompanhanteRepository repository, AcompanhanteMapper mapper) {
+		super(repository, mapper);
 	}
 
 	@Transactional
@@ -40,7 +30,7 @@ public class AcompanhanteService extends GenericService<Acompanhante, Long, Acom
 		existingAcompanhante.setEndereco(acompanhanteAtualizado.getEndereco());
 		existingAcompanhante.setTelefone(acompanhanteAtualizado.getTelefone());
 		existingAcompanhante.setInformacaoComplementar(acompanhanteAtualizado.getInformacaoComplementar());
-		existingAcompanhante.setTipoDeficiencia(acompanhanteAtualizado.getTipoDeficiencia());
+		existingAcompanhante.setTipoDeficiencia(acompanhanteAtualizado.getTipoDeficiencia());		
 		return repository.save(existingAcompanhante);
 	}
 
