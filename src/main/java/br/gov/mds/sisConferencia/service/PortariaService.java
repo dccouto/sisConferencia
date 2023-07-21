@@ -2,14 +2,16 @@ package br.gov.mds.sisConferencia.service;
 
 import org.springframework.stereotype.Service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Portaria;
 import br.gov.mds.sisConferencia.repository.PortariaRepository;
+import br.gov.mds.sisConferencia.service.dto.PortariaDTO;
 
 @Service
-public class PortariaService extends GenericService<Portaria, Long> {
+public class PortariaService extends GenericService<Portaria, Long, PortariaDTO> {
 
-	public PortariaService(PortariaRepository repository) {
-		super(repository);
+	public PortariaService(PortariaRepository repository, EntityMapper<PortariaDTO, Portaria> mapper) {
+		super(repository, mapper);
 	}
 
 	public Portaria atualizar(Long id, Portaria portaria) {

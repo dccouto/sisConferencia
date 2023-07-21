@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.mds.sisConferencia.models.Arquivo;
 import br.gov.mds.sisConferencia.models.Evento;
+import br.gov.mds.sisConferencia.service.ArquivoService;
 import br.gov.mds.sisConferencia.service.EventoService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class EventoController {
 
 	private final EventoService eventoService;
+	private final ArquivoService arquivoService;
 
 	@GetMapping
 	public ResponseEntity<List<Evento>> listarTodos() {
@@ -43,6 +46,15 @@ public class EventoController {
 	public ResponseEntity<Evento> atualizar(@PathVariable Long id, @RequestBody Evento eventoAtualizado) {
 		return ResponseEntity.ok(eventoService.atualizar(id, eventoAtualizado));
 	}
+	
+	@PostMapping("/{idEvento}/arquivo")
+	public ResponseEntity<Evento> inserirImagem(@PathVariable Long idEvento, @RequestBody Arquivo arquivo) {
+		Evento evento = eventoService.findById(idEvento);
+		Arquivo imagem = arquivoService.save(arquivo);
+		evento.setImagem(imagem);
+		return ResponseEntity.ok(eventoService.save(evento));
+	}
+
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {

@@ -3,18 +3,20 @@ package br.gov.mds.sisConferencia.service;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Orgao;
+import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
 
 @Service
-public class OrgaoService extends GenericService<Orgao , Long> {
+public class OrgaoService extends GenericService<Orgao, Long, OrgaoDTO> {
 
-	public OrgaoService(JpaRepository<Orgao, Long> repository) {
-		super(repository);
+	public OrgaoService(JpaRepository<Orgao, Long> repository, EntityMapper<OrgaoDTO, Orgao> mapper) {
+		super(repository, mapper);
 	}
-	
+
 	public Orgao atualizar(Long id, Orgao orgaoAtualizado) {
 		Orgao orgao = findById(id);
-		
+
 		orgao.setNome(orgaoAtualizado.getNome());
 		orgao.setAreaAtuacao(orgaoAtualizado.getAreaAtuacao());
 		orgao.setCargoAtuante(orgaoAtualizado.getCargoAtuante());

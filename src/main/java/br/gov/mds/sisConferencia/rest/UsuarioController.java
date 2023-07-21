@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.models.Usuario;
 import br.gov.mds.sisConferencia.service.UsuarioService;
 import br.gov.mds.sisConferencia.service.dto.UsuarioDTO;
-import br.gov.mds.sisConferencia.service.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
 	private final UsuarioService usuarioService;
-	private final UsuarioMapper mapper;
+	private final EntityMapper<UsuarioDTO, Usuario> mapper;
 
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> listarTodos() {

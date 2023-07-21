@@ -4,19 +4,26 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 
-public abstract class GenericService<T extends DomainGeneric, ID> {
+public abstract class GenericService<T extends DomainGeneric, ID, DTO> {
 	
 	protected final JpaRepository<T, ID> repository;
+	protected final EntityMapper<DTO, T> mapper;
 
-	public GenericService(JpaRepository<T, ID> repository) {
+	public GenericService(JpaRepository<T, ID> repository, EntityMapper<DTO, T> mapper) {
 		this.repository = repository;
+		this.mapper = mapper;
 	}
 	
 	public T save(T entidade) {
 		return repository.save(entidade);
+	}
+	
+	public T saveDTO(DTO dto) {
+		return repository.save(mapper.toEntity(dto));
 	}
 
 	public void delete(ID id) {

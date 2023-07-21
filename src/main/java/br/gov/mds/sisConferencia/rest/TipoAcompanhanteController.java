@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/tipoacompanhantes")
+@RequestMapping("/tipoAcompanhante")
 public class TipoAcompanhanteController {
 	
 	private final TipoAcompanhanteService tipoAcompanhanteService;

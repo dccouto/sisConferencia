@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/tipoconselheiros")
+@RequestMapping("/tipoConselheiro")
 public class TipoConselheiroController {
 
 	private final TipoConselheiroService tipoConselheiroService;
