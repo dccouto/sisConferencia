@@ -50,9 +50,16 @@ export interface IEmenta {
     nome: string;
     portaria: number;
     tema: string;
+    imagem: Arquivo;
     tipoEvento: number;
     tipoFormato: number;
   }
   
+
+  export interface Arquivo {
+    id: number;
+    nome: string;
+    byteArquivo: Uint8Array;  // Array de bytes
+  }
   // Para a lista de eventos
   export type IListaEventos = IEvento[];

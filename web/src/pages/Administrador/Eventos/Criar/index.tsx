@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { IEixo, IEvento, IEventoSalvar, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
+import { Arquivo, IEixo, IEvento, IEventoSalvar, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useDrawer } from '../../../../components/CidadaniaApp/Drawer/hooks/useDrawer'
@@ -104,9 +104,26 @@ const CriarEvento = () => {
         atualizarListaCombos();
     }, []);
 
-    const handleSalvar = async (values: any) => {
+    const handleSalvar = async (item: any) => {
         let msg = 'Dados salvos com sucesso.'
 
+        item.eixos = listaEixo
+
+        //processar bytes imagem upload    
+        if (item.imagem && item.imagem.length > 0) {
+            try {
+              const arquivo = await obterArquivo(item.imagem[0]);
+              
+              item.image = arquivo
+              
+            } catch (error) {
+              // Lidar com erros de leitura do arquivo
+              console.error(error);
+            }
+          }
+
+
+        console.log('evento', item)
         const dataSave = {
             
         } as unknown as IEventoSalvar
@@ -115,6 +132,35 @@ const CriarEvento = () => {
 
 
     }
+
+
+    const obterArquivo = (file: File): Promise<Arquivo> => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+      
+          reader.onloadend = (evt) => {
+            if (evt.target?.readyState === FileReader.DONE) {
+              const fileArrayBuffer = evt.target.result as ArrayBuffer;
+              const fileByteArray = new Uint8Array(fileArrayBuffer);
+      
+              // Construindo o objeto Arquivo
+              const arquivo: Arquivo = {
+                id: 0, // Substitua por ID real conforme necessário
+                nome: file.name,
+                byteArquivo: fileByteArray,
+              };
+      
+              resolve(arquivo);
+            }
+          };
+      
+          reader.onerror = (evt) => {
+            reject(new Error('Erro na leitura do arquivo'));
+          };
+      
+          reader.readAsArrayBuffer(file);
+        });
+      };
 
     function umAnoAtras() {
         const year = new Date().getFullYear()
@@ -246,7 +292,7 @@ const CriarEvento = () => {
                                 <Titulo titulo={`Imagem`} />
 
                                     <RHFInputFile 
-                                        name="myFile" 
+                                        name="imagem" 
                                         label="" 
                                         control={rhfmethods.control as any} 
                                         gridProps={{ lg: 12 }}

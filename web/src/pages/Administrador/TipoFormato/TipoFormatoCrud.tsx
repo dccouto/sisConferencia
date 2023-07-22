@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { format } from 'date-fns'
 
 import {
     Box,
@@ -13,7 +12,7 @@ import {
     Typography,
 } from '@mui/material'
 
-
+import { ITipoFormato } from '../../../services/sisConferenciaApi/tipoFormato/types'
 
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import { BotaoPadrao } from '../../../components/Formulario/BotaoPadrao'
@@ -22,8 +21,6 @@ import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
-import { RHFDate } from '../../../components/Formulario/reactHookForms/RHFDate'
-import { ITipoFormato } from '../../../services/sisConferenciaApi/eventos/types'
 
 interface ColumnConfig {
     key: string
@@ -73,9 +70,6 @@ const TipoFormatoCrud = ({ visible, tipoFormatos, setTipoFormatos,apiService,col
     const { toastSuccess, toastError } = useToast()
 
     const FormSchema = yup.object().shape({
-
-        numero: yup.string().required('Número é obrigatório *'),
-        dataTipoFormato: yup.string().required('Data é obrigatório *'),
         descricao: yup
             .string()
             .required('Descrição é obrigatório *')
@@ -91,7 +85,6 @@ const TipoFormatoCrud = ({ visible, tipoFormatos, setTipoFormatos,apiService,col
             let dataSave = {
                 id: values.id,
                 descricao: values.descricao,
-               
             }
             let tipoFormato: ITipoFormato
 
@@ -136,11 +129,9 @@ const TipoFormatoCrud = ({ visible, tipoFormatos, setTipoFormatos,apiService,col
                         />
                         
                         <Dialog {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
-                            <DialogTitle>Cadastrar TipoFormato</DialogTitle>
+                            <DialogTitle>Cadastrar Formato do Evento</DialogTitle>
                             <DialogContent>
                                 <Grid container xs={12} spacing={3} mt={1}>
-                                    
-                                                                                               
                                     <RHFText
                                         name={'descricao'}
                                         label={'Descrição'}
@@ -172,7 +163,7 @@ const TipoFormatoCrud = ({ visible, tipoFormatos, setTipoFormatos,apiService,col
                                             style={{ height: 50 }}
                                             sx={{ p: 2 }}
                                         >
-                                            Salvar TipoFormato
+                                            Salvar Formato
                                         </BotaoPadrao>
                                     </Grid>
                                 </Grid>
@@ -185,7 +176,7 @@ const TipoFormatoCrud = ({ visible, tipoFormatos, setTipoFormatos,apiService,col
                                 setIsForm(true);
                                 initializeFormFields();
                                 }}>
-                                ADICIONAR NOVO FORMATO DE EVENTO
+                                ADICIONAR NOVO TIPO DE EVENTO
                             </BotaoPadrao>
                             </Grid>
                         </Grid>

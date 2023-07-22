@@ -23,6 +23,7 @@ import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
 import { IEixo } from '../../../services/sisConferenciaApi/eventos/types'
 import RHFTextArea from '../../../components/Formulario/TextArea'
+import TableAcordion,{AcordionConfig} from '../../../components/Tabela/TableAcordion'
 
 interface ColumnConfig {
     key: string
@@ -42,10 +43,34 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
     const [editItem, setEditItem] = useState<IEixo | null>(null)
-
+    const [acordionConfig,setAcordionConfig] = useState<AcordionConfig[] | null>([])
+    
     const adicionarEixo = (item: IEixo) => {
         const index = eixos.findIndex((eixo) => eixo.id === item.id)
-    
+        const indexAcordion = acordionConfig?.findIndex((eixo) => eixo.id === item.id)
+
+        let itemAcordion = {
+            id: item.id,
+            AccordionSummary: 'EIXO - ' + item.numero + ' ' +  item.descricao,
+            AccordionDetails: 'EMENTA:' +  item.ementa.descricao,
+            object:item,
+            icon: 'arrow'
+        }
+
+        if (indexAcordion !== -1 && indexAcordion) {
+            if (acordionConfig !== null) {
+                const updatedEixosAcordion = [...acordionConfig]
+                updatedEixosAcordion[indexAcordion] = itemAcordion
+                setAcordionConfig(updatedEixosAcordion)
+            } 
+
+        } else {
+            if (acordionConfig !== null) {
+                const newAcordionConfig = [...acordionConfig, itemAcordion];
+                setAcordionConfig(newAcordionConfig);
+            }
+        }
+        console.log('CRIANDO ACORDION');
         if (index !== -1) {
             const updatedEixos = [...eixos]
             updatedEixos[index] = item
@@ -53,10 +78,18 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
         } else {
             setEixos([...eixos, item])
         }
+
+
+        
     }
 
     const deletarEixo = async (item: IEixo) => {
         const list = eixos.filter((c) => c.id !== item.id)
+        const listAcordion = acordionConfig?.filter((c) => c.id !== item.id)
+        
+        if(listAcordion)
+            setAcordionConfig(listAcordion)
+
         setEixos(list)
     }
 
@@ -90,7 +123,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
             }
 
             let dataSave = {
-                id: values.id,
+                id: eixos.length + 1,
                 descricao: values.descricao,
                 ementa:ementa,
                 numero:values.numero,
@@ -98,12 +131,12 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
             }
           
             adicionarEixo(dataSave)
-            toastSuccess('Tipo de Regime adicionado com sucesso.')
+            toastSuccess('Eixo adicionado com sucesso.')
             setIsForm(false)
             setEditItem(null)
         } catch (error) {
             console.log(error)
-            toastError('Erro ao adicionar tipo de Regime')
+            toastError('Erro ao adicionar Eixo')
         }
     }
 
@@ -115,9 +148,11 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
 
     const initializeFormFields = () => {
         setTimeout(() => {
+            
+            
             rhfmethods.setValue('descricao', '');
-            rhfmethods.setValue('numero', 0);
             rhfmethods.setValue('ementa.descricao', '');
+            rhfmethods.setValue('numero', 0);
             rhfmethods.setValue('tema', '');
             rhfmethods.setValue('descricao', '');
             rhfmethods.setValue('id', 0);
@@ -129,12 +164,15 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
             <FormProvider {...rhfmethods}>
                 {visible && (
                     <Grid>
-                        <CustomTable
+                        <TableAcordion
                             data={eixos}
                             onEdit={handleEditar}
                             onDelete={deletarEixo}
-                            columnConfig={columnConfig}
+                            acordionConfig={acordionConfig}
+                            txtNenhumRegistro='Nenhum eixo adicionado'
                         />
+
+                        
                         
                         <Dialog fullWidth={true}
                             maxWidth={"md"}  {...rhfmethods} open={isForm} onClose={() => setIsForm(false)}>
