@@ -2,6 +2,9 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
+import br.gov.mds.sisConferencia.service.dto.EventoDTO;
+import br.gov.mds.sisConferencia.service.request.EventoRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,7 @@ public class EventoController {
 	private final EventoService eventoService;
 	private final ArquivoService arquivoService;
 
+
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Evento>> listarTodos() {
@@ -34,22 +38,22 @@ public class EventoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Evento> salvar(@RequestBody Evento evento) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.save(evento));
+	public ResponseEntity<EventoDTO> salvar(@RequestBody EventoRequest eventoRequest) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvar(eventoRequest));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Evento> atualizar(@PathVariable Long id, @RequestBody Evento eventoAtualizado) {
-		return ResponseEntity.ok(eventoService.atualizar(id, eventoAtualizado));
+	public ResponseEntity<EventoDTO> atualizar(@PathVariable Long id, @RequestBody EventoDTO eventoAtualizado) {
+		return ResponseEntity.ok(eventoService.atualizar(eventoAtualizado));
 	}
 	
 	@PostMapping("/{idEvento}/arquivo")
-	public ResponseEntity<Evento> inserirImagem(@PathVariable Long idEvento, @RequestBody Arquivo arquivo) {
-		Evento evento = eventoService.findById(idEvento);
-		Arquivo imagem = arquivoService.save(arquivo);
+	public ResponseEntity<EventoDTO> inserirImagem(@PathVariable Long idEvento, @RequestBody ArquivoDTO arquivoDTO) {
+		EventoDTO evento = eventoService.buscarPorID(idEvento);
+		ArquivoDTO imagem = arquivoService.saveDTO(arquivoDTO);
 		evento.setImagem(imagem);
-		return ResponseEntity.ok(eventoService.save(evento));
+		return ResponseEntity.ok(eventoService.saveDTO(evento));
 	}
 
 

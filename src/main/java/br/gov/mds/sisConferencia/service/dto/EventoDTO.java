@@ -1,5 +1,7 @@
 package br.gov.mds.sisConferencia.service.dto;
 
+import br.gov.mds.sisConferencia.models.Arquivo;
+import br.gov.mds.sisConferencia.models.Documento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +24,6 @@ public class EventoDTO {
 
     private String tema;
 
-    private LocalDateTime dataCadastro;
-
     private LocalDateTime dataInicial;
 
     private LocalDateTime dataFinal;
@@ -36,5 +36,9 @@ public class EventoDTO {
 
     private PortariaDTO portaria;
 
+    private ArquivoDTO imagem;
+
     private List<EixoDTO> eixos;
+
+    private List<DocumentoDTO> documentos;
 }
