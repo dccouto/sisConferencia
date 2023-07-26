@@ -81,7 +81,7 @@ public class Evento implements DomainGeneric {
     @JoinColumn(name = "PK_ARQUIVO", nullable = true)
     private Arquivo imagem;
 
-	@OneToMany(mappedBy = "evento")
+	@OneToMany
 	private List<Eixo> eixos;
 	
 	@ManyToMany(cascade = CascadeType.PERSIST)

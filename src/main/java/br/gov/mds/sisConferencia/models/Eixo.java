@@ -1,14 +1,6 @@
 package br.gov.mds.sisConferencia.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
@@ -26,11 +18,8 @@ import lombok.Setter;
 @Table(name = "TB_EIXO", schema = Schemas.SISCONFERENCIA)
 public class Eixo {
 
-	@Id
-	@Column(name = "PK_EIXO")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_EIXO")
-	@SequenceGenerator(name = "SQ_EIXO", sequenceName = "SQ_EIXO", allocationSize = 1)
-	private Long id;
+	@EmbeddedId
+	private EixoID id;
 
 	@Column(name = "NU_EIXO")
 	private Integer numero;
@@ -40,10 +29,6 @@ public class Eixo {
 
 	@Column(name = "DS_DESCRICAO")
 	private String descricao;
-
-	@ManyToOne
-	@JoinColumn(name = "FK_EVENTO")
-	private Evento evento;
 
 	@ManyToOne
 	@JoinColumn(name = "FK_EMENTA", nullable = false)

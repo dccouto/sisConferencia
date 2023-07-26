@@ -3,6 +3,7 @@ package br.gov.mds.sisConferencia.service.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.gov.mds.sisConferencia.service.request.EventoRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,6 +29,11 @@ public class EventoMapper implements EntityMapper<EventoDTO, Evento> {
         return mapper.map(eventoDTO, Evento.class);
     }
 
+
+    public Evento requestToEntity(EventoRequest eventoRequest) {
+        return mapper.map(eventoRequest, Evento.class);
+    }
+
     @Override
     public EventoDTO toDto(Evento evento) {
         return mapper.map(evento, EventoDTO.class);
@@ -46,4 +52,6 @@ public class EventoMapper implements EntityMapper<EventoDTO, Evento> {
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
+
+
 }
