@@ -1,7 +1,7 @@
 
 import { AxiosResponse } from 'axios';
 import api, { getHeaders, getHeadersFiles } from '../../global'
-import { IEvento } from './types';
+import { IEvento, IEventoSalvar } from './types';
 import { IListaEventos } from './types';
 
 
@@ -16,17 +16,17 @@ const apiServiceEventos = {
             return [];
         }
     },
-    criar: async function (data: IEvento): Promise<any>  {
+    criar: async function (data: IEventoSalvar): Promise<any>  {
         try {
             
-            const response = await api.post<IEvento>('/eventos', data, getHeaders());
+            const response = await api.post<IEventoSalvar>('/eventos', data, getHeaders());
             return response;
         } catch (error) {
             console.error('Erro ao obter o tipo de evento:', error);
             throw error;
         }
     },
-    atualizar: async (id: number, data: IEvento):Promise<any>  => {
+    atualizar: async (id: number, data: IEventoSalvar):Promise<any>  => {
         try {
             const response = await api.put(`/eventos/${id}`, data, getHeaders());
             return response;

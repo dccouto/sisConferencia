@@ -37,21 +37,33 @@ interface Props {
     eixos: IEixo[]
     setEixos: (eixos: IEixo[]) => void
     columnConfig: ColumnConfig[]
+    contEixos:number  
 }
 
-const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
+const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
     const [editItem, setEditItem] = useState<IEixo | null>(null)
     const [acordionConfig,setAcordionConfig] = useState<AcordionConfig[] | null>([])
     
+
+
+
+    useEffect(() => {
+
+    }, []);
+
+
+
+
+
     const adicionarEixo = (item: IEixo) => {
         const index = eixos.findIndex((eixo) => eixo.id === item.id)
         const indexAcordion = acordionConfig?.findIndex((eixo) => eixo.id === item.id)
 
         let itemAcordion = {
             id: item.id,
-            AccordionSummary: 'EIXO - ' + item.numero + ' ' +  item.descricao,
+            AccordionSummary:  item.numero + ' - EIXO ' +  item.descricao,
             AccordionDetails: 'EMENTA:' +  item.ementa.descricao,
             object:item,
             icon: 'arrow'
@@ -131,6 +143,8 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
             }
           
             adicionarEixo(dataSave)
+            
+            
             toastSuccess('Eixo adicionado com sucesso.')
             setIsForm(false)
             setEditItem(null)
@@ -152,7 +166,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
             
             rhfmethods.setValue('descricao', '');
             rhfmethods.setValue('ementa.descricao', '');
-            rhfmethods.setValue('numero', 0);
+            rhfmethods.setValue('numero', contEixos);
             rhfmethods.setValue('tema', '');
             rhfmethods.setValue('descricao', '');
             rhfmethods.setValue('id', 0);
@@ -186,6 +200,9 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
                                         gridProps={{ xs: 4}}
                                         inputProps={{ maxLength: 7 }}
                                         InputLabelProps={{ shrink: true }}
+                                        onLoadStart={()=>{
+                                            rhfmethods.setValue('numero',contEixos);
+                                        }}
                                         onChange={(e) => {
                                             const v = parseInt(e.target.value, 10);
                                             rhfmethods.setValue('numero', v);
@@ -208,7 +225,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig }: Props) => {
                                         name={'descricao'}
                                         label={'Descrição'}
                                         gridProps={{ xs: 12 }}
-                                        inputProps={{ maxLength: 100 }}
+                                        inputProps={{ maxLength: 200 }}
                                         InputLabelProps={{ shrink: true }}
                                         onChange={(e) => {
                                             const v = e.target.value

@@ -41,7 +41,7 @@ const Eixo: React.FC<Props> = ({ listaEixos,setEixos }) => {
     
     return (
         <>     
-            <EixoCrud visible={true} eixos={listaEixos} setEixos={setEixos}  columnConfig={columnsConfig}></EixoCrud>
+            <EixoCrud visible={true} eixos={listaEixos} setEixos={setEixos}  columnConfig={columnsConfig} contEixos={listaEixos.length + 1}></EixoCrud>
         </>
     )
 }
