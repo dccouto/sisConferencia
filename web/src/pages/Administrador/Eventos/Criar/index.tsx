@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { Arquivo, IEixo, IEvento, IEventoSalvar, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
+import { Arquivo, IEixo, IEvento, IEventoSalvar,IListaEventos, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useDrawer } from '../../../../components/CidadaniaApp/Drawer/hooks/useDrawer'
@@ -30,12 +30,28 @@ import { IPortaria } from '../../../../services/sisConferenciaApi/portaria/types
 import { ITipoFormato } from '../../../../services/sisConferenciaApi/tipoFormato/types'
 import apiServiceTipoFormato from '../../../../services/sisConferenciaApi/tipoFormato'
 import Eixo from '../../Eixo'
+import { useToast } from '../../../../hooks/useToast'
+import apiService from '../../../../services/sisConferenciaApi/eventos';
+import { borderRadius } from '@mui/system'
+
+
+interface Props {
+    visible: boolean
+    eventos: IListaEventos
+    setEventos: (Eventos: IListaEventos) => void
+    apiService:any
+}
+
+
 
 const CriarEvento = () => {
 
     const { isDesktop } = useDrawer()
     const navigate = useNavigate()
-    
+    const [editItem, setEditItem] = useState<IEventoSalvar | null>(null)
+    const [fileBytes, setFileBytes] = useState<Uint8Array | null>(null);
+    const [imageURL, setImageURL] = useState<string | null>(null);
+    const [id,setId] = useState()
     const FormSchema = yup.object().shape({
          nome: yup.string().required('Campo de preenchimento obrigatório *'),   
          tipoFormato: yup.string().required('Campo de preenchimento obrigatório *'),  
@@ -104,62 +120,94 @@ const CriarEvento = () => {
         atualizarListaCombos();
     }, []);
 
+
+    
+    const { toastSuccess, toastError } = useToast();
+
+
+
     const handleSalvar = async (item: any) => {
         let msg = 'Dados salvos com sucesso.'
 
         item.eixos = listaEixo
 
         //processar bytes imagem upload    
-        if (item.imagem && item.imagem.length > 0) {
-            try {
-              const arquivo = await obterArquivo(item.imagem[0]);
-              
-              item.image = arquivo
-              
-            } catch (error) {
-              // Lidar com erros de leitura do arquivo
-              console.error(error);
-            }
-          }
-
+       
+        const arquivo: Arquivo = {
+            id: 0,  // Substitua por ID real conforme necessário
+            nome: 'imagemArquivo',  // Isso pressupõe que "nome" é um campo no seu formulário
+            byteArquivo: fileBytes,
+        };
+        
+        
+        item.imagem = arquivo
+        setFileBytes(null);
+        
+        let id = 0
+        if(editItem){
+            id = item.id
+        }
 
         console.log('evento', item)
         const dataSave = {
-            
+                id: id ? Number(id) : undefined,
+                dataCadastro: new Date(),
+                dataFinal: item.dataFinal,
+                dataInicial: item.dataInicial,
+                objetivo: item.objetivo,
+                nome: item.nome,
+                portaria: item.portaria,
+                eixos: item.eixos,
+                tema: item.tema,
+                imagem: item.imagem,
+                tipoEvento: item.tipoEvento,
+                tipoFormato: item.tipoFormato,
         } as unknown as IEventoSalvar
 
+        console.log(dataSave)
+        let evento: IEventoSalvar
 
-
+        if (editItem) {
+            evento = await apiService.atualizar(dataSave.id, dataSave)
+        } else {
+            evento = await apiService.criar(dataSave)
+        }
+        
+        toastSuccess('Evento adicionado com sucesso.')
 
     }
 
 
-    const obterArquivo = (file: File): Promise<Arquivo> => {
+    const getFileAsByteArray = async (file: File): Promise<Uint8Array> => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
-      
-          reader.onloadend = (evt) => {
-            if (evt.target?.readyState === FileReader.DONE) {
-              const fileArrayBuffer = evt.target.result as ArrayBuffer;
-              const fileByteArray = new Uint8Array(fileArrayBuffer);
-      
-              // Construindo o objeto Arquivo
-              const arquivo: Arquivo = {
-                id: 0, // Substitua por ID real conforme necessário
-                nome: file.name,
-                byteArquivo: fileByteArray,
-              };
-      
-              resolve(arquivo);
+          reader.onloadend = () => {
+            if (reader.readyState === FileReader.DONE && reader.result) {
+              const arrayBuffer = reader.result as ArrayBuffer;
+              resolve(new Uint8Array(arrayBuffer));
+            } else {
+              reject('Failed to read file');
             }
           };
-      
-          reader.onerror = (evt) => {
-            reject(new Error('Erro na leitura do arquivo'));
-          };
-      
           reader.readAsArrayBuffer(file);
         });
+      };
+
+
+      const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        
+
+        if (e.target.files && e.target.files.length > 0) {
+          const file = e.target.files[0];
+          const bytes = await getFileAsByteArray(file);
+          setFileBytes(bytes);  
+        
+         
+          const blob = new Blob([bytes], { type: 'image/jpeg' }); 
+          const url = URL.createObjectURL(blob);
+          setImageURL(url);
+        
+        }
       };
 
     function umAnoAtras() {
@@ -228,14 +276,14 @@ const CriarEvento = () => {
                                 <RHFDate
                                     name={'dataInicial'}
                                     label={'Inicio'}
-                                    minDate={umAnoAtras()}
-                                    maxDate={new Date()}
+                                    minDate={new Date()}
                                     gridProps={{ lg: 6 }}
                                 />
 
                                 <RHFDate
                                     name={'dataFinal'}
                                     label={'Fim'}
+                                    minDate={new Date()}
                                     gridProps={{ lg: 6 }}
                                 />
                             </FormContainer>
@@ -290,14 +338,20 @@ const CriarEvento = () => {
                                 <Grid  padding={2} item xs={12}>
 
                                 <Titulo titulo={`Imagem`} />
-
+                                    
+                                    {imageURL && (
+                                        <Grid  padding={2} item xs={12}>
+                                            <img src={imageURL} alt="Pré-visualização da imagem"  style={{ maxWidth: '100%', maxHeight: '300px'}} />
+                                        </Grid>
+                                    )}  
                                     <RHFInputFile 
                                         name="imagem" 
                                         label="" 
                                         control={rhfmethods.control as any} 
                                         gridProps={{ lg: 12 }}
+                                        onFileChange={onFileChange}  
                                     />
-
+                                  
                                 </Grid>
 
                                 <Grid  padding={2} item xs={12}>
@@ -341,7 +395,7 @@ const CriarEvento = () => {
                             Voltar para lista
                         </BotaoPadrao>
 
-                        { true //id
+                        { id
                         && (
                             <BotaoPadrao
                                 color='error'

@@ -39,27 +39,29 @@ export interface IEmenta {
     portaria: IPortaria;
     tema: string;
     tipoEvento: ITipoEvento;
-    tipoRegime: ITipoFormato
+    tipoRegime: ITipoFormato;
   }
 
   export interface IEventoSalvar {
+    id:number,
     dataCadastro: string;
     dataFinal: string;
     dataInicial: string;
     objetivo: string | '';
     nome: string;
     portaria: number;
+    eixos: IEixo[];
     tema: string;
-    imagem: Arquivo;
     tipoEvento: number;
     tipoFormato: number;
+    imagem: Arquivo;
   }
   
 
-  export interface Arquivo {
+  export interface Arquivo {  
     id: number;
     nome: string;
-    byteArquivo: Uint8Array;  // Array de bytes
+    byteArquivo: Uint8Array | null;  // Array de bytes
   }
   // Para a lista de eventos
   export type IListaEventos = IEvento[];

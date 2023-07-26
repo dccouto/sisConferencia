@@ -63,7 +63,7 @@ export const TableAcordion = ({ acordionConfig, data, onEdit, onDelete, txtNenhu
                                                 }
                                             >
                                                      <Grid  xs={11} >
-                                                     {item.id} - {item.AccordionSummary} 
+                                                      {item.AccordionSummary} 
                                                      </Grid>
                                                     <Grid xs={1} >
                                                         <EditIcon color='primary' onClick={() => onEdit(item.object)} />
