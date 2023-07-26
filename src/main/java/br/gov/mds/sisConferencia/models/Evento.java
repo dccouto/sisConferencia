@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -89,5 +90,14 @@ public class Evento implements DomainGeneric {
 		inverseJoinColumns = @JoinColumn(name = "FK_DOCUMENTO")
 	)
 	private List<Documento> documentos;
+	
+	
+    @PrePersist
+    public void prePersist() {
+    	if(dataCadastro == null) {
+    		// Define a dataCadastro antes de persistir a entidade no banco de dados
+    		dataCadastro = LocalDateTime.now();
+    	}
+    }
 
 }
