@@ -6,6 +6,7 @@ interface RHFInputFileProps {
   label: string;
   control: Control<FieldValues>;
   gridProps?: GridProps;
+  onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void ;
 }
 
 const RHFInputFile: React.FC<RHFInputFileProps> = ({
@@ -13,6 +14,7 @@ const RHFInputFile: React.FC<RHFInputFileProps> = ({
   label,
   control,
   gridProps,
+  onFileChange,
 }) => {
   return (
     <Grid item {...gridProps}>
@@ -29,7 +31,8 @@ const RHFInputFile: React.FC<RHFInputFileProps> = ({
               variant="outlined"
               InputLabelProps={{ shrink: true }}
               onChange={(e) => {
-                field.onChange((e.target as HTMLInputElement).files);
+                //field.onChange((e.target as HTMLInputElement).files);
+                onFileChange(e as React.ChangeEvent<HTMLInputElement>);  // especificando o tipo do evento aqui
               }}
             />
           )}

@@ -4,10 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import {
-    Box,
-    Dialog,
-    DialogTitle,
-    DialogContent,
     Grid,
     Typography,
 } from '@mui/material'
@@ -112,8 +108,7 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
 
     const initializeFormFields = () => {
         setTimeout(() => {
-            rhfmethods.setValue('objetivo', '');
-            rhfmethods.setValue('id', 0);
+            
         }, 0);
     };
 
