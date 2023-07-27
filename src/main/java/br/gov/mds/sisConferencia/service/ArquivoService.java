@@ -1,11 +1,11 @@
 package br.gov.mds.sisConferencia.service;
 
-import org.springframework.stereotype.Service;
-
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
+import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.Arquivo;
 import br.gov.mds.sisConferencia.repository.ArquivoRepository;
 import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ArquivoService extends GenericService<Arquivo, Long, ArquivoDTO> {
@@ -16,10 +16,12 @@ public class ArquivoService extends GenericService<Arquivo, Long, ArquivoDTO> {
 		super(repository, mapper);
 	}
 
-	public Arquivo atualizar(Long id, Arquivo arquivoAtualizado) {
-		Arquivo existingArquivo = findById(id);
-		existingArquivo.setByteArquivo(arquivoAtualizado.getByteArquivo());
-		return save(existingArquivo);
+	public ArquivoDTO atualizar(Long id, ArquivoDTO arquivoAtualizado) {
+			if (repository.existsById(id)) {
+				return atualizar(mapper.toDto(mapper.toEntity(arquivoAtualizado)));
+			} else {
+				throw new SisConferenciaNotFoundException("Não encontrado.");
+			}
 	}
 	
 }

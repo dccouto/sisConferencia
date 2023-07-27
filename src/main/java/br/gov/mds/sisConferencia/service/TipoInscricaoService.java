@@ -1,12 +1,11 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.TipoInscricao;
 import br.gov.mds.sisConferencia.repository.TipoInscricaoRepository;
 import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 import br.gov.mds.sisConferencia.service.mapper.TipoInscricaoMapper;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class TipoInscricaoService extends GenericService<TipoInscricao, Long, TipoInscricaoDTO> {
@@ -15,11 +14,11 @@ public class TipoInscricaoService extends GenericService<TipoInscricao, Long, Ti
 		super(repository, mapper);
 	}
 
-	@Transactional
-	public TipoInscricao atualizar(Long id, TipoInscricao tipoInscricaoAtualizado) {
-		TipoInscricao tipoInscricao = findById(id);
-		tipoInscricao.setDescricao(tipoInscricaoAtualizado.getDescricao());
-		return save(tipoInscricao);
-
+	public TipoInscricaoDTO atualizar(Long id, TipoInscricaoDTO tipoInscricaoAtualizado) {
+			if (repository.existsById(id)) {
+				return atualizar(mapper.toDto(mapper.toEntity(tipoInscricaoAtualizado)));
+			} else {
+				throw new SisConferenciaNotFoundException("Não encontrado.");
+			}
 	}
 }

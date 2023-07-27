@@ -1,12 +1,11 @@
 package br.gov.mds.sisConferencia.service;
 
+import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.Perfil;
 import br.gov.mds.sisConferencia.repository.PerfilRepository;
 import br.gov.mds.sisConferencia.service.dto.PerfilDTO;
 import br.gov.mds.sisConferencia.service.mapper.PerfilMapper;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class PerfilService extends GenericService<Perfil , Long, PerfilDTO> {
@@ -15,12 +14,12 @@ public class PerfilService extends GenericService<Perfil , Long, PerfilDTO> {
 		super(repository, mapper);
 	}
 
-	@Transactional
-	public Perfil atualizar(Long id, Perfil perfil) {
-		Perfil existingPerfil = findById(id);
-		existingPerfil.setDescricao(perfil.getDescricao());
-		return save(existingPerfil);
-		
+	public PerfilDTO atualizar(Long id, PerfilDTO perfilAtualizado) {
+			if (repository.existsById(id)) {
+				return atualizar(mapper.toDto(mapper.toEntity(perfilAtualizado)));
+			} else {
+				throw new SisConferenciaNotFoundException("Não encontrado.");
+			}
 	}
 
 }
