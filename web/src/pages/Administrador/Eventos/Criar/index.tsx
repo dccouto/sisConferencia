@@ -33,6 +33,7 @@ import Eixo from '../../Eixo'
 import { useToast } from '../../../../hooks/useToast'
 import apiService from '../../../../services/sisConferenciaApi/eventos';
 import { borderRadius } from '@mui/system'
+import { arrayBufferToBase64, fileToArrayBuffer, getFileAsByteArray } from '../../../../utils/files'
 
 
 interface Props {
@@ -49,7 +50,7 @@ const CriarEvento = () => {
     const { isDesktop } = useDrawer()
     const navigate = useNavigate()
     const [editItem, setEditItem] = useState<IEventoSalvar | null>(null)
-    const [fileBytes, setFileBytes] = useState<Uint8Array | null>(null);
+    const [fileBytes, setFileBytes] = useState<string | null>(null);
     const [imageURL, setImageURL] = useState<string | null>(null);
     const [id,setId] = useState()
     const FormSchema = yup.object().shape({
@@ -136,8 +137,8 @@ const CriarEvento = () => {
         //processar bytes imagem upload    
        
         const arquivo: Arquivo = {
-            id: 0,  // Substitua por ID real conforme necessário
-            nome: 'imagemArquivo',  // Isso pressupõe que "nome" é um campo no seu formulário
+            id: 0,  
+            nome: 'imagemArquivo',  
             byteArquivo: fileBytes,
         };
         
@@ -180,20 +181,7 @@ const CriarEvento = () => {
     }
 
 
-    const getFileAsByteArray = async (file: File): Promise<Uint8Array> => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            if (reader.readyState === FileReader.DONE && reader.result) {
-              const arrayBuffer = reader.result as ArrayBuffer;
-              resolve(new Uint8Array(arrayBuffer));
-            } else {
-              reject('Failed to read file');
-            }
-          };
-          reader.readAsArrayBuffer(file);
-        });
-      };
+
 
 
       const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -202,9 +190,15 @@ const CriarEvento = () => {
         if (e.target.files && e.target.files.length > 0) {
           const file = e.target.files[0];
           const bytes = await getFileAsByteArray(file);
-          setFileBytes(bytes);  
-        
-         
+
+
+          const arrayBuffer = await fileToArrayBuffer(file);
+          const base64String = arrayBufferToBase64(arrayBuffer);
+          
+          //carrega array de byte para mandar a imagem ao back
+          setFileBytes(base64String);
+
+          //carrega imagem na tela
           const blob = new Blob([bytes], { type: 'image/jpeg' }); 
           const url = URL.createObjectURL(blob);
           setImageURL(url);

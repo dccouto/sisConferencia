@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -47,8 +48,12 @@ public class Deliberacao {
 	@ManyToOne
 	@JoinColumn(name = "FK_RELATORIO_EVENTO")
 	private RelatorioEvento relatorioEvento;
-
+	
 	@ManyToOne
-	@JoinColumn(name = "FK_EIXO")
+	@JoinColumns({
+	    @JoinColumn(name="FK_EVENTO", referencedColumnName="FK_EVENTO"),
+	    @JoinColumn(name="FK_EIXO", referencedColumnName="FK_EIXO")
+	})
 	private Eixo eixo;
+
 }

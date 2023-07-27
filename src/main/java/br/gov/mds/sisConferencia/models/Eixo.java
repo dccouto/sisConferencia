@@ -1,10 +1,18 @@
 package br.gov.mds.sisConferencia.models;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
@@ -22,10 +30,9 @@ import lombok.Setter;
 @Table(name = "TB_EIXO", schema = Schemas.SISCONFERENCIA)
 public class Eixo {
 
-	@Id
-	@Column(name = "PK_EIXO")
-	private Long id;  // Remove as anotações @GeneratedValue e @SequenceGenerator
-
+    @EmbeddedId
+    private EventoEixoId id;
+    
 	@Column(name = "NU_EIXO")
 	private Integer numero;
 
@@ -34,12 +41,20 @@ public class Eixo {
 
 	@Column(name = "DS_DESCRICAO")
 	private String descricao;
-
+	
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "FK_EVENTO")
-	private Evento evento;
+    @JoinColumn(name = "FK_EVENTO", insertable = false, updatable = false)
+    private Evento evento;
 
 	@ManyToOne
 	@JoinColumn(name = "FK_EMENTA", nullable = false)
+	@Cascade(CascadeType.ALL)
 	private Ementa ementa;
+	
+	@OneToMany(mappedBy = "eixo")
+	private List<EventoEixo> eventoEixo;
+	
+	@OneToMany(mappedBy = "eixo")
+	private List<Deliberacao> deliberacoes;
 }

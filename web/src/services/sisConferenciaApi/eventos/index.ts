@@ -22,7 +22,7 @@ const apiServiceEventos = {
             const response = await api.post<IEventoSalvar>('/eventos', data, getHeaders());
             return response;
         } catch (error) {
-            console.error('Erro ao obter o tipo de evento:', error);
+            console.error('Erro ao criar evento:', error);
             throw error;
         }
     },

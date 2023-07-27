@@ -15,11 +15,25 @@ import java.util.stream.Collectors;
 @ComponentScan
 public class EixoMapper implements EntityMapper<EixoDTO, Eixo> {
 
-    private static ModelMapper mapper;
+    private final ModelMapper mapper;
 
     @Autowired
-    public void setModelMapper(ModelMapper mapper) {
-        EixoMapper.mapper = mapper;
+    public EixoMapper(ModelMapper mapper) {
+        this.mapper = mapper;
+
+        // Ignore ambiguity
+        this.mapper.getConfiguration().setAmbiguityIgnored(true);
+
+        // Mapeamento de Eixo para EixoDTO
+        this.mapper.createTypeMap(Eixo.class, EixoDTO.class)
+            .addMapping(src -> src.getId().getEventoId(), EixoDTO::setEventoId)
+            .addMapping(src -> src.getId().getEixoId(), EixoDTO::setEixoId);
+
+        // Mapeamento de EixoDTO para Eixo
+        this.mapper.createTypeMap(EixoDTO.class, Eixo.class)
+            .addMapping(EixoDTO::getEventoId, (dest, v) -> dest.getId().setEventoId((Long)v))
+            .addMapping(EixoDTO::getEixoId, (dest, v) -> dest.getId().setEixoId((Long)v));
+
     }
 
     @Override

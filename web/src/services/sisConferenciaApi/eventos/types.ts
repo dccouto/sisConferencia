@@ -61,7 +61,7 @@ export interface IEmenta {
   export interface Arquivo {  
     id: number;
     nome: string;
-    byteArquivo: Uint8Array | null;  // Array de bytes
+    byteArquivo: string | null;  // Array de bytes
   }
   // Para a lista de eventos
   export type IListaEventos = IEvento[];

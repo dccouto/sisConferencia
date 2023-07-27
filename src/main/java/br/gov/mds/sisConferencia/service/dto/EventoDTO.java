@@ -1,14 +1,14 @@
 package br.gov.mds.sisConferencia.service.dto;
 
-import br.gov.mds.sisConferencia.models.Arquivo;
-import br.gov.mds.sisConferencia.models.Documento;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -38,6 +38,7 @@ public class EventoDTO {
 
     private ArquivoDTO imagem;
 
+    @JsonManagedReference
     private List<EixoDTO> eixos;
 
     private List<DocumentoDTO> documentos;
