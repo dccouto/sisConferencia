@@ -55,7 +55,6 @@ public class EventoController {
 		return ResponseEntity.ok(eventoService.saveDTO(evento));
 	}
 
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		eventoService.delete(id);
