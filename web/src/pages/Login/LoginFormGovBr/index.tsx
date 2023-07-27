@@ -16,7 +16,7 @@ export default function LoginForm() {
     return (
         <Grid container spacing={3} justifyContent='center' alignItems='center'>
             <Grid item xs={12} sm={6}>
-                <BotaoLoginGovBr link={`${govBrConstants.urlProvider}/authorize?${qs}`} />
+                <BotaoLoginGovBr link={`${govBrConstants.urlProvider}`} />
             </Grid>
         </Grid>
     )

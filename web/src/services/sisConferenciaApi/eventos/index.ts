@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import api, { getHeaders, getHeadersFiles } from '../../global'
 import { IEvento, IEventoSalvar } from './types';
 import { IListaEventos } from './types';
-import { IEventoResultTable } from './data';
+
 
 
 
@@ -11,7 +11,7 @@ import { IEventoResultTable } from './data';
 const apiServiceEventos = {
     listar: async () => {
         try {
-            const response = await api.get<IEventoResultTable[]>('/eventos');
+            const response = await api.get<IEvento[]>('/eventos');
             return response;
         } catch (error) {
             console.error(error);

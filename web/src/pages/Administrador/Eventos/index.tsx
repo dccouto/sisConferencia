@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { IListaEventos } from '../../../services/sisConferenciaApi/eventos/types';
 import EventoCrud from './EventoCrud';
 import apiServiceEventos from '../../../services/sisConferenciaApi/eventos';
-import { IListaEventosTable } from '../../../services/sisConferenciaApi/eventos/data';
+
 
 
 
@@ -29,14 +29,14 @@ const columnsConfig= [
     { key: 'tema', displayName: 'Tema', visible: true },
     { key: 'ativo', displayName: 'Ativo', visible: true },
     { key: 'tipoEvento', displayName: 'Tipo de Evento', visible: true },
-    { key: 'tipoRegime', displayName: 'Tipo de Regime', visible: true },
+    { key: 'tipoFormato', displayName: 'Formato do Evento', visible: true },
 ];
 
 
 
 export default function Eventos() {     
 
-    const [Eventos,setEventos] = useState<IListaEventosTable>([])
+    const [Eventos,setEventos] = useState<IListaEventos>([])
 
 
     useEffect(() => {
