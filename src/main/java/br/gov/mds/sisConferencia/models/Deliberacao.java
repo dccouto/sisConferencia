@@ -1,5 +1,4 @@
 package br.gov.mds.sisConferencia.models;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,29 +27,28 @@ import lombok.Setter;
 @Entity
 @Table(name = "TB_DELIBERACAO", schema = Schemas.SISCONFERENCIA)
 public class Deliberacao {
-	
+
 	@Id
 	@Column(name = "PK_DELIBERACAO")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_DELIBERACAO")
 	@SequenceGenerator(name = "SQ_DELIBERACAO", sequenceName = "SQ_DELIBERACAO", allocationSize = 1)
     private Long id;
-	
+
 	@Column(name = "DS_DESCRICAO")
 	private String descricao;
-	
+
 	@Column(name = "NU_DELIBERACAO")
 	private Long numero;
-	
+
 	@Column(name = "TP_PARA")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoJurisdicaoEnum para;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "FK_RELATORIO_EVENTO")
 	private RelatorioEvento relatorioEvento;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "FK_EIXO")
 	private Eixo eixo;
-
 }

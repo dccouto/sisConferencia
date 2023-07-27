@@ -1,5 +1,4 @@
 package br.gov.mds.sisConferencia.models;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class Evento implements DomainGeneric {
 
 	@Column(name = "NO_EVENTO")
 	private String nome;
-	
+
 	@Column(name = "DS_OBJETIVO", length = 500)
 	private String objetivo;
 
@@ -60,7 +59,7 @@ public class Evento implements DomainGeneric {
 
 	@Column(name = "DT_FINAL")
 	private LocalDateTime dataFinal;
-	
+
 	@Convert(converter = SimNaoConverter.class)
 	@Column(name = "ST_ATIVO")
 	private Boolean ativo;
@@ -76,20 +75,19 @@ public class Evento implements DomainGeneric {
 	@ManyToOne
 	@JoinColumn(name = "FK_PORTARIA", nullable = true)
 	private Portaria portaria;
-	
+
     @ManyToOne
     @JoinColumn(name = "PK_ARQUIVO", nullable = true)
     private Arquivo imagem;
 
-	@OneToMany
+	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
 	private List<Eixo> eixos;
-	
+
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "RL_EVENTO_DOCUMENTO", 
 		joinColumns = @JoinColumn(name = "FK_EVENTO"), 
 		inverseJoinColumns = @JoinColumn(name = "FK_DOCUMENTO")
 	)
-	private List<Documento> documentos;
 	
 	
     @PrePersist
@@ -99,5 +97,5 @@ public class Evento implements DomainGeneric {
     		dataCadastro = LocalDateTime.now();
     	}
     }
-
+	private List<Documento> documentos;
 }
