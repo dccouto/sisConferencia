@@ -17,7 +17,7 @@
         <log4j2.version>2.17.0</log4j2.version>
         <sso-servico-client.version>0.0.40</sso-servico-client.version>
         <sso-oauth-client.version>0.0.40</sso-oauth-client.version>
-	    <sonar.coverage.exclusions>**/models/*,**/facade/*,**/config/*,**/enums/*,**/repository/*,**/dto/*,**/custom/*,**/rest/*,**/exceptions/*,**/util/*,**/converter/*,**/beans/*</sonar.coverage.exclusions>
+	    <sonar.coverage.exclusions>**/models/*,**/facade/*,**/config/*,**/enums/*,**/repository/*,**/dto/*,**/custom/*,**/rest/*,**/exceptions/*,**/util/*,**/converter/*,**/beans/*,**/mapper/*</sonar.coverage.exclusions>
 
 	</properties>
 	<dependencies>
