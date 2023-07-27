@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,23 +19,23 @@ public class ArquivoController {
 	private final ArquivoService arquivoService;
 
 	@GetMapping
-	public ResponseEntity<List<Arquivo>> listarTodos() {
-		return ResponseEntity.ok(arquivoService.findAll());
+	public ResponseEntity<List<ArquivoDTO>> listarTodos() {
+		return ResponseEntity.ok(arquivoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Arquivo> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(arquivoService.findById(id));
+	public ResponseEntity<ArquivoDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(arquivoService.buscarPorID(id));
 
 	}
 
 	@PostMapping
-	public ResponseEntity<Arquivo> salvar(@RequestBody Arquivo arquivo) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(arquivoService.save(arquivo));
+	public ResponseEntity<ArquivoDTO> salvar(@RequestBody ArquivoDTO arquivo) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(arquivoService.saveDTO(arquivo));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Arquivo> atualizar(@PathVariable Long id, @RequestBody Arquivo arquivoAtualizado) {
+	public ResponseEntity<ArquivoDTO> atualizar(@PathVariable Long id, @RequestBody ArquivoDTO arquivoAtualizado) {
 		return ResponseEntity.ok(arquivoService.atualizar(id, arquivoAtualizado));
 	}
 

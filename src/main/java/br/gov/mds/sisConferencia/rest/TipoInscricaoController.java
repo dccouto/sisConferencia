@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,27 +20,26 @@ public class TipoInscricaoController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<TipoInscricao>> listarTodos() {
-		return ResponseEntity.ok(tipoInscricaoService.findAll());
+	public ResponseEntity<List<TipoInscricaoDTO>> listarTodos() {
+		return ResponseEntity.ok(tipoInscricaoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<TipoInscricao> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(tipoInscricaoService.findById(id));
+	public ResponseEntity<TipoInscricaoDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(tipoInscricaoService.buscarPorID(id));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<TipoInscricao> salvar(@RequestBody TipoInscricao tipoInscricao) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(tipoInscricaoService.save(tipoInscricao));
+	public ResponseEntity<TipoInscricaoDTO> salvar(@RequestBody TipoInscricaoDTO tipoInscricao) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(tipoInscricaoService.saveDTO(tipoInscricao));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<TipoInscricao> atualizar(@PathVariable Long id,
-			@RequestBody TipoInscricao tipoInscricaoAtualizado) {
+	public ResponseEntity<TipoInscricaoDTO> atualizar(@PathVariable Long id,
+			@RequestBody TipoInscricaoDTO tipoInscricaoAtualizado) {
 		return ResponseEntity.ok(tipoInscricaoService.atualizar(id, tipoInscricaoAtualizado));
-
 	}
 
 	@DeleteMapping("/{id}")

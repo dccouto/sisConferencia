@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.OrgaoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +20,25 @@ public class OrgaoController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Orgao>> listarTodos() {
-		return ResponseEntity.ok(orgaoService.findAll());
+	public ResponseEntity<List<OrgaoDTO>> listarTodos() {
+		return ResponseEntity.ok(orgaoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Orgao> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(orgaoService.findById(id));
+	public ResponseEntity<OrgaoDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(orgaoService.buscarPorID(id));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Orgao> salvar(@RequestBody Orgao orgao) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(orgaoService.save(orgao));
+	public ResponseEntity<OrgaoDTO> salvar(@RequestBody OrgaoDTO orgao) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(orgaoService.saveDTO(orgao));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Orgao> atualizar(@PathVariable Long id, @RequestBody Orgao orgaoAtualizado) {
+	public ResponseEntity<OrgaoDTO> atualizar(@PathVariable Long id, @RequestBody OrgaoDTO orgaoAtualizado) {
 		return ResponseEntity.ok(orgaoService.atualizar(id, orgaoAtualizado));
 	}
 

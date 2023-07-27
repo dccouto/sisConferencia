@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +20,25 @@ public class AcompanhanteController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Acompanhante>> listarTodos() {
-		return ResponseEntity.ok(acompanhanteService.findAll());
+	public ResponseEntity<List<AcompanhanteDTO>> listarTodos() {
+		return ResponseEntity.ok(acompanhanteService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Acompanhante> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(acompanhanteService.findById(id));
+	public ResponseEntity<AcompanhanteDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(acompanhanteService.buscarPorID(id));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Acompanhante> salvar(@RequestBody Acompanhante acompanhante) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(acompanhanteService.save(acompanhante));
+	public ResponseEntity<AcompanhanteDTO> salvar(@RequestBody AcompanhanteDTO acompanhante) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(acompanhanteService.saveDTO(acompanhante));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Acompanhante> atualizar(@PathVariable Long id, @RequestBody Acompanhante acompanhanteAtualizado) {
+	public ResponseEntity<AcompanhanteDTO> atualizar(@PathVariable Long id, @RequestBody AcompanhanteDTO acompanhanteAtualizado) {
 		return ResponseEntity.ok(acompanhanteService.atualizar(id, acompanhanteAtualizado));
 	}
 
