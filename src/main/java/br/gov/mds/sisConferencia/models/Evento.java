@@ -89,6 +89,9 @@ public class Evento implements DomainGeneric {
 		inverseJoinColumns = @JoinColumn(name = "FK_DOCUMENTO")
 	)
 	
+
+	private List<Documento> documentos;
+	
 	
     @PrePersist
     public void prePersist() {
@@ -97,5 +100,4 @@ public class Evento implements DomainGeneric {
     		dataCadastro = LocalDateTime.now();
     	}
     }
-	private List<Documento> documentos;
 }
