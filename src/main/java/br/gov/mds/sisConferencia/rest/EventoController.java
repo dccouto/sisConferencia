@@ -36,7 +36,7 @@ public class EventoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<EventoDTO> salvar(@RequestBody EventoRequest eventoRequest) {
+	public ResponseEntity<EventoDTO> salvar(@RequestBody EventoRequest eventoRequest) throws Exception {
 		return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvar(eventoRequest));
 	}
 
