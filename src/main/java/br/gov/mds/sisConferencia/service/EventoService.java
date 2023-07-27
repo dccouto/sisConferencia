@@ -1,10 +1,6 @@
 package br.gov.mds.sisConferencia.service;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.Eixo;
 import br.gov.mds.sisConferencia.models.Evento;
 import br.gov.mds.sisConferencia.models.EventoEixoId;
@@ -13,6 +9,8 @@ import br.gov.mds.sisConferencia.repository.EventoRepository;
 import br.gov.mds.sisConferencia.service.dto.EventoDTO;
 import br.gov.mds.sisConferencia.service.mapper.EventoMapper;
 import br.gov.mds.sisConferencia.service.request.EventoRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EventoService extends GenericService<Evento, Long, EventoDTO> {
@@ -58,22 +56,12 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 	        throw e;
 	    }
 	}
-
-	
-
-	@Transactional
-	public EventoDTO atualizar(Long id, EventoRequest eventoRequest) throws Exception {
-		try {
-			if ( eventoRequest.getId() != null && eventoRequest.getId().equals(id)) {
-				return atualizar(mapper.toDto(eventoMapper.requestToEntity(eventoRequest)));
+	public EventoDTO atualizar(Long id, EventoDTO eventoAtualizado) {
+			if (repository.existsById(id)) {
+				return atualizar(mapper.toDto(mapper.toEntity(eventoAtualizado)));
 			} else {
-				return salvar(eventoRequest);
+				throw new SisConferenciaNotFoundException("Não encontrado.");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
 	}
-
 
 }
