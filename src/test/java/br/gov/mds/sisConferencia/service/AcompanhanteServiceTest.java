@@ -11,11 +11,9 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
@@ -25,7 +23,6 @@ import br.gov.mds.sisConferencia.service.dto.AcompanhanteDTO;
 import br.gov.mds.sisConferencia.service.mapper.AcompanhanteMapper;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
 public class AcompanhanteServiceTest {
 
 	@Mock
@@ -123,6 +120,7 @@ public class AcompanhanteServiceTest {
 		verify(repositoryMock, times(1)).save(acompanhanate);
 		verify(mapperMock, times(1)).toDto(acompanhanate);
 	}
+
 
 
 }
