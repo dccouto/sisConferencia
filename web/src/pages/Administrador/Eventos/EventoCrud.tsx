@@ -4,6 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import {
+    Box,
+    Dialog,
+    DialogTitle,
+    DialogContent,
     Grid,
     Typography,
 } from '@mui/material'
@@ -18,6 +22,7 @@ import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
 import { IEvento } from '../../../services/sisConferenciaApi/eventos/types'
 import { IListaEventos } from '../../../services/sisConferenciaApi/eventos/types'
+import { IEventoResultTable, IListaEventosTable } from '../../../services/sisConferenciaApi/eventos/data'
 
 interface ColumnConfig {
     key: string
@@ -28,8 +33,8 @@ interface ColumnConfig {
 
 interface Props {
     visible: boolean
-    eventos: IListaEventos
-    setEventos: (Eventos: IListaEventos) => void
+    eventos: IListaEventosTable
+    setEventos: (Eventos: IListaEventosTable) => void
     apiService:any
     columnConfig: ColumnConfig[]
 }
@@ -39,7 +44,7 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
     const [isForm, setIsForm] = useState(false)
     const [editItem, setEditItem] = useState<IEvento | null>(null)
 
-    const adicionarEventos = (item: IEvento) => {
+    const adicionarEventos = (item: IEventoResultTable) => {
         const index = eventos.findIndex((evento) => evento.id === item.id)
     
         if (index !== -1) {
@@ -75,7 +80,7 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
             }),
     })
 
-    const rhfmethods = useForm<IEvento>({ resolver: yupResolver(FormSchema) })
+    const rhfmethods = useForm<IEventoResultTable>({ resolver: yupResolver(FormSchema) })
 
     const handleSalvar = async (values: IEvento) => {
         try {
@@ -83,7 +88,7 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
                 id: values.id,
                 objetivo: values.objetivo,
             }
-            let evento: IEvento
+            let evento: IEventoResultTable
 
             if (editItem) {
                 evento = await apiService.atualizar(dataSave.id, dataSave)
@@ -101,17 +106,10 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
     }
 
     const handleEditar = (item: IEvento) => {
-        setEditItem(item)
-        setIsForm(true)
-        rhfmethods.reset(item)
+   
     }
 
-    const initializeFormFields = () => {
-        setTimeout(() => {
-            
-        }, 0);
-    };
-
+ 
     return (
         <>
             <FormProvider {...rhfmethods}>

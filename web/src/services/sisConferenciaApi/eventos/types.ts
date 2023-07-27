@@ -1,8 +1,23 @@
 export interface IEmenta {
     descricao: string;
     id: number;
+}
+
+
+export interface IEixoResult {
+    descricao: string;
+    ementa: IEmenta;
+    id: IidEventoEixo;
+    numero: number;
+    tema: string;
   }
-  
+
+  export interface IDocumento {
+    id: number;
+    dataEnvio: Date; 
+    extensao: string;
+    
+}
   export interface IEixo {
     descricao: string;
     ementa: IEmenta;
@@ -16,6 +31,7 @@ export interface IEmenta {
     descricao: string;
     id: number;
     numero: string;
+    documento:any
   }
   
   export interface ITipoEvento {
@@ -27,6 +43,13 @@ export interface IEmenta {
     descricao: string;
     id: number;
   }
+
+
+    
+  export interface IidEventoEixo {
+    eixoId: number;
+    eventoId: number;
+  }
   
   export interface IEvento {
     dataCadastro: string;
@@ -34,7 +57,7 @@ export interface IEmenta {
     dataInicial: string;
     objetivo: string;
     nome: string;
-    eixos: IEixo[];
+    eixos: IEixoResult[];
     id: number;
     portaria: IPortaria;
     tema: string;

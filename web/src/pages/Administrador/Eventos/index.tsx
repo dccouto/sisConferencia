@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { IListaEventos } from '../../../services/sisConferenciaApi/eventos/types';
 import EventoCrud from './EventoCrud';
 import apiServiceEventos from '../../../services/sisConferenciaApi/eventos';
+import { IListaEventosTable } from '../../../services/sisConferenciaApi/eventos/data';
 
 
 
@@ -21,21 +22,21 @@ const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 
 const columnsConfig= [
     { key: 'id', displayName: 'ID', width: 300, visible: true },
-    { key: 'descricao', displayName: 'Descrição', visible: true },
-    { key: 'dataCadastro', displayName: 'Data Cadastro', visible: true },
+    { key: 'nome', displayName: 'Nome', width: 300, visible: true },
+    { key: 'objetivo', displayName: 'Objetivo', visible: true },
     { key: 'dataFinal', displayName: 'Data Final', visible: true },
     { key: 'dataInicial', displayName: 'Data Inicial', visible: true },
-    { key: 'portaria', displayName: 'Portaria', visible: true },
     { key: 'tema', displayName: 'Tema', visible: true },
+    { key: 'ativo', displayName: 'Ativo', visible: true },
     { key: 'tipoEvento', displayName: 'Tipo de Evento', visible: true },
     { key: 'tipoRegime', displayName: 'Tipo de Regime', visible: true },
 ];
 
 
 
-export default function Eventos() {
+export default function Eventos() {     
 
-    const [Eventos,setEventos] = useState<IListaEventos>([])
+    const [Eventos,setEventos] = useState<IListaEventosTable>([])
 
 
     useEffect(() => {
