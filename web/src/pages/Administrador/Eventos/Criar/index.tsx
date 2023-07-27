@@ -61,6 +61,8 @@ const CriarEvento = () => {
 
     });
 
+    const { toastSuccess, toastError } = useToast();
+
     const [excluir, setExcluir] = useState(false)
 
     const rhfmethods = useForm<IEvento>({ resolver: yupResolver(FormSchema) })
@@ -77,6 +79,8 @@ const CriarEvento = () => {
     const [tipoFormatos, setTipoFormatos] = useState<ITipoFormato[]>([]);
     const [portarias, setPortarias] = useState<IPortaria[]>([]);
 
+
+    //Carrega combos
     useEffect(() => {
         const atualizarListaCombos = async () => {
             try {
@@ -122,10 +126,8 @@ const CriarEvento = () => {
 
 
     
-    const { toastSuccess, toastError } = useToast();
 
-
-
+    //Salvar Evento
     const handleSalvar = async (item: any) => {
         let msg = 'Dados salvos com sucesso.'
 
