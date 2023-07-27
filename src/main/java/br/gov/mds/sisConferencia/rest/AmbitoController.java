@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.AmbitoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,26 +20,26 @@ public class AmbitoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Ambito> create(@RequestBody Ambito ambito) {
-		return ResponseEntity.ok(ambitoService.save(ambito));
+	public ResponseEntity<AmbitoDTO> create(@RequestBody AmbitoDTO ambito) {
+		return ResponseEntity.ok(ambitoService.saveDTO(ambito));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Ambito> update(@PathVariable Long id, @RequestBody Ambito ambito) {
+	public ResponseEntity<AmbitoDTO> update(@PathVariable Long id, @RequestBody AmbitoDTO ambito) {
 		return ResponseEntity.ok(ambitoService.atualizar(id, ambito));
 	}
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Ambito>> getAll() {
-		return ResponseEntity.ok(ambitoService.findAll());
+	public ResponseEntity<List<AmbitoDTO>> getAll() {
+		return ResponseEntity.ok(ambitoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Ambito> getById(@PathVariable Long id) {
-		return ResponseEntity.ok(ambitoService.findById(id));
+	public ResponseEntity<AmbitoDTO> getById(@PathVariable Long id) {
+		return ResponseEntity.ok(ambitoService.buscarPorID(id));
 	}
 
 	@DeleteMapping("/{id}")

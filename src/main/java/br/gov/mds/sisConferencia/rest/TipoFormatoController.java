@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.TipoFormatoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,23 +28,23 @@ public class TipoFormatoController {
 	private final TipoFormatoService tipoFormatoService;
 
 	@GetMapping
-	public ResponseEntity<List<TipoFormato>> listarTodos() {
-		return ResponseEntity.ok(tipoFormatoService.findAll());
+	public ResponseEntity<List<TipoFormatoDTO>> listarTodos() {
+		return ResponseEntity.ok(tipoFormatoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<TipoFormato> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(tipoFormatoService.findById(id));
+	public ResponseEntity<TipoFormatoDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(tipoFormatoService.buscarPorID(id));
 
 	}
 
 	@PostMapping
-	public ResponseEntity<TipoFormato> salvar(@RequestBody TipoFormato tipoFormato) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(tipoFormatoService.save(tipoFormato));
+	public ResponseEntity<TipoFormatoDTO> salvar(@RequestBody TipoFormatoDTO tipoFormato) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(tipoFormatoService.saveDTO(tipoFormato));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<TipoFormato> atualizar(@PathVariable Long id, @RequestBody TipoFormato tipoFormatoAtualizado) {
+	public ResponseEntity<TipoFormatoDTO> atualizar(@PathVariable Long id, @RequestBody TipoFormatoDTO tipoFormatoAtualizado) {
 		return ResponseEntity.ok(tipoFormatoService.atualizar(id, tipoFormatoAtualizado));
 	}
 
