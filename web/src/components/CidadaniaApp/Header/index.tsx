@@ -20,7 +20,7 @@ export function Header() {
                     <MenuButton />
                     <Grid item sx={{ flexGrow: 1 }}>
                         <Grid container alignItems='center' justifyContent='space-between'>
-                            <DescSistema />
+                            <DescSistema fontSize={36} />
                             <DescUsuario />
                         </Grid>
                     </Grid>

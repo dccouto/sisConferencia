@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FormControl, Grid, Typography } from '@mui/material'
+import { Box, FormControl, Grid, Typography } from '@mui/material'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -24,6 +24,7 @@ import { RHFMaskedInput } from '../../../components/Formulario/reactHookForms/RH
 import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import ServiceStorage from '../../../services/storage'
 import LoginFormGovBr from '../LoginFormGovBr'
+import { DescSistema } from '../../../components/CidadaniaApp/Header/components/DescSistema'
 
 
 const LoginForm = () => {
@@ -37,7 +38,7 @@ const LoginForm = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const imageSize = isDesktop ? 400 : 0
+    const imageSize = isDesktop ? 100 : 0
 
     const defaultValues = {
         nu_cpf_pessoa: '',
@@ -120,37 +121,78 @@ const LoginForm = () => {
     const botaoGovBr =    <LoginFormGovBr></LoginFormGovBr>
     
     return (
+        
         <Grid >
-           
-            
-            <Grid item xs={isDesktop ? 7 : 12} paddingTop={2}>
 
-                
-            </Grid>
-            <Grid alignItems={'center'} >
-                        <img
-                            src='/logo.png'
-                            style={{ width: imageSize, height: imageSize }}
-                            alt='Minha Rede Suas'
-                            className={'titulo'}
-                        />
+                    <Grid
+                                item
+                                xs={12}
+                                sm={12}
+                                sx={{
+                                    paddingTop:'20%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                              
+                                }}
+                            >
+
+                        <Box sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'Left', 
+                            width: '100%', 
+                            height: '100%',
+                            marginLeft: '4%', 
+                        }}>
+                            <DescSistema fontSize={30} />
+                        </Box>
+                    
+                        <Typography  marginTop={1} marginLeft={'5%'} marginRight={5}  fontSize={15}>
+                        O Conselho Nacional de Assistência Social – CNAS foi instituída pela Lei Orgânica da Assistência Social LOAS (Lei no 8.742, de 7 de dezembro de 1993), como órgão superior de deliberação colegiada vinculada à estrutura do órgão da Administração Pública Federal responsável pela coordenação da Política Nacional de Assistência Social, atualmente o Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome.
+                        Conferências e Reuniões
+                        </Typography>
+
                          <FormContainer onSubmitHandler={loginMock}>
 
                             <BotaoPadrao
                                 loading={loading}
                                 size='large'
                                 type={'submit'}
-                                style={{ width: '100%', borderRadius: 5 }}
+                                style={{ width: '30%', borderRadius: 5 }}
                             >
                                 Acessar
                             </BotaoPadrao>
+                            {botaoGovBr} 
                         </FormContainer>
-                        <Typography fontWeight={'bold'} marginTop={1} fontSize={15}>
-                           SIS CONFERÊNCIA
-                        </Typography>
-                        <Typography fontSize={12}>Versão {versao}</Typography>
+                        
+
+                        <Box sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            width: '100%', 
+                            height: '100%',
+                            marginRight: '10%', 
+                        }}>
+                             <Typography fontWeight={'bold'} marginTop={1} fontSize={15}>
+                                SIS CONFERÊNCIA
+                            </Typography>
+                        </Box>
+                        <Box sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            width: '100%', 
+                            height: '100%',
+                            marginRight: '10%', 
+                        }}>
+                            
+                            <Typography fontSize={12}>Versão {versao}</Typography>
+                        </Box>
+                          
                     </Grid>
-            {botaoGovBr} 
+                    
+           
         </Grid>
     )
 }
