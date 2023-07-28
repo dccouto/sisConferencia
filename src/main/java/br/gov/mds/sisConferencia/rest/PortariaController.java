@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.PortariaDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,26 +30,26 @@ public class PortariaController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Portaria>> listarTodos() {
-		return ResponseEntity.ok(portariaService.findAll());
+	public ResponseEntity<List<PortariaDTO>> listarTodos() {
+		return ResponseEntity.ok(portariaService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Portaria> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(portariaService.findById(id));
+	public ResponseEntity<PortariaDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(portariaService.buscarPorID(id));
 
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Portaria> salvar(@RequestBody Portaria portaria) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(portariaService.save(portaria));
+	public ResponseEntity<PortariaDTO> salvar(@RequestBody PortariaDTO portaria) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(portariaService.saveDTO(portaria));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Portaria> atualizar(@PathVariable Long id, @RequestBody Portaria portariaAtualizada) {
+	public ResponseEntity<PortariaDTO> atualizar(@PathVariable Long id, @RequestBody PortariaDTO portariaAtualizada) {
 		return ResponseEntity.ok(portariaService.atualizar(id, portariaAtualizada));
 
 	}

@@ -26,13 +26,15 @@ public class EventoController {
 
 
 	@GetMapping
-	public ResponseEntity<List<Evento>> listarTodos() {
-		return ResponseEntity.ok(eventoService.findAll());
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<List<EventoDTO>> listarTodos() {
+		return ResponseEntity.ok(eventoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Evento> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(eventoService.findById(id));
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<EventoDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(eventoService.buscarPorID(id));
 	}
 
 	@PostMapping
@@ -42,7 +44,7 @@ public class EventoController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<EventoDTO> atualizar(@PathVariable Long id, @RequestBody EventoDTO eventoAtualizado) {
-		return ResponseEntity.ok(eventoService.atualizar(eventoAtualizado));
+		return ResponseEntity.ok(eventoService.atualizar(id, eventoAtualizado));
 	}
 	
 	@PostMapping("/{idEvento}/arquivo")
@@ -52,7 +54,6 @@ public class EventoController {
 		evento.setImagem(imagem);
 		return ResponseEntity.ok(eventoService.saveDTO(evento));
 	}
-
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {

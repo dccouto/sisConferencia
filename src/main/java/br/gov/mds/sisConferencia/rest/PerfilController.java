@@ -2,6 +2,7 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import br.gov.mds.sisConferencia.service.dto.PerfilDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +20,25 @@ public class PerfilController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<List<Perfil>> listarTodos() {
-		return ResponseEntity.ok(perfilService.findAll());
+	public ResponseEntity<List<PerfilDTO>> listarTodos() {
+		return ResponseEntity.ok(perfilService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Perfil> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(perfilService.findById(id));
+	public ResponseEntity<PerfilDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(perfilService.buscarPorID(id));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Perfil> salvar(@RequestBody Perfil perfil) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(perfilService.save(perfil));
+	public ResponseEntity<PerfilDTO> salvar(@RequestBody PerfilDTO perfil) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(perfilService.saveDTO(perfil));
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Perfil> atualizar(@PathVariable Long id, @RequestBody Perfil perfilAtualizado) {
+	public ResponseEntity<PerfilDTO> atualizar(@PathVariable Long id, @RequestBody PerfilDTO perfilAtualizado) {
 		return ResponseEntity.ok(perfilService.atualizar(id, perfilAtualizado));
 	}
 

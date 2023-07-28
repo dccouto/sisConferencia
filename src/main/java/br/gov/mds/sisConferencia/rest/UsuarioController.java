@@ -18,18 +18,17 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 
 	private final UsuarioService usuarioService;
-	private final EntityMapper<UsuarioDTO, Usuario> mapper;
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<UsuarioDTO>> listarTodos() {
-		return ResponseEntity.ok(mapper.toDto(usuarioService.findAll()));
+		return ResponseEntity.ok(usuarioService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(mapper.toDto(usuarioService.findById(id)));
+		return ResponseEntity.ok(usuarioService.buscarPorID(id));
 
 	}
 
@@ -41,8 +40,8 @@ public class UsuarioController {
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
-		return ResponseEntity.ok(mapper.toDto(usuarioService.atualizar(id, usuarioAtualizado)));
+	public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody UsuarioDTO usuarioAtualizado) {
+		return ResponseEntity.ok(usuarioService.atualizar(id, usuarioAtualizado));
 
 	}
 
