@@ -155,8 +155,8 @@ const CriarEvento = () => {
         const dataSave = {
                 id: id ? Number(id) : undefined,
                 dataCadastro: new Date(),
-                dataFinal: item.dataFinal,
-                dataInicial: item.dataInicial,
+                dataFinal: new Date(item.dataFinal),
+                dataInicial: new Date(item.dataInicial),
                 objetivo: item.objetivo,
                 nome: item.nome,
                 portaria: item.portaria,
