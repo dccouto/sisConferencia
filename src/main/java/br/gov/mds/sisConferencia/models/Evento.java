@@ -18,8 +18,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import br.gov.mds.sisConferencia.models.interfaces.DomainGeneric;
 import br.gov.mds.sisConferencia.util.Schemas;
 import br.gov.mds.sisConferencia.util.converter.SimNaoConverter;
@@ -82,7 +80,7 @@ public class Evento implements DomainGeneric {
     @JoinColumn(name = "PK_ARQUIVO", nullable = true)
     private Arquivo imagem;
     
-    @JsonManagedReference
+    
 	@OneToMany(mappedBy = "evento")
 	private List<Eixo> eixos;
 
@@ -91,10 +89,10 @@ public class Evento implements DomainGeneric {
 		joinColumns = @JoinColumn(name = "FK_EVENTO"), 
 		inverseJoinColumns = @JoinColumn(name = "FK_DOCUMENTO")
 	)
-	
-
 	private List<Documento> documentos;
 	
+	
+
 
     @PrePersist
     public void prePersist() {

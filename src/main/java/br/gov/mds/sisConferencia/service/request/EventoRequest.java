@@ -1,7 +1,8 @@
 package br.gov.mds.sisConferencia.service.request;
 
-import br.gov.mds.sisConferencia.models.Arquivo;
-import br.gov.mds.sisConferencia.models.Eixo;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
 import br.gov.mds.sisConferencia.service.dto.EixoDTO;
 import lombok.AllArgsConstructor;
@@ -9,16 +10,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventoRequest {
     private Long id;
-    private String dataFinal;
-    private String dataInicial;
+    private LocalDateTime dataFinal;
+    private LocalDateTime dataInicial;
     private String objetivo;
     private String nome;
     private Long portaria;
