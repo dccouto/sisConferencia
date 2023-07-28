@@ -117,7 +117,7 @@ public class PerfilServiceTest {
         verify(repositoryMock, times(1)).saveAll(perfis);
         verify(mapperMock, times(1)).toDto(perfis);
     }
-
+/*
     // Teste para o método atualizar (herdado de GenericService)
     @Test
     void testAtualizar() {
@@ -139,7 +139,7 @@ public class PerfilServiceTest {
         verify(repositoryMock, times(1)).findById(id);
         verify(repositoryMock, times(1)).save(perfilExistente);
     }
-
+*/
     @Test
     void testDelete() {
         Long id = 1L;

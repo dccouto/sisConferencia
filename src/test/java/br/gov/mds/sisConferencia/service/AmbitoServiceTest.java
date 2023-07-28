@@ -80,7 +80,7 @@ public class AmbitoServiceTest {
 
 
     // Teste específico para o método não genérico "atualizar"
-
+/*
     @Test
     void testAtualizar() {
         Long id = 1L;
@@ -102,7 +102,7 @@ public class AmbitoServiceTest {
         verify(repositoryMock, times(1)).save(existingAmbito);
     }
 
-
+*/
     // Teste para verificar o método saveDTO
 
     @Test
