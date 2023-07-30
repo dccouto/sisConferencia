@@ -1,7 +1,5 @@
 package br.gov.mds.sisConferencia.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,5 +22,5 @@ public class EixoDTO {
     private String descricao;
 
    
-    private EmentaDTO ementa;
+    private String ementa;
 }

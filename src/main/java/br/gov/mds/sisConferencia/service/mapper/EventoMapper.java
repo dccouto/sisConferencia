@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Component;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
@@ -18,9 +17,6 @@ import br.gov.mds.sisConferencia.service.PortariaService;
 import br.gov.mds.sisConferencia.service.TipoEventoService;
 import br.gov.mds.sisConferencia.service.TipoFormatoService;
 import br.gov.mds.sisConferencia.service.dto.EventoDTO;
-import br.gov.mds.sisConferencia.service.dto.PortariaDTO;
-import br.gov.mds.sisConferencia.service.dto.TipoEventoDTO;
-import br.gov.mds.sisConferencia.service.dto.TipoFormatoDTO;
 import br.gov.mds.sisConferencia.service.request.EventoRequest;
 
 @Component
@@ -51,23 +47,17 @@ public class EventoMapper implements EntityMapper<EventoDTO, Evento> {
     }
 
 
-    public Evento requestToEntity(EventoRequest eventoRequest) throws NotFoundException {
-    	Evento evento =mapper.map(eventoRequest, Evento.class); 
+    public Evento requestToEntity(EventoRequest eventoRequest) {
+    	Evento evento = mapper.map(eventoRequest, Evento.class); 
     	
-    	TipoEventoDTO tipoEventoDto = tipoEventoService.buscarPorID(eventoRequest.getTipoEvento());
-    	TipoEvento tipoEvento = mapper.map(tipoEventoDto, TipoEvento.class);
+    	TipoEvento tipoEvento = tipoEventoService.findById(eventoRequest.getTipoEvento());
     	evento.setTipoEvento(tipoEvento);
     	
-    	TipoFormatoDTO tipoFormatoDto = tipoFormatoEventoService.buscarPorID(eventoRequest.getTipoFormato());
-    	TipoFormato tipoFormato = mapper.map(tipoFormatoDto, TipoFormato.class);
+    	TipoFormato tipoFormato = tipoFormatoEventoService.findById(eventoRequest.getTipoFormato());
     	evento.setTipoFormato(tipoFormato);
     	
-    	PortariaDTO portariaDto = portairaService.buscarPorID(eventoRequest.getPortaria());
-    	Portaria portaria = mapper.map(portariaDto, Portaria.class);
+    	Portaria portaria = portairaService.findById(eventoRequest.getPortaria());
     	evento.setPortaria(portaria);
-    	
- 
-    	
     	
         return evento;
     }

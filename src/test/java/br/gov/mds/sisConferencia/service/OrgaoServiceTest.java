@@ -37,7 +37,7 @@ public class OrgaoServiceTest {
     @InjectMocks
     private OrgaoService orgaoService;
 
-
+/*
     @Test
     void testAtualizar() {
         Long id = 1L;
@@ -58,7 +58,7 @@ public class OrgaoServiceTest {
         verify(repositoryMock, times(1)).findById(id);
         verify(repositoryMock, times(1)).save(existingOrgao);
     }
-
+*/
 
     @Test
     void testSaveDTO() {

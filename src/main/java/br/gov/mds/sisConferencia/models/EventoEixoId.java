@@ -16,7 +16,7 @@ public class EventoEixoId implements Serializable {
     private Long eventoId;
 
     @Column(name = "FK_EIXO")
-    private Long eixoId;
+    private Long numeroEixo;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -27,12 +27,12 @@ public class EventoEixoId implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		EventoEixoId other = (EventoEixoId) obj;
-		return Objects.equals(eixoId, other.eixoId) && Objects.equals(eventoId, other.eventoId);
+		return Objects.equals(numeroEixo, other.numeroEixo) && Objects.equals(eventoId, other.eventoId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(eixoId, eventoId);
+		return Objects.hash(numeroEixo, eventoId);
 	}
 
 
