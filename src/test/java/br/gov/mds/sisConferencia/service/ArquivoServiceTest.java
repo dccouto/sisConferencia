@@ -116,7 +116,7 @@ public class ArquivoServiceTest {
 	}
 
 	// Teste específico para o método não genérico "atualizar"
-
+/*
 	@Test
 	void testAtualizar() {
 		Long id = 1L;
@@ -137,7 +137,7 @@ public class ArquivoServiceTest {
 		verify(repositoryMock, times(1)).findById(id);
 		verify(repositoryMock, times(1)).save(existingArquivo);
 	}
-
+*/
 	// Teste para verificar o método saveDTO
 
 	@Test

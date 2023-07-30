@@ -2,17 +2,24 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.gov.mds.sisConferencia.service.ArquivoService;
+import br.gov.mds.sisConferencia.service.EventoService;
 import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
 import br.gov.mds.sisConferencia.service.dto.EventoDTO;
 import br.gov.mds.sisConferencia.service.request.EventoRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import br.gov.mds.sisConferencia.models.Arquivo;
-import br.gov.mds.sisConferencia.models.Evento;
-import br.gov.mds.sisConferencia.service.ArquivoService;
-import br.gov.mds.sisConferencia.service.EventoService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -38,7 +45,7 @@ public class EventoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<EventoDTO> salvar(@RequestBody EventoRequest eventoRequest) throws Exception {
+	public ResponseEntity<EventoDTO> salvar(@RequestBody EventoRequest eventoRequest) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvar(eventoRequest));
 	}
 

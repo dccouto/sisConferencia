@@ -17,11 +17,11 @@ public class EventoEixo {
     @EmbeddedId
     private EventoEixoId id;
  
-    @ManyToOne
-    @MapsId("FK_EVENTO")
-    private Evento evento;
- 
-    @ManyToOne
-    @MapsId("FK_EIXO")
-    private Eixo eixo;
+//    @ManyToOne
+//    @MapsId("FK_EVENTO")
+//    private Evento evento;
+// 
+//    @ManyToOne
+//    @MapsId("FK_EIXO")
+//    private Eixo eixo;
 }
