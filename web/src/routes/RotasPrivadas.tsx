@@ -18,6 +18,8 @@ let Portaria = lazy(() => import('../pages/Administrador/Portaria'))
 let TipoEvento = lazy(() => import('../pages/Administrador/TipoEvento'))
 let Eventos = lazy(() => import('../pages/Administrador/Eventos'))
 let CriarEvento = lazy(() => import('../pages/Administrador/Eventos/Criar'))
+let GovBrContext = lazy(() => import('../pages/Login/GovBrContext'))
+
 
 
 
@@ -40,6 +42,13 @@ export const RotasPrivadas: IRotas = {
             path: privateRoutesNames.home.path,
             element: <Home />,
         },
+         //gov.br
+       {    
+        name:'govBr',
+        path:'/sso/code/',
+        element:<GovBrContext/>,
+       },
+
 
        //ConferenciaReunioes
        {    
