@@ -64,7 +64,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
         let itemAcordion = {
             id: item.id,
             AccordionSummary:  item.numero + ' - EIXO ' +  item.descricao,
-            AccordionDetails: 'EMENTA:' +  item.ementa.descricao,
+            AccordionDetails: 'EMENTA:' +  item.ementa,
             object:item,
             icon: 'arrow'
         }
@@ -129,15 +129,12 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
         try {
 
 
-            let ementa = {
-                id: values.ementa.id,
-                descricao: values.ementa.descricao,
-            }
+       
 
             let dataSave = {
                 id: eixos.length + 1,
                 descricao: values.descricao,
-                ementa:ementa,
+                ementa:values.ementa,
                 numero:values.numero,
                 tema:values.tema
             }
@@ -165,7 +162,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
             
             
             rhfmethods.setValue('descricao', '');
-            rhfmethods.setValue('ementa.descricao', '');
+            rhfmethods.setValue('ementa', '');
             rhfmethods.setValue('numero', contEixos);
             rhfmethods.setValue('tema', '');
             rhfmethods.setValue('descricao', '');
@@ -234,7 +231,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
                                     />
                          
                                 <RHFTextArea 
-                                    name="ementa.descricao"
+                                    name="ementa"
                                     label="Descrição Ementa"
                                     control={rhfmethods.control as any} // passando o 'control' para o RHFTextArea
                                     rules={{ required: true }}
@@ -243,7 +240,7 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
                                     gridProps={{ lg: 12 }}
                                     onChange={(e) => {
                                         const v = e.target.value
-                                        rhfmethods.setValue('ementa.descricao', v)
+                                        rhfmethods.setValue('ementa', v)
                                     }}
                                 />
                                 </Grid>

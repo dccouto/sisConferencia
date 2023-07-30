@@ -18,14 +18,7 @@ let Portaria = lazy(() => import('../pages/Administrador/Portaria'))
 let TipoEvento = lazy(() => import('../pages/Administrador/TipoEvento'))
 let Eventos = lazy(() => import('../pages/Administrador/Eventos'))
 let CriarEvento = lazy(() => import('../pages/Administrador/Eventos/Criar'))
-let GovBrContext = lazy(() => import('../pages/Login/GovBrContext'))
-
-
-
-
-
-
-
+let GovBrContext = lazy(() => import('../services/GovBrContext'))
 
 
 export interface IRotas extends RouteObject {

@@ -20,7 +20,7 @@ export interface IEixoResult {
 }
   export interface IEixo {
     descricao: string;
-    ementa: IEmenta;
+    ementa: string;
     id: number;
     numero: number;
     tema: string;
@@ -61,6 +61,7 @@ export interface IEixoResult {
     id: number;
     portaria: IPortaria;
     tema: string;
+    ativo:boolean;
     tipoEvento: ITipoEvento;
     tipoRegime: ITipoFormato;
   }
@@ -75,15 +76,21 @@ export interface IEixoResult {
     portaria: number;
     eixos: IEixo[];
     tema: string;
+    ativo:boolean,
     tipoEvento: number;
     tipoFormato: number;
-    imagem: Arquivo;
+    imagem: ArquivoSalvar;
   }
   
 
   export interface Arquivo {  
     id: number;
     nome: string;
+    byteArquivo: string | null;  // Array de bytes
+  }
+
+  export interface ArquivoSalvar {  
+    id: number;
     byteArquivo: string | null;  // Array de bytes
   }
   // Para a lista de eventos

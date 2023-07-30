@@ -20,6 +20,7 @@ public class EventoRequest {
     private LocalDateTime dataInicial;
     private String objetivo;
     private String nome;
+    private Boolean ativo; 
     private Long portaria;
     private String tema;
     private ArquivoDTO imagem;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Titulo } from '../../../components/Navegacao/Titulo';
+import { Titulo } from '../../components/Navegacao/Titulo';
 
 export default function GovBrContext() { // nome do componente atualizado   
   let location = useLocation();

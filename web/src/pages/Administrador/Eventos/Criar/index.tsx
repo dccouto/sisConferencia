@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { FormProvider, useForm } from 'react-hook-form'
-import { Arquivo, IEixo, IEvento, IEventoSalvar,IListaEventos, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
+import { Arquivo, ArquivoSalvar, IEixo, IEvento, IEventoSalvar,IListaEventos, ITipoEvento } from '../../../../services/sisConferenciaApi/eventos/types'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useDrawer } from '../../../../components/CidadaniaApp/Drawer/hooks/useDrawer'
@@ -52,7 +52,9 @@ const CriarEvento = () => {
     const [editItem, setEditItem] = useState<IEventoSalvar | null>(null)
     const [fileBytes, setFileBytes] = useState<string | null>(null);
     const [imageURL, setImageURL] = useState<string | null>(null);
-    const [id,setId] = useState()
+    const [id,setId] = useState();
+    const [ativo, setAtivo] = useState<string>('true');
+    
     const FormSchema = yup.object().shape({
          nome: yup.string().required('Campo de preenchimento obrigatório *'),   
          tipoFormato: yup.string().required('Campo de preenchimento obrigatório *'),  
@@ -132,17 +134,17 @@ const CriarEvento = () => {
     const handleSalvar = async (item: any) => {
         let msg = 'Dados salvos com sucesso.'
 
+    
         item.eixos = listaEixo
 
         //processar bytes imagem upload    
        
-        const arquivo: Arquivo = {
+        const arquivo: ArquivoSalvar = {
             id: 0,  
-            nome: 'imagemArquivo',  
             byteArquivo: fileBytes,
         };
         
-        
+
         item.imagem = arquivo
         setFileBytes(null);
         
@@ -160,6 +162,7 @@ const CriarEvento = () => {
                 objetivo: item.objetivo,
                 nome: item.nome,
                 portaria: item.portaria,
+                ativo: ativo === "true",
                 eixos: item.eixos,
                 tema: item.tema,
                 imagem: item.imagem,
@@ -354,10 +357,10 @@ const CriarEvento = () => {
 
                                     <Titulo titulo={`Status`} />
                                         <FormContainer>
-                                                <RadioGroup >
-                                                    <FormControlLabel value="option1" control={<Radio />} label="Ativo" />
-                                                    <FormControlLabel value="option2" control={<Radio />} label="Inativo" />
-                                                </RadioGroup>
+                                        <RadioGroup name="ativo" value={ativo} onChange={(e) => setAtivo(e.target.value)}>
+                                            <FormControlLabel value="true" control={<Radio />} label="Ativo" />
+                                            <FormControlLabel value="false" control={<Radio />} label="Inativo" />
+                                        </RadioGroup>
                                         </FormContainer>
                                 </Grid>
                                
