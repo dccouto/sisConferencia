@@ -16,6 +16,7 @@
         "@mui/lab": "^5.0.0-alpha.69",
         "@mui/material": "^5.5.3",
         "@mui/styles": "^5.4.2",
+        "@mui/x-data-grid": "^6.10.2",
         "@types/jest": "^27.4.0",
         "auth-react-router": "^0.2.2",
         "axios": "^0.26.0",

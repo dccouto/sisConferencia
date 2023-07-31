@@ -1,45 +1,29 @@
-// Components
-
-import jsonServerProvider from 'ra-data-json-server';
-
-
-// Services
-
 import { useEffect, useState } from 'react';
 import apiServiceEventos from '../../services/sisConferenciaApi/eventos';
 import { Titulo } from '../../components/Navegacao/Titulo';
 import { Breadcrumbs } from '../../components/Navegacao/Breadcrumbs';
 import { IListaEventos } from '../../services/sisConferenciaApi/eventos/types';
 import { Box, Card, Grid, Typography } from '@mui/material';
-import EventosFiltro from './Filtros';
-
-
-
+import { format, parseISO } from 'date-fns';
+import { FormProvider, useForm } from 'react-hook-form';
+import { DataGrid, ptBR } from '@mui/x-data-grid';
 
 const paginaInicial = '/home'
 
-
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
-
-
-const columnsConfig= [
-    { key: 'id', displayName: 'ID', width: 300, visible: true },
-    { key: 'descricao', displayName: 'Descrição', visible: true },
-    { key: 'dataCadastro', displayName: 'Data Cadastro', visible: true },
-    { key: 'dataFinal', displayName: 'Data Final', visible: true },
-    { key: 'dataInicial', displayName: 'Data Inicial', visible: true },
-    { key: 'portaria', displayName: 'Portaria', visible: true },
-    { key: 'tema', displayName: 'Tema', visible: true },
-    { key: 'tipoEvento', displayName: 'Tipo de Evento', visible: true },
-    { key: 'tipoRegime', displayName: 'Tipo de Regime', visible: true },
-];
-
-
-
 export default function Eventos_conferencia_reunioes() {
 
-    const [Eventos,setEventos] = useState<IListaEventos>([])
+    const [eventos,setEventos] = useState<IListaEventos>([])
 
+    const columns = [
+        { field: 'tipoEvento', headerName: 'Tipo de Evento', flex: 1,valueGetter: (params : any) => params.row.tipoEvento.descricao,}, 
+        { field: 'nome', headerName: 'Nome', flex: 3 },
+        { field: 'objetivo', headerName: 'Objetivo', flex: 1  },
+        { field: 'dataInicial', headerName: 'Data Inicial', flex: 1,valueGetter: (params : any) =>  format( parseISO(params.row.dataInicial), 'dd/MM/yyyy'),},
+        { field: 'dataFinal', headerName: 'Data Final', flex: 1, valueGetter: (params : any) => format( parseISO(params.row.dataFinal),'dd/MM/yyyy'),},
+      ];
+
+
+    const rhfmethods = useForm<IListaEventos>({})
 
     useEffect(() => {
         
@@ -89,7 +73,22 @@ export default function Eventos_conferencia_reunioes() {
             </Grid>
 
             <Grid item xs={12} style={{paddingTop:'40px'}}>    
-                <EventosFiltro></EventosFiltro>
+            <FormProvider {...rhfmethods}>
+               
+
+                        <DataGrid
+                           rows={eventos}
+                           localeText={ptBR.components.MuiDataGrid.defaultProps.localeText} 
+                           columns={columns}
+                           initialState={{
+                            pagination: {
+                              paginationModel: { pageSize: 10, page: 0 },
+                            },
+                          }}
+                        />                       
+               
+               
+            </FormProvider>
             </Grid>
 
 
