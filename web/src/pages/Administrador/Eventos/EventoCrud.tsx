@@ -27,6 +27,8 @@ import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
 import { IEvento } from '../../../services/sisConferenciaApi/eventos/types'
 import { IListaEventos } from '../../../services/sisConferenciaApi/eventos/types'
+import {  DataGrid, ptBR } from '@mui/x-data-grid'
+import { format, parseISO } from 'date-fns'
 
 
 interface ColumnConfig {
@@ -44,7 +46,40 @@ interface Props {
     columnConfig: ColumnConfig[]
 }
 
+
+
 const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: Props) => {
+
+
+
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 100},
+        { field: 'nome', headerName: 'Nome', flex: 1 },
+        { field: 'objetivo', headerName: 'Objetivo', flex: 1  },
+        { field: 'dataInicial', headerName: 'Data Inicial', flex: 1,valueGetter: (params : any) =>  format( parseISO(params.row.dataInicial), 'dd/MM/yyyy'),},
+        { field: 'dataFinal', headerName: 'Data Final', flex: 1, valueGetter: (params : any) => format( parseISO(params.row.dataFinal),'dd/MM/yyyy'),},
+        { field: 'tema', headerName: 'Tema' , flex: 1},
+        { field: 'ativo', headerName: 'Ativo', flex: 1 ,valueGetter: (params : any) => params.row.ativo? 'Sim':'Não'},
+        { field: 'tipoEvento', headerName: 'Tipo de Evento', flex: 1,valueGetter: (params : any) => params.row.tipoEvento.descricao,},
+        { field: 'tipoFormato', headerName: 'Formato do Evento', flex: 1,valueGetter: (params : any) => params.row.tipoFormato.descricao,},
+        {
+            field: 'actions',
+            headerName: 'Ações',
+            flex: 1,
+            renderCell: (params:  any) => (
+              <>
+                <EditIcon color='primary' onClick={() => ()=>{}} />
+                <span style={{ marginRight: '8px' }} />
+                <DeleteIcon color='primary' onClick={() =>deletarEvento(params.row)} />
+              </>
+            ),
+          },
+      ];
+    
+
+
+
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
     const [editItem, setEditItem] = useState<IEvento | null>(null)
@@ -126,66 +161,17 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
             <FormProvider {...rhfmethods}>
                 {visible && (
                     <>
-                        <Box display={'block'}>
-                            <Grid container xs={12}>
-                                <TableContainer component={Paper}>
-                                    <Table aria-label='simple table'>
-                                        <TableHead>
-                                            <TableRow>
-                                                {columnConfig.map(
-                                                    (column, key) =>
-                                                        column.visible !== false && (
-                                                            <TableCell key={key} sx={{ fontWeight: 'bold' }} width={column.width || ""}>
-                                                                {column.displayName}
-                                                            </TableCell>
-                                                        )
-                                                )}
-                                                <TableCell sx={{ fontWeight: 'bold' }} width={100}>{''}</TableCell>
-                                            </TableRow>
-                                        </TableHead>
 
-                                        {eventos.length === 0 ? (
-                                            <Typography textAlign={'center'} p={2}>
-                                                Nenhuma tipo de evento adicionado
-                                            </Typography>
-                                        ) : (
-                                            <TableBody>
-                                            {eventos.map((item, key) => (
-                                                <TableRow key={key}>
-                                                    {columnConfig.map((column) => {
-                                                    if (column.visible !== false) {
-                                                        // Se a chave é "tipoEvento", "tipoFormato", etc., renderize a propriedade "descricao" dentro desses objetos
-                                                        if (['tipoEvento', 'tipoFormato'].includes(column.key)) {
-                                                        return (
-                                                            <TableCell key={column.key} scope='row'>
-                                                            {(item[column.key as keyof typeof item] as any).descricao}
-                                                            </TableCell>
-                                                        );
-                                                        } else {
-                                                        return (
-                                                            <TableCell key={column.key} scope='row'>
-                                                            {item[column.key as keyof typeof item]}
-                                                            </TableCell>
-                                                        );
-                                                        }
-                                                    }
-                                                    return null;
-                                                    })}
-                                                    <TableCell>
-                                                    <EditIcon color='primary' onClick={() => ()=>{}} />
-                                                    <span style={{ marginRight: '8px' }} />
-                                                    <DeleteIcon color='primary' onClick={() =>deletarEvento(item)} />
-                                                    </TableCell>
-                                                </TableRow>
-                                                ))}
-                                        </TableBody>
-                                        )}
-                                    </Table>
-                                </TableContainer>
-                            </Grid>
-                        </Box>
-                        
-                       
+                        <DataGrid
+                           rows={eventos}
+                           localeText={ptBR.components.MuiDataGrid.defaultProps.localeText} 
+                           columns={columns}
+                           initialState={{
+                            pagination: {
+                              paginationModel: { pageSize: 10, page: 0 },
+                            },
+                          }}
+                        />                       
 
                         <Grid container spacing={2} my={4} mr={4} justifyContent={'end'}>
                             <Grid>
