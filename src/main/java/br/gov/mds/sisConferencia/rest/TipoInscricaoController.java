@@ -2,13 +2,19 @@ package br.gov.mds.sisConferencia.rest;
 
 import java.util.List;
 
-import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.mds.sisConferencia.models.TipoInscricao;
 import br.gov.mds.sisConferencia.service.TipoInscricaoService;
+import br.gov.mds.sisConferencia.service.dto.TipoInscricaoDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -19,7 +25,6 @@ public class TipoInscricaoController {
 	private final TipoInscricaoService tipoInscricaoService;
 
 	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<TipoInscricaoDTO>> listarTodos() {
 		return ResponseEntity.ok(tipoInscricaoService.buscarTodos());
 	}
@@ -30,20 +35,17 @@ public class TipoInscricaoController {
 	}
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoInscricaoDTO> salvar(@RequestBody TipoInscricaoDTO tipoInscricao) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(tipoInscricaoService.saveDTO(tipoInscricao));
 	}
 
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoInscricaoDTO> atualizar(@PathVariable Long id,
 			@RequestBody TipoInscricaoDTO tipoInscricaoAtualizado) {
 		return ResponseEntity.ok(tipoInscricaoService.atualizar(id, tipoInscricaoAtualizado));
 	}
 
 	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> excluir(@PathVariable Long id) {
 		tipoInscricaoService.delete(id);
 		return ResponseEntity.noContent().build();

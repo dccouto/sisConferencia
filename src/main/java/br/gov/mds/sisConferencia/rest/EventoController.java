@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.mds.sisConferencia.service.ArquivoService;
@@ -33,13 +32,11 @@ public class EventoController {
 
 
 	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<EventoDTO>> listarTodos() {
 		return ResponseEntity.ok(eventoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<EventoDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(eventoService.buscarPorID(id));
 	}
