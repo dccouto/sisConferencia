@@ -12,7 +12,6 @@ import br.gov.mds.sisConferencia.models.Arquivo;
 import br.gov.mds.sisConferencia.models.Eixo;
 import br.gov.mds.sisConferencia.models.Evento;
 import br.gov.mds.sisConferencia.models.EventoEixoId;
-import br.gov.mds.sisConferencia.repository.ArquivoRepository;
 import br.gov.mds.sisConferencia.repository.EixoRepository;
 import br.gov.mds.sisConferencia.repository.EventoRepository;
 import br.gov.mds.sisConferencia.service.dto.EventoDTO;
@@ -29,19 +28,19 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 	private final EixoRepository eixoRepository;
 	
 	
-	private final ArquivoRepository arquivoRepository;
+	private final ArquivoService arquivoService;
 
-	public EventoService(EventoRepository repository, EventoMapper mapper, ArquivoRepository arquivoRepository, EixoRepository eixoRepository) {
+	public EventoService(EventoRepository repository, EventoMapper mapper, ArquivoService arquivoService, EixoRepository eixoRepository) {
 		super(repository, mapper);
 		this.eventoMapper = mapper;
 		this.eixoRepository = eixoRepository;
-		this.arquivoRepository = arquivoRepository;
+		this.arquivoService = arquivoService;
 	}
 	
 	@Transactional
 	public EventoDTO salvar(EventoRequest eventoRequest) {
 	    Evento evento = eventoMapper.requestToEntity(eventoRequest);
-	    Arquivo save = arquivoRepository.save(evento.getImagem());
+	    Arquivo save = arquivoService.save(evento.getImagem());
 	    evento.setImagem(save);
 	    Evento savedEvento = save(evento);
 
@@ -57,7 +56,7 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 				eixo.setId(idEventoEixo);
 				savedEixos.add(eixo);
 	        }
-
+	        //trocar pelo eixoService
 	        eixoRepository.saveAll(savedEixos);
 	        evento.setEixos(savedEixos);
 	    }
@@ -69,9 +68,9 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 
 
 	@Transactional
-	public EventoDTO atualizar(Long id, EventoDTO eventoAtualizado) {
+	public EventoDTO atualizar(Long id, EventoRequest eventoAtualizado) {
 		if (repository.existsById(id)) {
-			return atualizar(mapper.toDto(mapper.toEntity(eventoAtualizado)));
+			return atualizar(mapper.toDto(eventoMapper.requestToEntity(eventoAtualizado)));
 		} else {
 			throw new SisConferenciaNotFoundException("Não encontrado.");
 		}

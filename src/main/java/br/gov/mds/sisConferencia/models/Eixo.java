@@ -43,9 +43,7 @@ public class Eixo {
 	@Column(name = "DS_EMENTA")
 	private String ementa;
 
-	/*@OneToMany(mappedBy = "eixo")
-	private List<EventoEixo> eventoEixo;
-	
+	/*	
 	@OneToMany(mappedBy = "eixo")
 	private List<Deliberacao> deliberacoes;*/
 	}

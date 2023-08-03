@@ -3,7 +3,6 @@ package br.gov.mds.sisConferencia.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -37,8 +36,6 @@ public class AcompanhanteServiceTest {
 	@InjectMocks
 	private AcompanhanteService acompanhanteService;
 
-
-	// Testes para os métodos herdados da classe GenericService
 
 	@Test
 	void testSalvar() {
@@ -80,45 +77,38 @@ public class AcompanhanteServiceTest {
 	}
 
 
-	  @Test
-	    void testAtualizar_Existente() {
-	        Long id = 1L;
-	        AcompanhanteDTO acompanhanteDTO = new AcompanhanteDTO();
-	        Acompanhante acompanhanteEntity = new Acompanhante();
+	@Test
+	void testAtualizar_Existente() {
+	    Long id = 1L;
+	    AcompanhanteDTO acompanhanteDTO = new AcompanhanteDTO();
+	    Acompanhante acompanhanteEntity = new Acompanhante();
 
-	        when(mapperMock.toEntity(acompanhanteDTO)).thenReturn(acompanhanteEntity);
-	        when(mapperMock.toDto(acompanhanteEntity)).thenReturn(acompanhanteDTO);
+	    when(mapperMock.toEntity(acompanhanteDTO)).thenReturn(acompanhanteEntity);
+	    when(mapperMock.toDto(acompanhanteEntity)).thenReturn(acompanhanteDTO);
 
-	        when(repositoryMock.existsById(id)).thenReturn(true);
+	    when(repositoryMock.existsById(id)).thenReturn(true);
+	    when(repositoryMock.saveAndFlush(acompanhanteEntity)).thenReturn(acompanhanteEntity);
 
-	        when(acompanhanteService.atualizar(acompanhanteDTO)).thenReturn(acompanhanteDTO);
+	    AcompanhanteDTO result = acompanhanteService.atualizar(id, acompanhanteDTO);
 
-	        AcompanhanteDTO result = acompanhanteService.atualizar(id, acompanhanteDTO);
+	    assertEquals(acompanhanteDTO, result);
 
-	        assertEquals(acompanhanteDTO, result);
-
-	        verify(repositoryMock, times(1)).existsById(id);
-
-	        verify(acompanhanteService, times(1)).atualizar(acompanhanteDTO);
-
-	        verify(mapperMock, times(1)).toEntity(acompanhanteDTO);
-	        verify(mapperMock, times(1)).toDto(acompanhanteEntity);
-	    }
-
-	    @Test
-	    void testAtualizar_NaoExistente() {
-	        Long id = 1L;
-	        AcompanhanteDTO acompanhanteDTO = new AcompanhanteDTO();
-
-	        when(repositoryMock.existsById(id)).thenReturn(false);
-	        assertThrows(SisConferenciaNotFoundException.class, () -> acompanhanteService.atualizar(id, acompanhanteDTO));
-	        verify(repositoryMock, times(1)).existsById(id);
-	        verify(acompanhanteService, never()).atualizar(acompanhanteDTO);
-	        verify(mapperMock, never()).toEntity(acompanhanteDTO);
-	    }
+	    verify(repositoryMock, times(1)).existsById(id);
+	    verify(repositoryMock, times(1)).saveAndFlush(acompanhanteEntity);
+	}
 
 
-	// Teste para verificar o método saveDTO
+	@Test
+	void testAtualizar_NaoExistente() {
+		Long id = 1L;
+		AcompanhanteDTO acompanhanteDTO = new AcompanhanteDTO();
+
+		when(repositoryMock.existsById(id)).thenReturn(false);
+		assertThrows(SisConferenciaNotFoundException.class, () -> acompanhanteService.atualizar(id, acompanhanteDTO));
+		verify(repositoryMock, times(1)).existsById(id);
+		verify(acompanhanteService, never()).atualizar(acompanhanteDTO);
+		verify(mapperMock, never()).toEntity(acompanhanteDTO);
+	}
 
 	@Test
 	void testSaveDTO() {
@@ -136,7 +126,5 @@ public class AcompanhanteServiceTest {
 		verify(repositoryMock, times(1)).save(acompanhanate);
 		verify(mapperMock, times(1)).toDto(acompanhanate);
 	}
-
-
 
 }
