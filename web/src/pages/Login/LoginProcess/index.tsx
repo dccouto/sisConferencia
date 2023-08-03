@@ -30,7 +30,10 @@ export default function LoginProcess() {
     return (
         <Box>
             <Typography variant={'h5'} mb={2}>
-                Aguarde um momento enquanto processamos a autenticação...
+            {!autenticado ? 
+            <>Aguarde um momento enquanto processamos a autenticação... </>:
+            <>Bem vindo ao SisConferência ! </>}
+                
             </Typography>
 
             {!autenticado ? <CircularProgress size={22} /> : <CheckOutlinedIcon color={'success'} />}
