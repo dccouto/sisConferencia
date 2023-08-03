@@ -4,14 +4,6 @@ export interface IEmenta {
 }
 
 
-export interface IEixoResult {
-    descricao: string;
-    ementa: IEmenta;
-    id: IidEventoEixo;
-    numero: number;
-    tema: string;
-  }
-
   export interface IDocumento {
     id: number;
     dataEnvio: Date; 
@@ -21,7 +13,8 @@ export interface IEixoResult {
   export interface IEixo {
     descricao: string;
     ementa: string;
-    id: number;
+    eixoId: number;
+    eventoId: number;
     numero: number;
     tema: string;
   }
@@ -45,11 +38,6 @@ export interface IEixoResult {
   }
 
 
-    
-  export interface IidEventoEixo {
-    eixoId: number;
-    eventoId: number;
-  }
   
   export interface IEvento {
     dataCadastro: string;
@@ -63,7 +51,8 @@ export interface IEixoResult {
     tema: string;
     ativo:boolean;
     tipoEvento: ITipoEvento;
-    tipoRegime: ITipoFormato;
+    tipoFormato: ITipoFormato;
+    imagem: ArquivoSalvar;
   }
 
   export interface IEventoSalvar {
@@ -74,7 +63,7 @@ export interface IEixoResult {
     objetivo: string | '';
     nome: string;
     portaria: number;
-    eixos: IEixo[];
+    eixos: IEixoResult[];
     tema: string;
     ativo:boolean,
     tipoEvento: number;

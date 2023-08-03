@@ -26,8 +26,9 @@ const columnsConfig = [
 interface Props {
     listaEixos: IEixo[]
     setEixos: (eixos: IEixo[]) => void
+    idEvento:number
 }
-const Eixo: React.FC<Props> = ({ listaEixos,setEixos }) => {
+const Eixo: React.FC<Props> = ({ listaEixos,setEixos,idEvento }) => {
     // 
 
 
@@ -40,8 +41,8 @@ const Eixo: React.FC<Props> = ({ listaEixos,setEixos }) => {
     }, [])
     
     return (
-        <>     
-            <EixoCrud visible={true} eixos={listaEixos} setEixos={setEixos}  columnConfig={columnsConfig} contEixos={listaEixos.length + 1}></EixoCrud>
+        <>    
+            <EixoCrud visible={true} eixos={listaEixos} setEixos={setEixos}  columnConfig={columnsConfig} contEixos={listaEixos.length + 1} idEvento={idEvento}></EixoCrud>
         </>
     )
 }

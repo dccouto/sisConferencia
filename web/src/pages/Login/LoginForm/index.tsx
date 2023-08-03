@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Box, FormControl, Grid, Typography } from '@mui/material'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Box,  Grid, Typography } from '@mui/material'
+import {  useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
@@ -13,15 +13,13 @@ import { IUsuarioLogin } from '../LoginForm/loginTypes'
 
 // Hooks
 import { useToast } from '../../../hooks/useToast'
-import { IUserRoutes, useAuth, UserAuth } from '../../../hooks/useAuth'
+import {  useAuth, UserAuth } from '../../../hooks/useAuth'
 
 // Services
 import { apiLogin, mockLogin } from '../../../services/auth'
 import { useDrawer } from '../../../components/CidadaniaApp/Drawer/hooks/useDrawer'
 
 import '../../../assets/styleLogin.css'
-import { RHFMaskedInput } from '../../../components/Formulario/reactHookForms/RHFMaskedInput'
-import { RHFText } from '../../../components/Formulario/reactHookForms/RHFText'
 import ServiceStorage from '../../../services/storage'
 import LoginFormGovBr from '../LoginFormGovBr'
 import { DescSistema } from '../../../components/CidadaniaApp/Header/components/DescSistema'

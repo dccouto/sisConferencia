@@ -82,9 +82,9 @@ export function makeServer() {
                 //   pageEnd
                 // );
                 return allUsers.filter((user) => {
-                    if (municipio && municipio != 0) {
+                    if (municipio && municipio !== 0) {
                         return user.uf === uf && user.municipio.cod === municipio
-                    } else if (uf && municipio == 0 && uf != 0) {
+                    } else if (uf && municipio === 0 && uf !== 0) {
                         return user.uf === uf
                     } else {
                         return user

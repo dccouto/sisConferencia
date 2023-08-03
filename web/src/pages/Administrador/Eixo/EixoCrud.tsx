@@ -21,9 +21,11 @@ import { useToast } from '../../../hooks/useToast'
 import Mask from '../../../utils/mask'
 import { useNavigate } from 'react-router-dom'
 import { CustomTable } from '../../../components/Tabela/CustomTable'
-import { IEixo } from '../../../services/sisConferenciaApi/eventos/types'
+import { IEixo, IEvento } from '../../../services/sisConferenciaApi/eventos/types'
 import RHFTextArea from '../../../components/Formulario/TextArea'
 import TableAcordion,{AcordionConfig} from '../../../components/Tabela/TableAcordion'
+import apiServiceEvento from '../../../services/sisConferenciaApi/eventos';
+
 
 interface ColumnConfig {
     key: string
@@ -38,9 +40,10 @@ interface Props {
     setEixos: (eixos: IEixo[]) => void
     columnConfig: ColumnConfig[]
     contEixos:number  
+    idEvento:number
 }
 
-const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) => {
+const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos,idEvento }: Props) => {
     const navigate = useNavigate()
     const [isForm, setIsForm] = useState(false)
     const [editItem, setEditItem] = useState<IEixo | null>(null)
@@ -51,6 +54,29 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
 
     useEffect(() => {
 
+        const carregaEixosDoEvento = async () => {
+            try {
+
+                if(idEvento > 0 ){
+
+                    if (idEvento) {
+                        const result: any = await apiServiceEvento.buscar(Number(idEvento))
+
+                        const eventoLoad: IEvento = result
+                    
+                        let eixos = eventoLoad.eixos
+                    
+                        eixos.forEach(eixo => {
+                            adicionarEixo(eixo)
+                        });
+                    }
+                }    
+            } catch (error) {
+                console.error(error)
+            }
+
+        }
+        carregaEixosDoEvento()
     }, []);
 
 
@@ -58,11 +84,15 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
 
 
     const adicionarEixo = (item: IEixo) => {
-        const index = eixos.findIndex((eixo) => eixo.id === item.id)
-        const indexAcordion = acordionConfig?.findIndex((eixo) => eixo.id === item.id)
-
+        const index = eixos.findIndex((eixo) => eixo.eixoId === item.eixoId)
+        const indexAcordion = acordionConfig?.findIndex((eixo) => eixo.eixoId === item.eixoId)
+        
+        
+        
+        
         let itemAcordion = {
-            id: item.id,
+            eixoId: item.eixoId,
+            eventoId: idEvento,
             AccordionSummary:  item.numero + ' - EIXO ' +  item.descricao,
             AccordionDetails: 'EMENTA:' +  item.ementa,
             object:item,
@@ -96,8 +126,8 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
     }
 
     const deletarEixo = async (item: IEixo) => {
-        const list = eixos.filter((c) => c.id !== item.id)
-        const listAcordion = acordionConfig?.filter((c) => c.id !== item.id)
+        const list = eixos.filter((c) => c.eixoId !== item.eixoId)
+        const listAcordion = acordionConfig?.filter((c) => c.eixoId !== item.eixoId)
         
         if(listAcordion)
             setAcordionConfig(listAcordion)
@@ -132,7 +162,8 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
        
 
             let dataSave = {
-                id: eixos.length + 1,
+                eixoId: eixos.length + 1,
+                eventoId: idEvento,
                 descricao: values.descricao,
                 ementa:values.ementa,
                 numero:values.numero,
@@ -166,12 +197,13 @@ const EixoCrud = ({ visible, eixos, setEixos,columnConfig,contEixos }: Props) =>
             rhfmethods.setValue('numero', contEixos);
             rhfmethods.setValue('tema', '');
             rhfmethods.setValue('descricao', '');
-            rhfmethods.setValue('id', 0);
+            rhfmethods.setValue('eixoId', 0);
         }, 0);
     };
 
     return (
         <>
+        
             <FormProvider {...rhfmethods}>
                 {visible && (
                     <Grid>
