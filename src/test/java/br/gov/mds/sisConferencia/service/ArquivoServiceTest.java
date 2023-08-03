@@ -12,11 +12,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.gov.mds.sisConferencia.config.mapper.EntityMapper;
@@ -26,7 +24,6 @@ import br.gov.mds.sisConferencia.repository.ArquivoRepository;
 import br.gov.mds.sisConferencia.service.dto.ArquivoDTO;
 
 @ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
 public class ArquivoServiceTest {
 
 	@Mock
