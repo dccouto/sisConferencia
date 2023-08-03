@@ -1,11 +1,9 @@
-import { Box, Grid, Typography, useTheme } from '@mui/material'
+import {  Grid } from '@mui/material'
 import { govBrConstants } from '../../../utils/constants'
-import logo from '../../../assets/logo.png'
 import { BotaoLoginGovBr } from '../components/BotaoLoginGovBr'
 
 export default function LoginForm() {
-    const theme = useTheme()
-
+    
     const qs = [
         'response_type=code',
         `client_id=${govBrConstants.clientId}`,

@@ -1,6 +1,5 @@
 
-import { AxiosResponse } from 'axios';
-import api, { getHeaders, getHeadersFiles } from '../../global'
+import api, { getHeaders } from '../../global'
 import { ITipoEvento } from './types';
 
 

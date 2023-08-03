@@ -4,16 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import {
-    Box,
     Grid,
-    Typography,
-    TableContainer,
-    Table,
-    TableHead,
-    TableRow,
-    TableCell,
-    Paper,
-    TableBody,
 } from '@mui/material'
 
 import EditIcon from '@mui/icons-material/Edit'
@@ -69,7 +60,7 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
             flex: 1,
             renderCell: (params:  any) => (
               <>
-                <EditIcon color='primary' onClick={() => ()=>{}} />
+                <EditIcon color='primary' onClick={() =>  navigate('/administracao/eventos/registrar/' + params.row.id)} />
                 <span style={{ marginRight: '8px' }} />
                 <DeleteIcon color='primary' onClick={() =>deletarEvento(params.row)} />
               </>
@@ -176,7 +167,7 @@ const EventosCrud = ({ visible, eventos, setEventos,apiService,columnConfig }: P
                         <Grid container spacing={2} my={4} mr={4} justifyContent={'end'}>
                             <Grid>
                                 <BotaoPadrao size={'large'} variant='outlined' onClick={() =>{ 
-                                    navigate('/administracao/eventos/criar')
+                                    navigate('/administracao/eventos/registrar')
                                 }}>
                                 ADICIONAR NOVO EVENTO
                             </BotaoPadrao>

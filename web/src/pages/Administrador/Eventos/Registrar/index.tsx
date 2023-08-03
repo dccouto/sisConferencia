@@ -15,7 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useDrawer } from '../../../../components/CidadaniaApp/Drawer/hooks/useDrawer'
 import { BotaoPadrao } from '../../../../components/Formulario/BotaoPadrao'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FormContainer } from '../../../../components/Formulario/FormContainer'
 import { RHFText } from '../../../../components/Formulario/reactHookForms/RHFText'
 import { RHFSelect } from '../../../../components/Formulario/reactHookForms/RHFSelect'
@@ -37,22 +37,21 @@ import { arrayBufferToBase64, fileToArrayBuffer, getFileAsByteArray } from '../.
 
 
 interface Props {
-    visible: boolean
-    eventos: IListaEventos
-    setEventos: (Eventos: IListaEventos) => void
-    apiService:any
 }
 
 
 
-const CriarEvento = () => {
+const RegistrarEvento = () => {
 
     const { isDesktop } = useDrawer()
     const navigate = useNavigate()
-    const [editItem, setEditItem] = useState<IEventoSalvar | null>(null)
+    const [editItem, setEditItem] = useState(false)
     const [fileBytes, setFileBytes] = useState<string | null>(null);
     const [imageURL, setImageURL] = useState<string | null>(null);
-    const [id,setId] = useState();
+    
+
+    const { id } = useParams()
+
     const [ativo, setAtivo] = useState<string>('true');
     
     const FormSchema = yup.object().shape({
@@ -68,7 +67,7 @@ const CriarEvento = () => {
 
     const [excluir, setExcluir] = useState(false)
 
-    const rhfmethods = useForm<IEvento>({ resolver: yupResolver(FormSchema) })
+    const rhfmethods = useForm<IEventoSalvar>({ resolver: yupResolver(FormSchema) })
 
     const paginaEventos = '/administracao/eventos'
 
@@ -81,6 +80,57 @@ const CriarEvento = () => {
     const [tiposEvento, setTiposEvento] = useState<ITipoEvento[]>([]);
     const [tipoFormatos, setTipoFormatos] = useState<ITipoFormato[]>([]);
     const [portarias, setPortarias] = useState<IPortaria[]>([]);
+
+
+
+
+    //Carrega Dados Evento 
+    useEffect(() => {
+        const buscarEvento = async () => {
+            try {
+                if (id) {
+                    const result: any = await apiService.buscar(Number(id))
+
+                    const eventoLoad: IEvento = result
+                    console.log(eventoLoad);
+
+                    rhfmethods.setValue('id', id !== undefined ? parseInt(id) : 0)
+                    rhfmethods.setValue('nome', eventoLoad.nome)
+                    rhfmethods.setValue('tipoEvento', eventoLoad.tipoEvento.id)
+                    rhfmethods.setValue('tipoFormato', eventoLoad.tipoFormato.id)
+                    rhfmethods.setValue('tipoFormato', eventoLoad.tipoFormato.id)
+                    rhfmethods.setValue('dataInicial', eventoLoad.dataInicial)
+                    rhfmethods.setValue('dataFinal', eventoLoad.dataFinal)
+                    rhfmethods.setValue('portaria', eventoLoad.portaria.id)
+                    rhfmethods.setValue('tema', eventoLoad.tema)
+                    rhfmethods.setValue('objetivo', eventoLoad.objetivo)
+                    rhfmethods.setValue('ativo', eventoLoad.ativo)
+                    setListaEixo(eventoLoad.eixos)
+                    //carrega imagem na tela
+                    let base64String = eventoLoad.imagem.byteArquivo; 
+                    setImageURL(`data:image/jpeg;base64,${base64String}`);
+                    setEditItem(true)
+
+                }
+            } catch (error) {
+                console.error(error)
+            }
+            
+                
+        };
+        
+        buscarEvento();
+    }, []);
+
+
+
+
+
+
+
+
+
+
 
 
     //Carrega combos
@@ -123,7 +173,7 @@ const CriarEvento = () => {
              
                 
         };
-
+        
         atualizarListaCombos();
     }, []);
 
@@ -183,10 +233,6 @@ const CriarEvento = () => {
 
     }
 
-
-
-
-
       const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         
 
@@ -209,14 +255,12 @@ const CriarEvento = () => {
         }
       };
 
-    function umAnoAtras() {
-        const year = new Date().getFullYear()
-        const month = new Date().getMonth()
-        const day = new Date().getDate()
-        const date = new Date(year - 1, month, day)
-        return date
+   
+    const deletarEvento = async () => {
+        await apiService.excluir(id)
+        toastSuccess('Evento excluído com sucesso.')
+        navigate('/administracao/eventos')
     }
-
     return (
         <>
             <Breadcrumbs
@@ -366,7 +410,7 @@ const CriarEvento = () => {
                                
                                 <Grid  padding={2} item xs={12}>
                                     <Titulo titulo={`Eixos`} />
-                                    <Eixo listaEixos={listaEixo} setEixos={setListaEixo}></Eixo>                 
+                                    <Eixo listaEixos={listaEixo} setEixos={setListaEixo} idEvento={id !== undefined ? parseInt(id) : 0}></Eixo>                 
                                 </Grid>
                                 
                             </FormContainer>
@@ -388,7 +432,7 @@ const CriarEvento = () => {
                         <BotaoPadrao
                             variant='outlined'
                             size={'large'}
-                            onClick={() => navigate('/gestao/emergencia/listar')}
+                            onClick={() => navigate('/administracao/eventos')}
                             startIcon={<ArrowBackIcon fontSize='small' />}
                         >
                             Voltar para lista
@@ -401,7 +445,7 @@ const CriarEvento = () => {
                                 variant='outlined'
                                 type='button'
                                 size={'large'}
-                                onClick={() => setExcluir(true)}
+                                onClick={() => deletarEvento() }
                                 startIcon={<DeleteIcon fontSize='small' />}
                                 style={{
                                     marginTop: isDesktop ? 0 : 10,
@@ -422,8 +466,7 @@ const CriarEvento = () => {
                             }}
                         >
                             <AddCircleOutlineIcon fontSize='small' style={{ marginRight: 10 }} />
-                            { false //id 
-                            ? 'Salvar Evento' : 'Criar Evento'}
+                            { id  ? 'Salvar Evento' : 'Criar Evento'}
                         </BotaoPadrao>
                     </Grid>
                 </FormProvider>
@@ -437,4 +480,4 @@ const CriarEvento = () => {
 
 
 
-export default CriarEvento
+export default RegistrarEvento

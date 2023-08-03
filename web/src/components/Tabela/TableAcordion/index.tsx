@@ -7,7 +7,7 @@ import { Box, Grid, Paper } from '@mui/material'
 import { useState } from 'react';
 
 export interface AcordionConfig {
-    id: number
+    eixoId: number
     AccordionSummary: string
     AccordionDetails: string
     object: any
@@ -35,14 +35,14 @@ export const TableAcordion = ({ acordionConfig, data, onEdit, onDelete, txtNenhu
       setExpanded(newExpanded ? panel : false);
     };
 
-
+    
     return (
         <Box display={'block'}>
             <Grid container xs={12}>
                 <TableContainer component={Paper}>
                     <Table aria-label='simple table'>
                        
-
+                        {console.log(data,'EIXO ACORDION')}
                         {data.length === 0 ? (
                             <Typography textAlign={'center'} p={2}>
                                 {txtNenhumRegistro} 

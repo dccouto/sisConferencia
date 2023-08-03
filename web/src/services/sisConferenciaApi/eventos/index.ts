@@ -1,8 +1,6 @@
 
-import { AxiosResponse } from 'axios';
-import api, { getHeaders, getHeadersFiles } from '../../global'
+import api, { getHeaders } from '../../global'
 import { IEvento, IEventoSalvar } from './types';
-import { IListaEventos } from './types';
 
 
 
@@ -12,6 +10,15 @@ const apiServiceEventos = {
     listar: async () => {
         try {
             const response = await api.get<IEvento[]>('/eventos');
+            return response;
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    },
+    buscar: async (id: number) => {
+        try {
+            const response = await api.get<IEvento>(`/eventos/${id}`);
             return response;
         } catch (error) {
             console.error(error);

@@ -6,13 +6,15 @@ import { IListaEventos } from '../../services/sisConferenciaApi/eventos/types';
 import { Box, Card, Grid, Typography } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import { FormProvider, useForm } from 'react-hook-form';
-import { DataGrid, ptBR } from '@mui/x-data-grid';
+import { DataGrid, ptBR,GridToolbar } from '@mui/x-data-grid';
+import { LoadingPage } from '../../components/Auth/LoadingPage';
 
 const paginaInicial = '/home'
 
 export default function Eventos_conferencia_reunioes() {
 
     const [eventos,setEventos] = useState<IListaEventos>([])
+    const [exibirTabela,setExibirTabela] = useState(false)
 
     const columns = [
         { field: 'tipoEvento', headerName: 'Tipo de Evento', flex: 1,valueGetter: (params : any) => params.row.tipoEvento.descricao,}, 
@@ -37,8 +39,10 @@ export default function Eventos_conferencia_reunioes() {
                     console.error("Result is not an array");
                 }
             } catch (error) {
+                setExibirTabela(true)
                 console.error(error);
             }
+            setExibirTabela(true)
         }
 
         buscarListaEventos();
@@ -46,53 +50,64 @@ export default function Eventos_conferencia_reunioes() {
     
     return (
         <>
-            <Breadcrumbs
-                current={`Conferências e Reuniões`}
-                prevCrumbs={[{ name: 'Eventos' }]}
-            />
-       
-
-
-            <Titulo titulo={`Eventos`} voltar={paginaInicial} />
-
-            <Grid item xs={12}>    
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                            
-                            <Card style={{paddingLeft:'20px', paddingBottom:'10px', paddingRight:'10px'}}>
-                                <Titulo titulo={`CNAS – SISCONFERÊNCIA`}  />
-                                <Typography>
-                                Bem-vindo ao módulo de Conferências e Reuniões do Conselho Nacional de Assistência Social – CNAS. Neste local poderá
-                                ter acesso às informações de todas as Conferências Nacionais já realizadas, bem como a que está programada ou em
-                                Cadastro Conselheiros Eleição Sociedade Civil curso. Também dará acesso as Reuniões Ordinárias, Extraordinárias, Reuniões Descentralizadas e Ampliadas, bem como as reuniões Trimestrais do CNAS, CEAS e CAS/DF. Para localizar o evento que deseja visualizar, preencha a(s) informação(ões) na caixa de pesquisa abaixo. O Conselho agradece a sua visita. Estamos trabalhando para levar todas as informações que desejar.
-
-                                </Typography>
-                            </Card>
-                            
+               
+                            <Breadcrumbs
+                                current={`Conferências e Reuniões`}
+                                prevCrumbs={[{ name: 'Eventos' }]}
+                            />
                     
-                </Box>
-            </Grid>
-
-            <Grid item xs={12} style={{paddingTop:'40px'}}>    
-            <FormProvider {...rhfmethods}>
-               
-
-                        <DataGrid
-                           rows={eventos}
-                           localeText={ptBR.components.MuiDataGrid.defaultProps.localeText} 
-                           columns={columns}
-                           initialState={{
-                            pagination: {
-                              paginationModel: { pageSize: 10, page: 0 },
-                            },
-                          }}
-                        />                       
-               
-               
-            </FormProvider>
-            </Grid>
 
 
-           
+                            <Titulo titulo={`Eventos`} voltar={paginaInicial} />
+
+                            <Grid item xs={12}>    
+                                <Box display='flex' justifyContent='center' alignItems='center'>
+                                            
+                                            <Card style={{paddingLeft:'20px', paddingBottom:'10px', paddingRight:'10px'}}>
+                                                <Titulo titulo={`CNAS – SISCONFERÊNCIA`}  />
+                                                <Typography>
+                                                Bem-vindo ao módulo de Conferências e Reuniões do Conselho Nacional de Assistência Social – CNAS. Neste local poderá
+                                                ter acesso às informações de todas as Conferências Nacionais já realizadas, bem como a que está programada ou em
+                                                Cadastro Conselheiros Eleição Sociedade Civil curso. Também dará acesso as Reuniões Ordinárias, Extraordinárias, Reuniões Descentralizadas e Ampliadas, bem como as reuniões Trimestrais do CNAS, CEAS e CAS/DF. Para localizar o evento que deseja visualizar, preencha a(s) informação(ões) na caixa de pesquisa abaixo. O Conselho agradece a sua visita. Estamos trabalhando para levar todas as informações que desejar.
+
+                                                </Typography>
+                                            </Card>
+                                            
+                                    
+                                </Box>
+                            </Grid>
+                            {exibirTabela ?(
+
+                                <>
+                                <Grid item xs={12} style={{paddingTop:'40px'}}>    
+                                <FormProvider {...rhfmethods}>
+
+
+                                            <DataGrid
+                                            rows={eventos}
+                                            localeText={ptBR.components.MuiDataGrid.defaultProps.localeText} 
+                                            columns={columns}
+                                            initialState={{
+                                                pagination: {
+                                                paginationModel: { pageSize: 10, page: 0 },
+                                                },
+                                            }}
+                                            slots={{
+                                                toolbar: GridToolbar,
+                                            }}
+                                            disableRowSelectionOnClick
+                                            />                       
+                                
+                                
+                                </FormProvider>
+                                </Grid>
+
+
+
+                                  </>
+                                ): (
+                                <LoadingPage />
+                            )}
         </>
     )
 }

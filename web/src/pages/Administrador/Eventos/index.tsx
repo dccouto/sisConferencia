@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { IListaEventos } from '../../../services/sisConferenciaApi/eventos/types';
 import EventoCrud from './EventoCrud';
 import apiServiceEventos from '../../../services/sisConferenciaApi/eventos';
+import { LoadingPage } from '../../../components/Auth/LoadingPage';
 
 
 
@@ -37,7 +38,7 @@ const columnsConfig= [
 export default function Eventos() {     
 
     const [Eventos,setEventos] = useState<IListaEventos>([])
-
+    const [exibirTabela,setExibirTabela] = useState(false)
 
     useEffect(() => {
         
@@ -51,8 +52,11 @@ export default function Eventos() {
                     console.error("Result is not an array");
                 }
             } catch (error) {
+                setExibirTabela(true);
                 console.error(error);
+                
             }
+            setExibirTabela(true);
         }
 
         buscarListaEventos();
@@ -60,13 +64,19 @@ export default function Eventos() {
     
     return (
         <>
-            <Breadcrumbs
-                current={`Eventos`}
-                prevCrumbs={[{ name: 'Administração' }]}
-            />
-            <Titulo titulo={`Eventos`} voltar={paginaInicial} />
+            {exibirTabela ? (
+                <>
+                    <Breadcrumbs
+                        current={`Eventos`}
+                        prevCrumbs={[{ name: 'Administração' }]}
+                    />
+                    <Titulo titulo={`Eventos`} voltar={paginaInicial} />
 
-            <EventoCrud visible={true} eventos={Eventos} setEventos={setEventos} apiService={apiServiceEventos} columnConfig={columnsConfig}></EventoCrud>
+                    <EventoCrud visible={true} eventos={Eventos} setEventos={setEventos} apiService={apiServiceEventos} columnConfig={columnsConfig} />
+                </>
+            ) : (
+                <LoadingPage />
+            )}
         </>
     )
 }
