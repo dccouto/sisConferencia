@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.mds.sisConferencia.service.TipoAcompanhanteService;
@@ -26,31 +25,26 @@ public class TipoAcompanhanteController {
 	private final TipoAcompanhanteService tipoAcompanhanteService;
 
 	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<TipoAcompanhanteDTO>> listarTodos() {
 		return ResponseEntity.ok(tipoAcompanhanteService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoAcompanhanteDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(tipoAcompanhanteService.buscarPorID(id));
 	}
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoAcompanhanteDTO> salvar(@RequestBody TipoAcompanhanteDTO tipoAcompanhante) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(tipoAcompanhanteService.saveDTO(tipoAcompanhante));
 	}
 
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<TipoAcompanhanteDTO> atualizar(@PathVariable Long id, @RequestBody TipoAcompanhanteDTO tipoAcompanhanteAtualizado) {
 		return ResponseEntity.ok(tipoAcompanhanteService.atualizar(id, tipoAcompanhanteAtualizado));
 	}
 
 	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> excluir(@PathVariable Long id) {
 		tipoAcompanhanteService.delete(id);
 		return ResponseEntity.noContent().build();

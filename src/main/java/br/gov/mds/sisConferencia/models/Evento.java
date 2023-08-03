@@ -81,10 +81,10 @@ public class Evento implements DomainGeneric {
     private Arquivo imagem;
     
     
-	@OneToMany(mappedBy = "evento")
+	@OneToMany(mappedBy = "evento", cascade = CascadeType.REMOVE)
 	private List<Eixo> eixos;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name = "RL_EVENTO_DOCUMENTO", 
 		joinColumns = @JoinColumn(name = "FK_EVENTO"), 
 		inverseJoinColumns = @JoinColumn(name = "FK_DOCUMENTO")
