@@ -72,6 +72,13 @@ export function isAfterToday(startDate?: string): boolean {
     return isAfter(parsedDate, new Date()) // true
 }
 
+export function formatCPF(cpf: any) {
+    const cpfRegex = /^(\d{3})(\d{3})(\d{3})(\d{2})$/
+    return cpf.replace(cpfRegex, '$1.$2.$3-$4')
+}
+
+
+
 export function validarCNPJ(value?: string): boolean {
     if (!value) {
         return false
