@@ -35,6 +35,9 @@ public class Arquivo implements DomainGeneric {
 	@Column(name = "NO_ARQUIVO", length = 250)
 	private String nome;
 
+	@Column(name = "DS_DESCRICAO", length = 50)
+	private String extensao;
+
     @Lob
     @Column(name = "BYTE_ARQUIVO")
     private byte[] byteArquivo;

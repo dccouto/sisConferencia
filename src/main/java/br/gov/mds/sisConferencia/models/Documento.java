@@ -40,9 +40,6 @@ public class Documento {
 
     @Column(name = "DATA_ENVIO")
     private LocalDate dataEnvio;
-    
-    @Column(name = "DS_EXTENSAO")
-    private String extensao;
 
     @ManyToOne
     @JoinColumn(name = "FK_TIPO_DOCUMENTO")

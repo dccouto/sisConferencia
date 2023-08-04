@@ -52,7 +52,7 @@ public class Deliberacao {
 	@ManyToOne
 	@JoinColumns({
 	    @JoinColumn(name="FK_EVENTO", referencedColumnName="FK_EVENTO"),
-	    @JoinColumn(name="FK_EIXO", referencedColumnName="FK_EIXO")
+	    @JoinColumn(name="PK_EIXO", referencedColumnName="PK_EIXO")
 	})
 	private Eixo eixo;
 
