@@ -26,13 +26,11 @@ public class EixoMapper implements EntityMapper<EixoDTO, Eixo> {
 
         // Mapeamento de Eixo para EixoDTO
         this.mapper.createTypeMap(Eixo.class, EixoDTO.class)
-            .addMapping(src -> src.getId().getEventoId(), EixoDTO::setEventoId)
-            .addMapping(src -> src.getId().getNumeroEixo(), EixoDTO::setEixoId);
+            .addMapping(Eixo::getId, EixoDTO::setId);
 
         // Mapeamento de EixoDTO para Eixo
         this.mapper.createTypeMap(EixoDTO.class, Eixo.class)
-            .addMapping(EixoDTO::getEventoId, (dest, v) -> dest.getId().setEventoId((Long)v))
-            .addMapping(EixoDTO::getEixoId, (dest, v) -> dest.getId().setNumeroEixo((Long)v));
+            .addMapping(EixoDTO::getId, (dest, v) -> dest.setId((Long)v));
 
     }
 

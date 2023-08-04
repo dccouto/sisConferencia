@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EixoDTO {
 
-    private Long eventoId;
+    //private EventoDTO evento;
     
-	private Long eixoId;
+	private Long id;
 	
     private Integer numero;
 
@@ -21,6 +22,5 @@ public class EixoDTO {
 
     private String descricao;
 
-   
     private String ementa;
 }

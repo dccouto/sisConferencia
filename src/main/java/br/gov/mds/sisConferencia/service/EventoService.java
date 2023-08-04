@@ -5,13 +5,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import br.gov.mds.sisConferencia.service.dto.EixoDTO;
+import br.gov.mds.sisConferencia.service.mapper.EixoMapper;
 import org.springframework.stereotype.Service;
 
 import br.gov.mds.sisConferencia.exceptions.SisConferenciaNotFoundException;
 import br.gov.mds.sisConferencia.models.Arquivo;
 import br.gov.mds.sisConferencia.models.Eixo;
 import br.gov.mds.sisConferencia.models.Evento;
-import br.gov.mds.sisConferencia.models.EventoEixoId;
 import br.gov.mds.sisConferencia.repository.ArquivoRepository;
 import br.gov.mds.sisConferencia.repository.EixoRepository;
 import br.gov.mds.sisConferencia.repository.EventoRepository;
@@ -25,17 +26,19 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 	
 	private final EventoMapper eventoMapper;
 
-	
+	private final EixoMapper eixoMapper;
 	private final EixoRepository eixoRepository;
 	
 	
 	private final ArquivoRepository arquivoRepository;
 
-	public EventoService(EventoRepository repository, EventoMapper mapper, ArquivoRepository arquivoRepository, EixoRepository eixoRepository) {
+	public EventoService(EventoRepository repository, EventoMapper mapper, ArquivoRepository arquivoRepository,
+						 EixoRepository eixoRepository, EixoMapper eixoMapper ) {
 		super(repository, mapper);
 		this.eventoMapper = mapper;
 		this.eixoRepository = eixoRepository;
 		this.arquivoRepository = arquivoRepository;
+		this.eixoMapper = eixoMapper;
 	}
 	
 	@Transactional
@@ -45,21 +48,19 @@ public class EventoService extends GenericService<Evento, Long, EventoDTO> {
 	    evento.setImagem(save);
 	    Evento savedEvento = save(evento);
 
-	    if (evento.getEixos() != null) {
-	        List<Eixo> eixos = evento.getEixos();
+	    if (eventoRequest.getEixos() != null) {
 	        List<Eixo> savedEixos = new ArrayList<>();
 
-	        for (Eixo eixo : eixos) {
+	        for (EixoDTO eixoDTO : eventoRequest.getEixos()) {
+				Eixo eixo = eixoMapper.toEntity(eixoDTO);
+				eixo.setEvento(savedEvento);
 
-	            EventoEixoId idEventoEixo = new EventoEixoId();
-	            idEventoEixo.setEventoId(savedEvento.getId()); // Use evento.getId() aqui, não savedEvento.getId()
-				idEventoEixo.setNumeroEixo(eixo.getNumero());
-				eixo.setId(idEventoEixo);
 				savedEixos.add(eixo);
 	        }
 
-	        eixoRepository.saveAll(savedEixos);
+			savedEixos = eixoRepository.saveAll(savedEixos);
 	        evento.setEixos(savedEixos);
+
 	    }
 
 

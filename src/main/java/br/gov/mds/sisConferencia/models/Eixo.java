@@ -1,10 +1,5 @@
 package br.gov.mds.sisConferencia.models;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import br.gov.mds.sisConferencia.util.Schemas;
 import lombok.AllArgsConstructor;
@@ -12,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Builder
 @AllArgsConstructor
@@ -22,10 +18,12 @@ import lombok.Setter;
 @Table(name = "TB_EIXO", schema = Schemas.SISCONFERENCIA)
 public class Eixo {
 
-    @EmbeddedId
-    private EventoEixoId id;
-		
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_EIXO")
+	@SequenceGenerator(name = "SQ_EIXO", sequenceName = "SQ_EIXO", allocationSize = 1)
+	@Column(name = "PK_EIXO")
+    private Long id;
+
 	@Column(name = "NU_EIXO")
 	private Long numero;
 
@@ -35,17 +33,10 @@ public class Eixo {
 	@Column(name = "DS_DESCRICAO")
 	private String descricao;
 
-	
-    @ManyToOne
-    @JoinColumn(name = "FK_EVENTO", insertable = false, updatable = false)
-    private Evento evento;
-
 	@Column(name = "DS_EMENTA")
 	private String ementa;
 
-	/*@OneToMany(mappedBy = "eixo")
-	private List<EventoEixo> eventoEixo;
-	
-	@OneToMany(mappedBy = "eixo")
-	private List<Deliberacao> deliberacoes;*/
+	@ManyToOne
+	@JoinColumn(name = "FK_EVENTO", nullable = false)
+	private Evento evento;
 	}
